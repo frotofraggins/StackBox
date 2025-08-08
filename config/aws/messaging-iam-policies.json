@@ -1,0 +1,230 @@
+{
+  "StackPro-MessagingMasterPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "APIGatewayWebSocketAccess",
+        "Effect": "Allow",
+        "Action": [
+          "execute-api:ManageConnections",
+          "execute-api:Invoke"
+        ],
+        "Resource": [
+          "arn:aws:execute-api:*:*:*/*/POST/@connections/*",
+          "arn:aws:execute-api:*:*:*/*"
+        ]
+      },
+      {
+        "Sid": "DynamoDBMessagingAccess",
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:Query",
+          "dynamodb:Scan",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:BatchGetItem",
+          "dynamodb:BatchWriteItem"
+        ],
+        "Resource": [
+          "arn:aws:dynamodb:*:*:table/StackPro-Connections",
+          "arn:aws:dynamodb:*:*:table/StackPro-Connections/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Messages",
+          "arn:aws:dynamodb:*:*:table/StackPro-Messages/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Channels",
+          "arn:aws:dynamodb:*:*:table/StackPro-Channels/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Presence",
+          "arn:aws:dynamodb:*:*:table/StackPro-Presence/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Notifications",
+          "arn:aws:dynamodb:*:*:table/StackPro-Notifications/index/*"
+        ]
+      },
+      {
+        "Sid": "SNSNotificationAccess",
+        "Effect": "Allow",
+        "Action": [
+          "sns:Publish",
+          "sns:CreateTopic",
+          "sns:Subscribe",
+          "sns:Unsubscribe",
+          "sns:GetTopicAttributes",
+          "sns:SetTopicAttributes"
+        ],
+        "Resource": [
+          "arn:aws:sns:*:*:stackpro-notifications-*"
+        ]
+      },
+      {
+        "Sid": "SQSMessagingAccess",
+        "Effect": "Allow",
+        "Action": [
+          "sqs:SendMessage",
+          "sqs:ReceiveMessage",
+          "sqs:DeleteMessage",
+          "sqs:GetQueueAttributes",
+          "sqs:CreateQueue"
+        ],
+        "Resource": [
+          "arn:aws:sqs:*:*:stackpro-messaging-*"
+        ]
+      },
+      {
+        "Sid": "SESEmailAccess",
+        "Effect": "Allow",
+        "Action": [
+          "ses:SendEmail",
+          "ses:SendRawEmail",
+          "ses:SendTemplatedEmail"
+        ],
+        "Resource": "*"
+      },
+      {
+        "Sid": "CloudWatchLogsAccess",
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:DescribeLogGroups",
+          "logs:DescribeLogStreams"
+        ],
+        "Resource": [
+          "arn:aws:logs:*:*:log-group:/stackpro/messaging/*"
+        ]
+      }
+    ]
+  },
+
+  "StackPro-ClientMessagingPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "ClientWebSocketAccess",
+        "Effect": "Allow",
+        "Action": [
+          "execute-api:ManageConnections",
+          "execute-api:Invoke"
+        ],
+        "Resource": [
+          "arn:aws:execute-api:*:*:*/*/POST/@connections/*"
+        ],
+        "Condition": {
+          "StringEquals": {
+            "aws:PrincipalTag/ClientId": "${aws:RequestTag/ClientId}"
+          }
+        }
+      },
+      {
+        "Sid": "ClientMessagingData",
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:Query",
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem"
+        ],
+        "Resource": [
+          "arn:aws:dynamodb:*:*:table/StackPro-Messages",
+          "arn:aws:dynamodb:*:*:table/StackPro-Messages/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Channels",
+          "arn:aws:dynamodb:*:*:table/StackPro-Channels/index/*",
+          "arn:aws:dynamodb:*:*:table/StackPro-Presence",
+          "arn:aws:dynamodb:*:*:table/StackPro-Presence/index/*"
+        ],
+        "Condition": {
+          "ForAllValues:StringEquals": {
+            "dynamodb:Attributes": [
+              "clientId", "channelId", "messageId", "userId", "content", 
+              "timestamp", "messageType", "reactions", "threadId"
+            ]
+          },
+          "StringEquals": {
+            "aws:PrincipalTag/ClientId": "${dynamodb:LeadingKeys[0]}"
+          }
+        }
+      },
+      {
+        "Sid": "ClientConnectionManagement",
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:Query",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem"
+        ],
+        "Resource": [
+          "arn:aws:dynamodb:*:*:table/StackPro-Connections",
+          "arn:aws:dynamodb:*:*:table/StackPro-Connections/index/*"
+        ],
+        "Condition": {
+          "StringEquals": {
+            "aws:PrincipalTag/ClientId": "${dynamodb:LeadingKeys[0]}"
+          }
+        }
+      },
+      {
+        "Sid": "ClientNotificationAccess",
+        "Effect": "Allow",
+        "Action": [
+          "sns:Publish"
+        ],
+        "Resource": [
+          "arn:aws:sns:*:*:stackpro-notifications-${aws:PrincipalTag/ClientId}"
+        ]
+      }
+    ]
+  },
+
+  "StackPro-MessagingBoundaryPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "DenyOtherClientData",
+        "Effect": "Deny",
+        "Action": "*",
+        "Resource": "*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:ResourceTag/ClientId": "*"
+          },
+          "StringNotEquals": {
+            "aws:ResourceTag/ClientId": "${aws:PrincipalTag/ClientId}"
+          }
+        }
+      },
+      {
+        "Sid": "DenyUntaggedResources",
+        "Effect": "Deny",
+        "Action": [
+          "dynamodb:*",
+          "sns:*",
+          "sqs:*"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "Null": {
+            "aws:ResourceTag/ClientId": "true"
+          }
+        }
+      }
+    ]
+  },
+
+  "StackPro-LambdaTrustPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": [
+            "lambda.amazonaws.com",
+            "apigateway.amazonaws.com"
+          ]
+        },
+        "Action": "sts:AssumeRole"
+      }
+    ]
+  }
+}

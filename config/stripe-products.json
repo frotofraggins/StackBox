@@ -1,0 +1,62 @@
+{
+  "products": [
+    {
+      "id": "stackpro-starter",
+      "name": "StackPro Starter",
+      "description": "Perfect for small businesses getting started with professional tools",
+      "price": 29900,
+      "currency": "usd",
+      "interval": "month",
+      "features": [
+        "Professional Business Website",
+        "Customer Relationship Management (CRM)",
+        "Secure File Sharing Portal",
+        "Custom @yourbusiness.stackpro.io Email",
+        "SSL Security Certificate",
+        "24/7 Hosting & Support"
+      ],
+      "popular": false
+    },
+    {
+      "id": "stackpro-business",
+      "name": "StackPro Business",
+      "description": "Everything in Starter plus advanced business tools",
+      "price": 59900,
+      "currency": "usd", 
+      "interval": "month",
+      "features": [
+        "Everything in Starter Plan",
+        "Online Booking & Scheduling System",
+        "Email Marketing & Newsletter Tools",
+        "Advanced CRM Automation",
+        "Priority Support",
+        "Custom Integrations"
+      ],
+      "popular": true
+    },
+    {
+      "id": "stackpro-enterprise",
+      "name": "StackPro Enterprise", 
+      "description": "Complete business solution for growing companies",
+      "price": 129900,
+      "currency": "usd",
+      "interval": "month",
+      "features": [
+        "Everything in Business Plan",
+        "AI-Powered Business Tools",
+        "Advanced Analytics Dashboard",
+        "Multi-Location Support",
+        "Custom Domain Integration",
+        "Dedicated Account Manager",
+        "White-Label Options"
+      ],
+      "popular": false
+    }
+  ],
+  "testCards": {
+    "success": "4242424242424242",
+    "declined": "4000000000000002",
+    "insufficientFunds": "4000000000009995",
+    "expiredCard": "4000000000000069"
+  }
+}

@@ -1,0 +1,445 @@
+{
+  "StackPro-Connections": {
+    "TableName": "StackPro-Connections",
+    "KeySchema": [
+      {
+        "AttributeName": "connectionId",
+        "KeyType": "HASH"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "connectionId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "clientId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "userId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "connectedAt",
+        "AttributeType": "S"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ClientIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "connectedAt",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "UserIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "userId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "connectedAt",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "TimeToLiveSpecification": {
+      "AttributeName": "ttl",
+      "Enabled": true
+    },
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "Tags": [
+      {
+        "Key": "Service",
+        "Value": "StackPro-Messaging"
+      },
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      }
+    ]
+  },
+
+  "StackPro-Messages": {
+    "TableName": "StackPro-Messages",
+    "KeySchema": [
+      {
+        "AttributeName": "channelId",
+        "KeyType": "HASH"
+      },
+      {
+        "AttributeName": "messageId",
+        "KeyType": "RANGE"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "channelId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "messageId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "clientId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "timestamp",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "threadId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "userId",
+        "AttributeType": "S"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ClientIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "timestamp",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "ThreadIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "threadId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "timestamp",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "UserIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "userId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "timestamp",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "Tags": [
+      {
+        "Key": "Service",
+        "Value": "StackPro-Messaging"
+      },
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      }
+    ]
+  },
+
+  "StackPro-Channels": {
+    "TableName": "StackPro-Channels",
+    "KeySchema": [
+      {
+        "AttributeName": "channelId",
+        "KeyType": "HASH"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "channelId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "clientId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "createdAt",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "channelType",
+        "AttributeType": "S"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ClientIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "createdAt",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "TypeIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "channelType",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "Tags": [
+      {
+        "Key": "Service",
+        "Value": "StackPro-Messaging"
+      },
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      }
+    ]
+  },
+
+  "StackPro-Presence": {
+    "TableName": "StackPro-Presence",
+    "KeySchema": [
+      {
+        "AttributeName": "userId",
+        "KeyType": "HASH"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "userId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "clientId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "lastSeen",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "status",
+        "AttributeType": "S"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ClientIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "lastSeen",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "StatusIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "status",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "TimeToLiveSpecification": {
+      "AttributeName": "ttl",
+      "Enabled": true
+    },
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "Tags": [
+      {
+        "Key": "Service",
+        "Value": "StackPro-Messaging"
+      },
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      }
+    ]
+  },
+
+  "StackPro-Notifications": {
+    "TableName": "StackPro-Notifications",
+    "KeySchema": [
+      {
+        "AttributeName": "userId",
+        "KeyType": "HASH"
+      },
+      {
+        "AttributeName": "notificationId",
+        "KeyType": "RANGE"
+      }
+    ],
+    "AttributeDefinitions": [
+      {
+        "AttributeName": "userId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "notificationId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "clientId",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "timestamp",
+        "AttributeType": "S"
+      },
+      {
+        "AttributeName": "status",
+        "AttributeType": "S"
+      }
+    ],
+    "GlobalSecondaryIndexes": [
+      {
+        "IndexName": "ClientIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "clientId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "timestamp",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      },
+      {
+        "IndexName": "StatusIndex",
+        "KeySchema": [
+          {
+            "AttributeName": "userId",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "status",
+            "KeyType": "RANGE"
+          }
+        ],
+        "Projection": {
+          "ProjectionType": "ALL"
+        },
+        "BillingMode": "PAY_PER_REQUEST"
+      }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "TimeToLiveSpecification": {
+      "AttributeName": "ttl",
+      "Enabled": true
+    },
+    "StreamSpecification": {
+      "StreamEnabled": true,
+      "StreamViewType": "NEW_AND_OLD_IMAGES"
+    },
+    "Tags": [
+      {
+        "Key": "Service",
+        "Value": "StackPro-Messaging"
+      },
+      {
+        "Key": "Environment",
+        "Value": "Production"
+      }
+    ]
+  }
+}

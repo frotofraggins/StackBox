@@ -1,0 +1,185 @@
+{
+  "StackPro-BedrockMasterPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "BedrockModelAccess",
+        "Effect": "Allow",
+        "Action": [
+          "bedrock:InvokeModel",
+          "bedrock:InvokeModelWithResponseStream",
+          "bedrock:ListFoundationModels",
+          "bedrock:GetFoundationModel"
+        ],
+        "Resource": [
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0",
+          "arn:aws:bedrock:*::foundation-model/amazon.titan-embed-text-v1",
+          "arn:aws:bedrock:*::foundation-model/amazon.titan-embed-text-v2:0"
+        ]
+      },
+      {
+        "Sid": "BedrockKnowledgeBase",
+        "Effect": "Allow", 
+        "Action": [
+          "bedrock:CreateKnowledgeBase",
+          "bedrock:GetKnowledgeBase",
+          "bedrock:UpdateKnowledgeBase",
+          "bedrock:DeleteKnowledgeBase",
+          "bedrock:ListKnowledgeBases",
+          "bedrock:CreateDataSource",
+          "bedrock:GetDataSource",
+          "bedrock:UpdateDataSource",
+          "bedrock:DeleteDataSource",
+          "bedrock:StartIngestionJob",
+          "bedrock:GetIngestionJob",
+          "bedrock:ListIngestionJobs"
+        ],
+        "Resource": "*",
+        "Condition": {
+          "StringEquals": {
+            "aws:RequestedRegion": "${aws:RequestedRegion}"
+          }
+        }
+      }
+    ]
+  },
+
+  "StackPro-ClientBedrockPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "ClientBedrockAccess",
+        "Effect": "Allow",
+        "Action": [
+          "bedrock:InvokeModel",
+          "bedrock:InvokeModelWithResponseStream"
+        ],
+        "Resource": [
+          "arn:aws:bedrock:*::foundation-model/anthropic.claude-3-5-sonnet-20241022-v2:0",
+          "arn:aws:bedrock:*::foundation-model/amazon.titan-embed-text-v1"
+        ],
+        "Condition": {
+          "StringEquals": {
+            "aws:PrincipalTag/ClientId": "${aws:ResourceTag/ClientId}"
+          }
+        }
+      },
+      {
+        "Sid": "ClientS3KnowledgeAccess",
+        "Effect": "Allow",
+        "Action": [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+          "s3:ListBucket"
+        ],
+        "Resource": [
+          "arn:aws:s3:::stackpro-knowledge-base/${aws:PrincipalTag/ClientId}/*",
+          "arn:aws:s3:::stackpro-knowledge-base"
+        ],
+        "Condition": {
+          "StringLike": {
+            "s3:prefix": "${aws:PrincipalTag/ClientId}/*"
+          }
+        }
+      },
+      {
+        "Sid": "ClientDynamoDBAccess", 
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Query",
+          "dynamodb:Scan"
+        ],
+        "Resource": [
+          "arn:aws:dynamodb:*:*:table/StackPro-AIEmbeddings",
+          "arn:aws:dynamodb:*:*:table/StackPro-ChatHistory",
+          "arn:aws:dynamodb:*:*:table/StackPro-AIUsage"
+        ],
+        "Condition": {
+          "ForAllValues:StringEquals": {
+            "dynamodb:Attributes": ["clientId", "documentId", "content", "embedding", "metadata", "timestamp"]
+          },
+          "StringEquals": {
+            "dynamodb:Select": ["AllAttributes", "SpecificAttributes"]
+          }
+        }
+      },
+      {
+        "Sid": "ClientCloudWatchLogs",
+        "Effect": "Allow",
+        "Action": [
+          "logs:CreateLogStream", 
+          "logs:PutLogEvents"
+        ],
+        "Resource": [
+          "arn:aws:logs:*:*:log-group:/stackpro/ai/${aws:PrincipalTag/ClientId}:*"
+        ]
+      }
+    ]
+  },
+
+  "StackPro-ClientBoundaryPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "DenyAccessToOtherClients",
+        "Effect": "Deny",
+        "Action": "*",
+        "Resource": "*",
+        "Condition": {
+          "ForAnyValue:StringLike": {
+            "aws:ResourceTag/ClientId": "*"
+          },
+          "StringNotEquals": {
+            "aws:ResourceTag/ClientId": "${aws:PrincipalTag/ClientId}"
+          }
+        }
+      },
+      {
+        "Sid": "DenyS3AccessToOtherClients",
+        "Effect": "Deny", 
+        "Action": "s3:*",
+        "Resource": [
+          "arn:aws:s3:::stackpro-knowledge-base/*"
+        ],
+        "Condition": {
+          "StringNotLike": {
+            "s3:prefix": "${aws:PrincipalTag/ClientId}/*"
+          }
+        }
+      }
+    ]
+  },
+
+  "StackPro-TrustPolicy": {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "Service": [
+            "lambda.amazonaws.com",
+            "ecs-tasks.amazonaws.com"
+          ]
+        },
+        "Action": "sts:AssumeRole"
+      },
+      {
+        "Effect": "Allow",
+        "Principal": {
+          "AWS": "arn:aws:iam::${AWS::AccountId}:role/StackPro-AIService"
+        },
+        "Action": "sts:AssumeRole",
+        "Condition": {
+          "StringEquals": {
+            "sts:ExternalId": "stackpro-ai-service"
+          }
+        }
+      }
+    ]
+  }
+}

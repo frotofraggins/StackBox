@@ -1,0 +1,72 @@
+{
+  "name": "stackbox-deployment-pipeline",
+  "version": "1.0.0",
+  "description": "Automated deployment pipeline for StackBox client business stacks on AWS",
+  "main": "src/deploy.js",
+  "scripts": {
+    "start": "node src/api/server.js",
+    "dev": "nodemon src/api/server.js",
+    "test": "jest",
+    "validate-config": "node src/scripts/validate-config.js",
+    "quick-test": "node scripts/quick-test.js",
+    "test-local": "npm run quick-test && npm run test-api && npm run test-frontend",
+    "test-api": "curl -s http://localhost:3001/health || echo 'API server not running. Start with: npm run dev'",
+    "test-frontend": "cd frontend && npm run build && cd ..",
+    "test-aws": "node -e \"const {STSClient,GetCallerIdentityCommand}=require('@aws-sdk/client-sts');new STSClient({}).send(new GetCallerIdentityCommand({})).then(d=>console.log('✅ AWS Connected:',d.Account)).catch(e=>console.log('❌ AWS Error:',e.message))\"",
+    "test-deployment": "node test-trial.js",
+    "setup": "npm install && cd frontend && npm install && cd .. && echo '✅ Dependencies installed. Create .env file and run: npm run quick-test'",
+    "build": "cd frontend && npm run build && cd ..",
+    "deploy-vercel": "vercel --prod",
+    "check-domains": "node check-brand-domains.js",
+    "health": "curl -s http://localhost:3001/health"
+  },
+  "keywords": [
+    "aws",
+    "deployment",
+    "business-tools",
+    "docker",
+    "automation"
+  ],
+  "author": "StackBox",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-acm": "^3.478.0",
+    "@aws-sdk/client-cloudfront": "^3.478.0",
+    "@aws-sdk/client-ec2": "^3.478.0",
+    "@aws-sdk/client-elastic-load-balancing-v2": "^3.478.0",
+    "@aws-sdk/client-rds": "^3.478.0",
+    "@aws-sdk/client-route-53": "^3.478.0",
+    "@aws-sdk/client-route-53-domains": "^3.478.0",
+    "@aws-sdk/client-s3": "^3.478.0",
+    "@aws-sdk/client-secrets-manager": "^3.478.0",
+    "@aws-sdk/client-sesv2": "^3.478.0",
+    "@aws-sdk/client-sts": "^3.478.0",
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.11.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "docker-compose": "^0.24.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.1.5",
+    "handlebars": "^4.7.8",
+    "helmet": "^7.1.0",
+    "joi": "^17.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.7",
+    "stripe": "^14.25.0",
+    "uuid": "^11.1.0",
+    "winston": "^3.11.0",
+    "yaml": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "homepage": "https://allbusinesstools.com"
+}

@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-08-08T00:15:29.762Z",
+  "accountId": "304052673868",
+  "region": "us-west-2",
+  "existingResources": {
+    "dynamodbTables": [
+      "stackbox-messages",
+      "stackbox-connections",
+      "stackbox-rooms"
+    ],
+    "apiGatewayApis": [
+      "c7zc4l0r88"
+    ],
+    "s3Buckets": [],
+    "rdsInstances": []
+  }
+}

@@ -1,0 +1,58 @@
+{"level":"info","message":"🗄️ Database service initialized (in-memory mode)","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"clientId":"demo-company-12345","email":"demo@stackpro.io","level":"info","message":"✅ Demo data initialized:","password":"demo123","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"🔵 Stripe service initialized","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"🚀 StackPro API server (simplified) running on port 3002","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"📊 Environment: development","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"🔗 Health check: http://localhost:3002/health","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"👤 Demo user: demo@stackpro.io / demo123","service":"stackbox-deployment","timestamp":"2025-08-07 08:14:10"}
+{"level":"info","message":"GET /health - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:20:57"}
+{"level":"info","message":"GET /api/site-builder/templates - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:20:57"}
+{"level":"info","message":"POST /api/site-builder/assets/upload - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:20:57"}
+{"level":"info","message":"POST /api/site-builder/publish/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:20:57"}
+{"level":"info","message":"🗄️ Database service initialized (in-memory mode)","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"clientId":"demo-company-12345","email":"demo@stackpro.io","level":"info","message":"✅ Demo data initialized:","password":"demo123","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"🔵 Stripe service initialized","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"✅ Initialized 2 site templates","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"🚀 StackPro API server (simplified) running on port 3002","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"📊 Environment: development","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"🔗 Health check: http://localhost:3002/health","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"👤 Demo user: demo@stackpro.io / demo123","service":"stackbox-deployment","timestamp":"2025-08-07 08:21:36"}
+{"level":"info","message":"GET /health - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:14"}
+{"level":"info","message":"GET /health - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"GET /api/site-builder/templates - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Retrieved 2 templates","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"GET /api/site-builder/templates/law-firm-professional - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Retrieved template: law-firm-professional","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"POST /api/site-builder/sites - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Applied template: Professional Law Firm to site site-test-demo-12345-1754580169568","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"✅ Created site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"GET /api/site-builder/sites/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"PUT /api/site-builder/sites/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"✅ Updated site: site-test-demo-12345-1754580169568","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"POST /api/site-builder/assets/upload - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"POST /api/site-builder/publish/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"✅ Published site: site-test-demo-12345-1754580169568 to: https://test-demo-12345.stackpro.io","service":"stackbox-deployment","timestamp":"2025-08-07 08:22:49"}
+{"level":"info","message":"GET /health - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"GET /api/site-builder/templates - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"Retrieved 2 templates","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"GET /api/site-builder/templates/law-firm-professional - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"Retrieved template: law-firm-professional","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"POST /api/site-builder/sites - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"Applied template: Professional Law Firm to site site-test-demo-12345-1754580878803","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"✅ Created site: site-test-demo-12345-1754580878803 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"GET /api/site-builder/sites/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:38"}
+{"level":"info","message":"PUT /api/site-builder/sites/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"✅ Updated site: site-test-demo-12345-1754580169568","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"POST /api/site-builder/assets/upload - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"POST /api/site-builder/publish/test-demo-12345 - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"Found site: site-test-demo-12345-1754580169568 for client: test-demo-12345","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"✅ Published site: site-test-demo-12345-1754580169568 to: https://test-demo-12345.stackpro.io","service":"stackbox-deployment","timestamp":"2025-08-07 08:34:39"}
+{"level":"info","message":"POST /api/auth/login - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 11:27:56"}
+{"clientId":"demo-company-12345","email":"demo@stackpro.io","level":"info","message":"👤 User found by email:","service":"stackbox-deployment","timestamp":"2025-08-07 11:27:56"}
+{"level":"info","message":"POST /api/auth/login - ::1","service":"stackbox-deployment","timestamp":"2025-08-07 11:28:06"}
+{"clientId":"demo-company-12345","email":"demo@stackpro.io","level":"info","message":"👤 User found by email:","service":"stackbox-deployment","timestamp":"2025-08-07 11:28:06"}

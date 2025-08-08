@@ -1,0 +1,78 @@
+{
+  "domain": {
+    "primary": "temp-stackbox.com",
+    "subdomainPattern": "{clientId}.temp-stackbox.com",
+    "emailDomain": "temp-stackbox.com",
+    "wildcardSSL": false
+  },
+  "aws": {
+    "region": "us-west-2",
+    "profile": "Stackbox"
+  },
+  "resources": {
+    "instanceTypes": {
+      "shared": "t3.medium",
+      "dedicated": "t2.micro",
+      "small": "t3.small",
+      "medium": "t3.medium", 
+      "large": "t3.large"
+    },
+    "sharedInstanceType": "t3.medium",
+    "dedicatedInstanceType": "t2.micro",
+    "amiId": "ami-0c02fb55956c7d316",
+    "keyPairName": "stackbox-keypair",
+    "securityGroups": {
+      "web": "stackbox-web-sg",
+      "database": "stackbox-db-sg"
+    },
+    "shared": {
+      "maxClientsPerInstance": 10,
+      "instanceTag": "stackbox-shared-trial",
+      "storageGB": 20
+    },
+    "dedicated": {
+      "storageGB": 8,
+      "instanceTag": "stackbox-dedicated"
+    }
+  },
+  "s3": {
+    "bucketPrefix": "stackbox-client",
+    "bucketSuffix": "-data",
+    "bucketPattern": "{prefix}-{clientId}{suffix}"
+  },
+  "route53": {
+    "hostedZoneId": "TEMP_HOSTED_ZONE_ID",
+    "ttl": 300
+  },
+  "ses": {
+    "fromEmail": "noreply@temp-stackbox.com",
+    "replyToEmail": "support@temp-stackbox.com", 
+    "region": "us-east-1"
+  },
+  "docker": {
+    "networkPrefix": "stackbox-client",
+    "containerPrefix": "client"
+  },
+  "services": {
+    "nginx": {
+      "port": 80,
+      "sslPort": 443
+    },
+    "espocrm": {
+      "port": 8080,
+      "database": "mysql"
+    },
+    "nextcloud": {
+      "port": 8081,
+      "database": "mysql"
+    },
+    "calcom": {
+      "port": 3000,
+      "optional": true
+    },
+    "mailtrain": {
+      "port": 3001,
+      "optional": true
+    }
+  }
+}
