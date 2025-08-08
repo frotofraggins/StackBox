@@ -1,0 +1,518 @@
+{
+  "audit": {
+    "timestamp": "2025-08-08T15:56:03.913Z",
+    "account": "304052673868",
+    "region": "us-west-2",
+    "profile": "Stackbox"
+  },
+  "summary": {
+    "dynamodb": 4,
+    "lambda": 1,
+    "rds": 1,
+    "s3": 3,
+    "apigateway": 0,
+    "amplify": 0,
+    "cloudwatchAlarms": 0,
+    "cloudwatchDashboards": 0,
+    "iamRoles": 2,
+    "hostedZones": 2,
+    "domains": 0,
+    "budgets": 1
+  },
+  "resources": {
+    "dynamodb": [
+      {
+        "name": "stackpro-sandbox-connections",
+        "arn": "arn:aws:dynamodb:us-west-2:304052673868:table/stackpro-sandbox-connections",
+        "status": "ACTIVE",
+        "billingMode": "PAY_PER_REQUEST",
+        "itemCount": 0,
+        "sizeBytes": 0,
+        "keySchema": [
+          {
+            "AttributeName": "tenantKey",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "connectionId",
+            "KeyType": "RANGE"
+          }
+        ],
+        "attributes": [
+          {
+            "AttributeName": "connectionId",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "tenantKey",
+            "AttributeType": "S"
+          }
+        ],
+        "ttl": {
+          "TimeToLiveStatus": "DISABLED"
+        },
+        "tags": {
+          "Project": "StackPro",
+          "Owner": "Ops",
+          "CostCenter": "Sandbox",
+          "Env": "FreeTier"
+        }
+      },
+      {
+        "name": "stackpro-sandbox-messages",
+        "arn": "arn:aws:dynamodb:us-west-2:304052673868:table/stackpro-sandbox-messages",
+        "status": "ACTIVE",
+        "billingMode": "PAY_PER_REQUEST",
+        "itemCount": 3,
+        "sizeBytes": 260,
+        "keySchema": [
+          {
+            "AttributeName": "tenantKey",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "messageId",
+            "KeyType": "RANGE"
+          }
+        ],
+        "attributes": [
+          {
+            "AttributeName": "messageId",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "tenantKey",
+            "AttributeType": "S"
+          }
+        ],
+        "ttl": {
+          "TimeToLiveStatus": "DISABLED"
+        },
+        "tags": {
+          "Project": "StackPro",
+          "Owner": "Ops",
+          "CostCenter": "Sandbox",
+          "Env": "FreeTier"
+        }
+      },
+      {
+        "name": "stackpro-sandbox-quotas",
+        "arn": "arn:aws:dynamodb:us-west-2:304052673868:table/stackpro-sandbox-quotas",
+        "status": "ACTIVE",
+        "billingMode": "PAY_PER_REQUEST",
+        "itemCount": 0,
+        "sizeBytes": 0,
+        "keySchema": [
+          {
+            "AttributeName": "scope",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "date",
+            "KeyType": "RANGE"
+          }
+        ],
+        "attributes": [
+          {
+            "AttributeName": "date",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "scope",
+            "AttributeType": "S"
+          }
+        ],
+        "ttl": {
+          "TimeToLiveStatus": "ENABLED",
+          "AttributeName": "ttl"
+        },
+        "tags": {
+          "Project": "StackPro",
+          "Phase": "Phase1",
+          "Purpose": "AbuseProtection",
+          "Env": "FreeTier"
+        }
+      },
+      {
+        "name": "stackpro-sandbox-rooms",
+        "arn": "arn:aws:dynamodb:us-west-2:304052673868:table/stackpro-sandbox-rooms",
+        "status": "ACTIVE",
+        "billingMode": "PAY_PER_REQUEST",
+        "itemCount": 0,
+        "sizeBytes": 0,
+        "keySchema": [
+          {
+            "AttributeName": "tenantKey",
+            "KeyType": "HASH"
+          },
+          {
+            "AttributeName": "roomId",
+            "KeyType": "RANGE"
+          }
+        ],
+        "attributes": [
+          {
+            "AttributeName": "roomId",
+            "AttributeType": "S"
+          },
+          {
+            "AttributeName": "tenantKey",
+            "AttributeType": "S"
+          }
+        ],
+        "ttl": {
+          "TimeToLiveStatus": "DISABLED"
+        },
+        "tags": {
+          "Project": "StackPro",
+          "Owner": "Ops",
+          "CostCenter": "Sandbox",
+          "Env": "FreeTier"
+        }
+      }
+    ],
+    "lambda": [
+      {
+        "name": "stackpro-email-forwarder",
+        "arn": "arn:aws:lambda:us-west-2:304052673868:function:stackpro-email-forwarder",
+        "runtime": "nodejs18.x",
+        "handler": "lambda-email-forwarder.handler",
+        "codeSize": 1631,
+        "timeout": 3,
+        "memorySize": 128,
+        "lastModified": "2025-08-06T22:44:32.883+0000",
+        "environment": {},
+        "role": "arn:aws:iam::304052673868:role/stackpro-lambda-email-role",
+        "description": "Automatically forward @stackpro.io emails to nsflournoy@gmail.com",
+        "tags": {}
+      }
+    ],
+    "rds": [
+      {
+        "identifier": "stackpro-sandbox-db",
+        "arn": "arn:aws:rds:us-west-2:304052673868:db:stackpro-sandbox-db",
+        "status": "available",
+        "engine": "mysql",
+        "engineVersion": "8.0.42",
+        "instanceClass": "db.t3.micro",
+        "allocatedStorage": 20,
+        "multiAZ": false,
+        "endpoint": {
+          "Address": "stackpro-sandbox-db.cja28w6em2bv.us-west-2.rds.amazonaws.com",
+          "Port": 3306,
+          "HostedZoneId": "Z1PVIF0B656C1W"
+        },
+        "port": 0,
+        "backupRetention": 7,
+        "tags": {
+          "Project": "StackPro",
+          "Owner": "Ops",
+          "CostCenter": "Sandbox",
+          "Env": "FreeTier"
+        }
+      }
+    ],
+    "s3": [
+      {
+        "name": "mesahomes.com",
+        "creationDate": "2025-06-22T21:51:13.000Z",
+        "region": "us-west-1",
+        "tags": {}
+      },
+      {
+        "name": "stackpro-emails-storage",
+        "creationDate": "2025-08-06T21:37:22.000Z",
+        "region": "us-west-2",
+        "tags": {}
+      },
+      {
+        "name": "stackpro-sandbox-assets",
+        "creationDate": "2025-08-08T00:06:38.000Z",
+        "region": "us-west-2",
+        "tags": {}
+      }
+    ],
+    "apigateway": [],
+    "amplify": [],
+    "cloudwatch": {
+      "alarms": [],
+      "dashboards": []
+    },
+    "iam": {
+      "roles": [
+        {
+          "name": "stackpro-lambda-email-role",
+          "arn": "arn:aws:iam::304052673868:role/stackpro-lambda-email-role",
+          "createDate": "2025-08-06T22:42:31.000Z",
+          "path": "/"
+        },
+        {
+          "name": "StackPro-Sandbox-TenantLock-Role",
+          "arn": "arn:aws:iam::304052673868:role/StackPro-Sandbox-TenantLock-Role",
+          "description": "IAM role for StackPro sandbox tenant lock Lambda function",
+          "createDate": "2025-08-08T15:52:09.000Z",
+          "path": "/"
+        }
+      ],
+      "policies": []
+    },
+    "route53": {
+      "zones": [
+        {
+          "id": "/hostedzone/Z0293767219852CNS3KMT",
+          "name": "stackpro.io.",
+          "recordCount": 10,
+          "records": [
+            {
+              "Name": "stackpro.io.",
+              "Type": "A",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "76.76.19.19"
+                }
+              ]
+            },
+            {
+              "Name": "stackpro.io.",
+              "Type": "MX",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "10 inbound-smtp.us-west-2.amazonaws.com"
+                }
+              ]
+            },
+            {
+              "Name": "stackpro.io.",
+              "Type": "NS",
+              "TTL": 172800,
+              "ResourceRecords": [
+                {
+                  "Value": "ns-392.awsdns-49.com."
+                },
+                {
+                  "Value": "ns-1959.awsdns-52.co.uk."
+                },
+                {
+                  "Value": "ns-698.awsdns-23.net."
+                },
+                {
+                  "Value": "ns-1422.awsdns-49.org."
+                }
+              ]
+            },
+            {
+              "Name": "stackpro.io.",
+              "Type": "SOA",
+              "TTL": 900,
+              "ResourceRecords": [
+                {
+                  "Value": "ns-392.awsdns-49.com. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+              ]
+            },
+            {
+              "Name": "stackpro.io.",
+              "Type": "TXT",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "\"v=spf1 include:amazonses.com ~all\""
+                }
+              ]
+            },
+            {
+              "Name": "_amazonses.stackpro.io.",
+              "Type": "TXT",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "\"mAskvwvV4bVm/oeL+UHHNmq5806uRido1KQEz4XOAcM=\""
+                }
+              ]
+            },
+            {
+              "Name": "_d8316b20e8e03d5bc4a8586e793fc4b7.stackpro.io.",
+              "Type": "CNAME",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "_a05dbc38d8e55d676a525bf2b9b9b4bd.xlfgrmvvlj.acm-validations.aws."
+                }
+              ]
+            },
+            {
+              "Name": "_dmarc.stackpro.io.",
+              "Type": "TXT",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "\"v=DMARC1; p=quarantine; rua=mailto:admin@stackpro.io\""
+                }
+              ]
+            },
+            {
+              "Name": "api.stackpro.io.",
+              "Type": "A",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "76.76.19.19"
+                }
+              ]
+            },
+            {
+              "Name": "www.stackpro.io.",
+              "Type": "CNAME",
+              "TTL": 300,
+              "ResourceRecords": [
+                {
+                  "Value": "stackpro.io"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "/hostedzone/Z10182223SPYFYDHCGZH7",
+          "name": "mesahomes.com.",
+          "recordCount": 6,
+          "records": [
+            {
+              "Name": "mesahomes.com.",
+              "Type": "A",
+              "ResourceRecords": [],
+              "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d1uiw5fe3k6enb.cloudfront.net.",
+                "EvaluateTargetHealth": false
+              }
+            },
+            {
+              "Name": "mesahomes.com.",
+              "Type": "AAAA",
+              "ResourceRecords": [],
+              "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d1uiw5fe3k6enb.cloudfront.net.",
+                "EvaluateTargetHealth": false
+              }
+            },
+            {
+              "Name": "mesahomes.com.",
+              "Type": "NS",
+              "TTL": 172800,
+              "ResourceRecords": [
+                {
+                  "Value": "ns-1049.awsdns-03.org."
+                },
+                {
+                  "Value": "ns-1778.awsdns-30.co.uk."
+                },
+                {
+                  "Value": "ns-70.awsdns-08.com."
+                },
+                {
+                  "Value": "ns-706.awsdns-24.net."
+                }
+              ]
+            },
+            {
+              "Name": "mesahomes.com.",
+              "Type": "SOA",
+              "TTL": 900,
+              "ResourceRecords": [
+                {
+                  "Value": "ns-1049.awsdns-03.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+                }
+              ]
+            },
+            {
+              "Name": "www.mesahomes.com.",
+              "Type": "A",
+              "ResourceRecords": [],
+              "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d1uiw5fe3k6enb.cloudfront.net.",
+                "EvaluateTargetHealth": false
+              }
+            },
+            {
+              "Name": "www.mesahomes.com.",
+              "Type": "AAAA",
+              "ResourceRecords": [],
+              "AliasTarget": {
+                "HostedZoneId": "Z2FDTNDATAQYW2",
+                "DNSName": "d1uiw5fe3k6enb.cloudfront.net.",
+                "EvaluateTargetHealth": false
+              }
+            }
+          ]
+        }
+      ],
+      "domains": []
+    },
+    "budgets": [
+      {
+        "name": "StackPro-FreeTier-Budget",
+        "type": "COST",
+        "limit": {
+          "Amount": "5.0",
+          "Unit": "USD"
+        },
+        "timeUnit": "MONTHLY",
+        "costFilters": {
+          "TagKeyValue": [
+            "Env$FreeTier"
+          ]
+        }
+      }
+    ]
+  },
+  "analysis": {
+    "stackProResources": {
+      "confirmed": [
+        "DynamoDB: stackpro-sandbox-connections",
+        "DynamoDB: stackpro-sandbox-messages",
+        "DynamoDB: stackpro-sandbox-quotas",
+        "DynamoDB: stackpro-sandbox-rooms",
+        "Lambda: stackpro-email-forwarder",
+        "RDS: stackpro-sandbox-db",
+        "S3: stackpro-emails-storage",
+        "S3: stackpro-sandbox-assets"
+      ],
+      "likely": [],
+      "unknown": []
+    },
+    "freeTierUsage": {
+      "dynamodb": {
+        "tables": 4,
+        "freeTierLimit": 25,
+        "status": "within-limit"
+      },
+      "lambda": {
+        "functions": 1,
+        "freeTierLimit": "unlimited",
+        "status": "within-limit"
+      },
+      "rds": {
+        "instances": 1,
+        "freeTierLimit": 1,
+        "status": "within-limit"
+      },
+      "s3": {
+        "buckets": 3,
+        "freeTierLimit": "unlimited",
+        "status": "within-limit"
+      }
+    },
+    "costEstimate": {
+      "dynamodb": "$0.00 (Pay-per-request within free tier)",
+      "lambda": "$0.00 (Within free tier execution limits)",
+      "rds": "$0.00 (t3.micro within free tier)",
+      "s3": "$0.00 (Within free tier storage limits)",
+      "totalEstimate": "$0.00"
+    }
+  }
+}

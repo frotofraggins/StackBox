@@ -1,0 +1,9 @@
+{
+  "appId": "d3nyaf84s1jkxp",
+  "appName": "StackPro-Sandbox",
+  "defaultDomain": "main.d3nyaf84s1jkxp.amplifyapp.com",
+  "customDomain": "sandbox.stackpro.io",
+  "region": "us-west-2",
+  "repository": "https://github.com/frotofraggins/StackBox.git",
+  "branch": "main"
+}

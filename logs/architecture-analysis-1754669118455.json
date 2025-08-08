@@ -1,0 +1,641 @@
+{
+  "analysis": {
+    "timestamp": "2025-08-08T16:05:18.454Z",
+    "projectRoot": "D:\\Users\\nflos\\StackBox",
+    "totalFiles": 96
+  },
+  "entryPoints": [],
+  "reachability": {
+    "reachableFiles": 0,
+    "unreachableFiles": 96,
+    "reachabilityRatio": 0
+  },
+  "dependencies": {
+    "totalDependencies": 338,
+    "avgDependenciesPerFile": 3.5208333333333335,
+    "maxDependencies": 15
+  },
+  "architecturalPatterns": {
+    "api-routes": {
+      "count": 0,
+      "files": []
+    },
+    "react-pages": {
+      "count": 0,
+      "files": []
+    },
+    "react-components": {
+      "count": 0,
+      "files": []
+    },
+    "services": {
+      "count": 0,
+      "files": []
+    },
+    "utilities": {
+      "count": 0,
+      "files": []
+    },
+    "config": {
+      "count": 0,
+      "files": []
+    },
+    "hooks": {
+      "count": 0,
+      "files": []
+    },
+    "middleware": {
+      "count": 5,
+      "files": [
+        "scripts\\analyze-code-architecture.js",
+        "src\\api\\routes\\ai.js",
+        "src\\api\\routes\\messaging.js",
+        "src\\api\\server-simple.js",
+        "src\\api\\server.js"
+      ]
+    },
+    "tests": {
+      "count": 10,
+      "files": [
+        "frontend\\src\\pages\\test\\messaging.tsx",
+        "scripts\\quick-test.js",
+        "scripts\\sandbox-health-tests.js",
+        "scripts\\test-ai-system.js",
+        "scripts\\test-deployment.js",
+        "scripts\\test-messaging-system.js",
+        "scripts\\test-site-builder.js",
+        "scripts\\test-stripe-endpoints.js",
+        "scripts\\test-stripe-integration.js",
+        "scripts\\test-trial.js"
+      ]
+    }
+  },
+  "deadCode": {
+    "unreachableFiles": [
+      "frontend\\next-env.d.ts",
+      "frontend\\next.config.js",
+      "frontend\\postcss.config.js",
+      "frontend\\src\\components\\AIChatbox.tsx",
+      "frontend\\src\\components\\messaging\\ChatWindow.tsx",
+      "frontend\\src\\components\\messaging\\MessageInput.tsx",
+      "frontend\\src\\components\\messaging\\MessageList.tsx",
+      "frontend\\src\\components\\messaging\\TypingIndicator.tsx",
+      "frontend\\src\\components\\messaging\\UserPresence.tsx",
+      "frontend\\src\\components\\SignupForm.tsx",
+      "frontend\\src\\components\\site-builder\\core\\GrapesJSEditor.tsx",
+      "frontend\\src\\components\\site-builder\\core\\PreviewPane.tsx",
+      "frontend\\src\\components\\site-builder\\core\\SiteBuilder.tsx",
+      "frontend\\src\\components\\site-builder\\panels\\AssetPanel.tsx",
+      "frontend\\src\\components\\site-builder\\panels\\SettingsPanel.tsx",
+      "frontend\\src\\components\\site-builder\\panels\\ThemePanel.tsx",
+      "frontend\\src\\components\\site-builder\\templates\\TemplateSelector.tsx",
+      "frontend\\src\\components\\site-builder\\utils\\exportToStatic.ts",
+      "frontend\\src\\hooks\\useNotification.ts",
+      "frontend\\src\\hooks\\useWebSocket.ts",
+      "frontend\\src\\pages\\about.tsx",
+      "frontend\\src\\pages\\contact.tsx",
+      "frontend\\src\\pages\\cookie-policy.tsx",
+      "frontend\\src\\pages\\dashboard\\website\\builder.tsx",
+      "frontend\\src\\pages\\dashboard.tsx",
+      "frontend\\src\\pages\\demo-messaging.tsx",
+      "frontend\\src\\pages\\features.tsx",
+      "frontend\\src\\pages\\index.tsx",
+      "frontend\\src\\pages\\law-firms.tsx",
+      "frontend\\src\\pages\\login.tsx",
+      "frontend\\src\\pages\\premium-messaging.tsx",
+      "frontend\\src\\pages\\pricing.tsx",
+      "frontend\\src\\pages\\privacy.tsx",
+      "frontend\\src\\pages\\signup.tsx",
+      "frontend\\src\\pages\\support.tsx",
+      "frontend\\src\\pages\\terms.tsx",
+      "frontend\\src\\pages\\test\\messaging.tsx",
+      "frontend\\src\\pages\\_app.tsx",
+      "frontend\\tailwind.config.js",
+      "scripts\\analyze-code-architecture.js",
+      "scripts\\analyze-file-usage.js",
+      "scripts\\audit-aws-resources.js",
+      "scripts\\check-brand-domains.js",
+      "scripts\\deploy-abuse-protection-phase1.js",
+      "scripts\\deploy-amplify-production.js",
+      "scripts\\deploy-amplify-sandbox.js",
+      "scripts\\deploy-free-tier-mode.js",
+      "scripts\\deploy-full-production.js",
+      "scripts\\email-forwarder.js",
+      "scripts\\find-perfect-domain.js",
+      "scripts\\fix-ssl-certificate.js",
+      "scripts\\lambda-email-forwarder.js",
+      "scripts\\production-health-check.js",
+      "scripts\\quick-test.js",
+      "scripts\\request-production-ssl.js",
+      "scripts\\sandbox-health-tests.js",
+      "scripts\\setup-ai-infrastructure.js",
+      "scripts\\setup-messaging-infrastructure-v3.js",
+      "scripts\\setup-messaging-infrastructure.js",
+      "scripts\\setup.js",
+      "scripts\\test-ai-system.js",
+      "scripts\\test-deployment.js",
+      "scripts\\test-messaging-system.js",
+      "scripts\\test-site-builder.js",
+      "scripts\\test-stripe-endpoints.js",
+      "scripts\\test-stripe-integration.js",
+      "scripts\\test-trial.js",
+      "scripts\\transfer-domain-to-stackbox.js",
+      "src\\api\\routes\\ai.js",
+      "src\\api\\routes\\messaging.js",
+      "src\\api\\routes\\site-builder.js",
+      "src\\api\\server-simple.js",
+      "src\\api\\server.js",
+      "src\\config\\validation.js",
+      "src\\deploy.js",
+      "src\\services\\acm-service.js",
+      "src\\services\\ai\\claude-assistant.js",
+      "src\\services\\ai\\document-processor.js",
+      "src\\services\\ai\\embedding-service.js",
+      "src\\services\\alb-service.js",
+      "src\\services\\aws-provisioner.js",
+      "src\\services\\cloudfront-service.js",
+      "src\\services\\database-service.js",
+      "src\\services\\docker-service.js",
+      "src\\services\\enterprise-deployer.js",
+      "src\\services\\logger.js",
+      "src\\services\\messaging\\messaging-service.js",
+      "src\\services\\messaging\\notification-service.js",
+      "src\\services\\messaging\\websocket-handler.js",
+      "src\\services\\rds-service.js",
+      "src\\services\\secrets-manager-service.js",
+      "src\\services\\site-builder\\builder-service.js",
+      "src\\services\\stripe-service.js",
+      "src\\services\\trial-manager.js",
+      "src\\utils\\crypto.js",
+      "src\\utils\\logger.js"
+    ],
+    "unusedExports": [
+      {
+        "file": "frontend\\next.config.js",
+        "exports": [
+          "nextConfig"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\AIChatbox.tsx",
+        "exports": [
+          "AIChatbox",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\messaging\\ChatWindow.tsx",
+        "exports": [
+          "ChatWindow",
+          "ChatWindow"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\messaging\\MessageInput.tsx",
+        "exports": [
+          "MessageInput",
+          "MessageInput"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\messaging\\MessageList.tsx",
+        "exports": [
+          "MessageList",
+          "MessageList"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\messaging\\TypingIndicator.tsx",
+        "exports": [
+          "TypingIndicator",
+          "TypingIndicator"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\messaging\\UserPresence.tsx",
+        "exports": [
+          "UserPresence",
+          "UserPresence"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\SignupForm.tsx",
+        "exports": [
+          "SignupForm"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\core\\GrapesJSEditor.tsx",
+        "exports": [
+          "GrapesJSEditor"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\core\\PreviewPane.tsx",
+        "exports": [
+          "PreviewPane"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\core\\SiteBuilder.tsx",
+        "exports": [
+          "SiteBuilder"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\panels\\AssetPanel.tsx",
+        "exports": [
+          "AssetPanel"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\panels\\SettingsPanel.tsx",
+        "exports": [
+          "SettingsPanel"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\panels\\ThemePanel.tsx",
+        "exports": [
+          "ThemePanel"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\templates\\TemplateSelector.tsx",
+        "exports": [
+          "TemplateSelector"
+        ]
+      },
+      {
+        "file": "frontend\\src\\components\\site-builder\\utils\\exportToStatic.ts",
+        "exports": [
+          "exportToStatic",
+          "generateSitemap",
+          "generateRobotsTxt"
+        ]
+      },
+      {
+        "file": "frontend\\src\\hooks\\useNotification.ts",
+        "exports": [
+          "useNotification",
+          "useNotification"
+        ]
+      },
+      {
+        "file": "frontend\\src\\hooks\\useWebSocket.ts",
+        "exports": [
+          "useWebSocket",
+          "useWebSocket"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\about.tsx",
+        "exports": [
+          "About",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\contact.tsx",
+        "exports": [
+          "Contact",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\cookie-policy.tsx",
+        "exports": [
+          "CookiePolicy",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\dashboard\\website\\builder.tsx",
+        "exports": [
+          "SiteBuilderPage",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\dashboard.tsx",
+        "exports": [
+          "Dashboard",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\demo-messaging.tsx",
+        "exports": [
+          "DemoMessaging",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\features.tsx",
+        "exports": [
+          "Features",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\index.tsx",
+        "exports": [
+          "Home",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\law-firms.tsx",
+        "exports": [
+          "LawFirms",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\login.tsx",
+        "exports": [
+          "Login",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\premium-messaging.tsx",
+        "exports": [
+          "PremiumMessaging",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\pricing.tsx",
+        "exports": [
+          "Pricing",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\privacy.tsx",
+        "exports": [
+          "Privacy",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\signup.tsx",
+        "exports": [
+          "Signup",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\support.tsx",
+        "exports": [
+          "Support",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\terms.tsx",
+        "exports": [
+          "Terms",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\test\\messaging.tsx",
+        "exports": [
+          "MessagingTest",
+          "function"
+        ]
+      },
+      {
+        "file": "frontend\\src\\pages\\_app.tsx",
+        "exports": [
+          "App",
+          "function"
+        ]
+      },
+      {
+        "file": "scripts\\analyze-code-architecture.js",
+        "exports": [
+          "..."
+        ]
+      },
+      {
+        "file": "scripts\\setup-ai-infrastructure.js",
+        "exports": [
+          "AIInfrastructureSetup"
+        ]
+      },
+      {
+        "file": "scripts\\setup-messaging-infrastructure.js",
+        "exports": [
+          "MessagingInfrastructureSetup"
+        ]
+      },
+      {
+        "file": "scripts\\test-ai-system.js",
+        "exports": [
+          "AISystemTester"
+        ]
+      },
+      {
+        "file": "scripts\\test-messaging-system.js",
+        "exports": [
+          "MessagingSystemTester"
+        ]
+      },
+      {
+        "file": "src\\api\\routes\\ai.js",
+        "exports": [
+          "router"
+        ]
+      },
+      {
+        "file": "src\\api\\routes\\messaging.js",
+        "exports": [
+          "router"
+        ]
+      },
+      {
+        "file": "src\\api\\routes\\site-builder.js",
+        "exports": [
+          "router"
+        ]
+      },
+      {
+        "file": "src\\api\\server-simple.js",
+        "exports": [
+          "app"
+        ]
+      },
+      {
+        "file": "src\\api\\server.js",
+        "exports": [
+          "app"
+        ]
+      },
+      {
+        "file": "src\\services\\ai\\claude-assistant.js",
+        "exports": [
+          "ClaudeAssistant"
+        ]
+      },
+      {
+        "file": "src\\services\\ai\\document-processor.js",
+        "exports": [
+          "DocumentProcessor"
+        ]
+      },
+      {
+        "file": "src\\services\\ai\\embedding-service.js",
+        "exports": [
+          "EmbeddingService"
+        ]
+      },
+      {
+        "file": "src\\services\\messaging\\messaging-service.js",
+        "exports": [
+          "MessagingService"
+        ]
+      },
+      {
+        "file": "src\\services\\messaging\\notification-service.js",
+        "exports": [
+          "NotificationService"
+        ]
+      },
+      {
+        "file": "src\\services\\messaging\\websocket-handler.js",
+        "exports": [
+          "WebSocketHandler"
+        ]
+      }
+    ],
+    "orphanedFiles": [
+      "frontend\\next-env.d.ts",
+      "frontend\\postcss.config.js"
+    ]
+  },
+  "topConnectedFiles": [
+    {
+      "file": "src\\api\\server.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 15,
+      "totalConnections": 15
+    },
+    {
+      "file": "src\\api\\server-simple.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 13,
+      "totalConnections": 13
+    },
+    {
+      "file": "scripts\\deploy-free-tier-mode.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 12,
+      "totalConnections": 12
+    },
+    {
+      "file": "scripts\\setup-messaging-infrastructure.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 12,
+      "totalConnections": 12
+    },
+    {
+      "file": "frontend\\src\\components\\site-builder\\core\\SiteBuilder.tsx",
+      "incomingConnections": 0,
+      "outgoingConnections": 9,
+      "totalConnections": 9
+    },
+    {
+      "file": "scripts\\sandbox-health-tests.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 9,
+      "totalConnections": 9
+    },
+    {
+      "file": "scripts\\setup-messaging-infrastructure-v3.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 9,
+      "totalConnections": 9
+    },
+    {
+      "file": "src\\services\\enterprise-deployer.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 9,
+      "totalConnections": 9
+    },
+    {
+      "file": "frontend\\src\\components\\messaging\\ChatWindow.tsx",
+      "incomingConnections": 0,
+      "outgoingConnections": 8,
+      "totalConnections": 8
+    },
+    {
+      "file": "src\\api\\routes\\ai.js",
+      "incomingConnections": 0,
+      "outgoingConnections": 8,
+      "totalConnections": 8
+    }
+  ],
+  "dependencyHotspots": [
+    {
+      "file": "src\\api\\server.js",
+      "type": "high-dependencies",
+      "count": 15,
+      "risk": "Complex file with many dependencies"
+    },
+    {
+      "file": "src\\api\\server-simple.js",
+      "type": "high-dependencies",
+      "count": 13,
+      "risk": "Complex file with many dependencies"
+    },
+    {
+      "file": "scripts\\deploy-free-tier-mode.js",
+      "type": "high-dependencies",
+      "count": 12,
+      "risk": "Complex file with many dependencies"
+    },
+    {
+      "file": "scripts\\setup-messaging-infrastructure.js",
+      "type": "high-dependencies",
+      "count": 12,
+      "risk": "Complex file with many dependencies"
+    }
+  ],
+  "recommendations": [
+    {
+      "type": "dead-code-removal",
+      "priority": "high",
+      "title": "Remove 96 unreachable files",
+      "description": "These files are not reachable from any entry point",
+      "action": "Consider removing these files",
+      "files": [
+        "frontend\\next-env.d.ts",
+        "frontend\\next.config.js",
+        "frontend\\postcss.config.js",
+        "frontend\\src\\components\\AIChatbox.tsx",
+        "frontend\\src\\components\\messaging\\ChatWindow.tsx",
+        "frontend\\src\\components\\messaging\\MessageInput.tsx",
+        "frontend\\src\\components\\messaging\\MessageList.tsx",
+        "frontend\\src\\components\\messaging\\TypingIndicator.tsx",
+        "frontend\\src\\components\\messaging\\UserPresence.tsx",
+        "frontend\\src\\components\\SignupForm.tsx"
+      ]
+    },
+    {
+      "type": "architecture-improvement",
+      "priority": "medium",
+      "title": "Refactor 4 complex files",
+      "description": "These files have too many dependencies",
+      "action": "Consider breaking down complex files",
+      "files": [
+        "src\\api\\server.js",
+        "src\\api\\server-simple.js",
+        "scripts\\deploy-free-tier-mode.js",
+        "scripts\\setup-messaging-infrastructure.js"
+      ]
+    }
+  ]
+}

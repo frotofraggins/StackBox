@@ -12,19 +12,19 @@ export default function Terms() {
       </Head>
 
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="header-glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-primary">
               StackPro
             </Link>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/features" className="text-gray-700 hover:text-blue-600">Features</Link>
-              <Link href="/pricing" className="text-gray-700 hover:text-blue-600">Pricing</Link>
-              <Link href="/law-firms" className="text-gray-700 hover:text-blue-600">Use Cases</Link>
-              <Link href="/contact" className="text-gray-700 hover:text-blue-600">Support</Link>
+              <Link href="/features" className="nav-link">Features</Link>
+              <Link href="/pricing" className="nav-link">Pricing</Link>
+              <Link href="/law-firms" className="nav-link">Use Cases</Link>
+              <Link href="/contact" className="nav-link">Support</Link>
             </nav>
-            <Link href="/pricing" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+            <Link href="/pricing" className="btn-primary">
               Start Free Trial
             </Link>
           </div>
@@ -33,96 +33,146 @@ export default function Terms() {
 
       <main>
         {/* Header */}
-        <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
+        <section className="bg-gradient-dark py-16">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl lg:text-5xl font-bold text-text-light mb-4">
               Terms of Service
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-text-light/80">
               Last updated: January 1, 2025
             </p>
           </div>
         </section>
 
-        {/* Terms Content */}
-        <section className="py-16">
+        {/* Quick Summary */}
+        <section className="py-8 bg-primary/5">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="prose prose-lg max-w-none">
+            <div className="card text-center">
+              <h2 className="text-2xl font-bold text-text-light mb-4">📋 Quick Summary</h2>
+              <div className="grid md:grid-cols-3 gap-6 text-sm">
+                <div>
+                  <div className="text-3xl mb-2">✅</div>
+                  <h3 className="font-semibold text-text-light mb-2">You Own Your Data</h3>
+                  <p className="text-text-secondary">Your customer data, files, and content belong entirely to you</p>
+                </div>
+                <div>
+                  <div className="text-3xl mb-2">💰</div>
+                  <h3 className="font-semibold text-text-light mb-2">Fair Pricing</h3>
+                  <p className="text-text-secondary">No surprise fees, cancel anytime, 7-day free trial</p>
+                </div>
+                <div>
+                  <div className="text-3xl mb-2">🔒</div>
+                  <h3 className="font-semibold text-text-light mb-2">Your Privacy</h3>
+                  <p className="text-text-secondary">We protect your data with bank-level security</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Terms Content */}
+        <section className="py-16 bg-background">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="space-y-6">
               
-              <h2>1. Acceptance of Terms</h2>
-              <p>
-                By accessing and using StackPro ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. 
-                If you do not agree to abide by the above, please do not use this service.
-              </p>
-
-              <h2>2. Description of Service</h2>
-              <p>
-                StackPro provides a comprehensive business platform that includes customer relationship management (CRM), 
-                file sharing, professional websites, email marketing, booking systems, and related business tools 
-                ("the Platform"). The Service is provided on a subscription basis.
-              </p>
-
-              <h2>3. User Account and Registration</h2>
-              <div>
-                <h3>3.1 Account Creation</h3>
-                <p>
-                  To use the Service, you must create an account by providing accurate, current, and complete information. 
-                  You are responsible for safeguarding your account credentials and for all activities that occur under your account.
-                </p>
-
-                <h3>3.2 Account Responsibilities</h3>
-                <ul>
-                  <li>You must provide accurate and complete registration information</li>
-                  <li>You are responsible for maintaining the security of your account</li>
-                  <li>You must notify us immediately of any unauthorized use of your account</li>
-                  <li>You are responsible for all activities that occur under your account</li>
-                </ul>
-              </div>
-
-              <h2>4. Subscription and Payment Terms</h2>
-              <div>
-                <h3>4.1 Subscription Plans</h3>
-                <p>
-                  StackPro offers multiple subscription plans with different features and pricing. 
-                  Current plans and pricing are available on our <Link href="/pricing" className="text-blue-600 hover:text-blue-700">pricing page</Link>.
-                </p>
-
-                <h3>4.2 Payment</h3>
-                <ul>
-                  <li>Subscription fees are billed in advance on a monthly or annual basis</li>
-                  <li>All fees are non-refundable except as expressly stated in these terms</li>
-                  <li>Prices may change with 30 days advance notice</li>
-                  <li>Failed payments may result in service suspension or termination</li>
-                </ul>
-
-                <h3>4.3 Free Trial</h3>
-                <p>
-                  New users may be eligible for a free trial period. During the trial, you have access to the features 
-                  of your selected plan. At the end of the trial period, you will be charged for your selected subscription 
-                  unless you cancel before the trial ends.
+              <div className="card">
+                <h2 className="text-2xl font-bold text-text-light mb-4">1. Acceptance of Terms</h2>
+                <p className="text-text-secondary leading-relaxed">
+                  By accessing and using StackPro ("the Service"), you accept and agree to be bound by the terms and provision of this agreement. 
+                  If you do not agree to abide by the above, please do not use this service.
                 </p>
               </div>
 
-              <h2>5. Acceptable Use Policy</h2>
-              <div>
-                <h3>5.1 Permitted Use</h3>
-                <p>
-                  You may use the Service only for lawful purposes and in accordance with these Terms. 
-                  You agree to comply with all applicable laws, regulations, and third-party terms.
+              <div className="card">
+                <h2 className="text-2xl font-bold text-text-light mb-4">2. Description of Service</h2>
+                <p className="text-text-secondary leading-relaxed">
+                  StackPro provides a comprehensive business platform that includes customer relationship management (CRM), 
+                  file sharing, professional websites, email marketing, booking systems, and related business tools 
+                  ("the Platform"). The Service is provided on a subscription basis.
                 </p>
+              </div>
 
-                <h3>5.2 Prohibited Activities</h3>
-                <p>You agree not to:</p>
-                <ul>
-                  <li>Use the Service for any illegal or unauthorized purpose</li>
-                  <li>Violate any laws in your jurisdiction</li>
-                  <li>Transmit any harmful, threatening, abusive, or defamatory content</li>
-                  <li>Attempt to gain unauthorized access to any part of the Service</li>
-                  <li>Interfere with or disrupt the Service or servers</li>
-                  <li>Upload or share malware, viruses, or other malicious code</li>
-                  <li>Spam other users or send unsolicited communications</li>
-                  <li>Violate the privacy rights of others</li>
-                </ul>
+              <div className="card">
+                <h2 className="text-2xl font-bold text-text-light mb-4">3. User Account and Registration</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">3.1 Account Creation</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      To use the Service, you must create an account by providing accurate, current, and complete information. 
+                      You are responsible for safeguarding your account credentials and for all activities that occur under your account.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">3.2 Account Responsibilities</h3>
+                    <ul className="text-text-secondary leading-relaxed space-y-2">
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>You must provide accurate and complete registration information</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>You are responsible for maintaining the security of your account</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>You must notify us immediately of any unauthorized use of your account</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>You are responsible for all activities that occur under your account</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
+                <h2 className="text-2xl font-bold text-text-light mb-4">4. Subscription and Payment Terms</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">4.1 Subscription Plans</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      StackPro offers multiple subscription plans with different features and pricing. 
+                      Current plans and pricing are available on our <Link href="/pricing" className="text-primary hover:text-primary-hover underline">pricing page</Link>.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">4.2 Payment</h3>
+                    <ul className="text-text-secondary leading-relaxed space-y-2">
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>Subscription fees are billed in advance on a monthly or annual basis</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>All fees are non-refundable except as expressly stated in these terms</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>Prices may change with 30 days advance notice</li>
+                      <li className="flex items-start"><span className="text-primary mr-2">•</span>Failed payments may result in service suspension or termination</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">4.3 Free Trial</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      New users may be eligible for a free trial period. During the trial, you have access to the features 
+                      of your selected plan. At the end of the trial period, you will be charged for your selected subscription 
+                      unless you cancel before the trial ends.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card">
+                <h2 className="text-2xl font-bold text-text-light mb-4">5. Acceptable Use Policy</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">5.1 Permitted Use</h3>
+                    <p className="text-text-secondary leading-relaxed">
+                      You may use the Service only for lawful purposes and in accordance with these Terms. 
+                      You agree to comply with all applicable laws, regulations, and third-party terms.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold text-text-light mb-2">5.2 Prohibited Activities</h3>
+                    <p className="text-text-secondary leading-relaxed mb-3">You agree not to:</p>
+                    <ul className="text-text-secondary leading-relaxed space-y-2">
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Use the Service for any illegal or unauthorized purpose</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Violate any laws in your jurisdiction</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Transmit any harmful, threatening, abusive, or defamatory content</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Attempt to gain unauthorized access to any part of the Service</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Interfere with or disrupt the Service or servers</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Upload or share malware, viruses, or other malicious code</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Spam other users or send unsolicited communications</li>
+                      <li className="flex items-start"><span className="text-red-500 mr-2">•</span>Violate the privacy rights of others</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
 
               <h2>6. Data and Privacy</h2>

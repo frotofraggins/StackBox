@@ -1,0 +1,158 @@
+{
+  "domain": {
+    "DomainName": "stackpro.io",
+    "Nameservers": [
+      {
+        "Name": "ns-392.awsdns-49.com",
+        "GlueIps": []
+      },
+      {
+        "Name": "ns-1959.awsdns-52.co.uk",
+        "GlueIps": []
+      },
+      {
+        "Name": "ns-698.awsdns-23.net",
+        "GlueIps": []
+      },
+      {
+        "Name": "ns-1422.awsdns-49.org",
+        "GlueIps": []
+      }
+    ],
+    "AutoRenew": true,
+    "AdminContact": {
+      "FirstName": "Nick",
+      "LastName": "Flournoy",
+      "ContactType": "COMPANY",
+      "OrganizationName": "Prostack LLC",
+      "AddressLine1": "39669 N LUKE LN",
+      "AddressLine2": "",
+      "City": "San Tan Valley",
+      "State": "AZ",
+      "CountryCode": "US",
+      "ZipCode": "85140",
+      "PhoneNumber": "+1.4804448869",
+      "Email": "NSFLOURNOY@GMAIL.COM",
+      "ExtraParams": []
+    },
+    "RegistrantContact": {
+      "FirstName": "Nick",
+      "LastName": "Flournoy",
+      "ContactType": "COMPANY",
+      "OrganizationName": "Prostack LLC",
+      "AddressLine1": "39669 N LUKE LN",
+      "AddressLine2": "",
+      "City": "San Tan Valley",
+      "State": "AZ",
+      "CountryCode": "US",
+      "ZipCode": "85140",
+      "PhoneNumber": "+1.4804448869",
+      "Email": "NSFLOURNOY@GMAIL.COM",
+      "ExtraParams": []
+    },
+    "TechContact": {
+      "FirstName": "Nick",
+      "LastName": "Flournoy",
+      "ContactType": "COMPANY",
+      "OrganizationName": "Prostack LLC",
+      "AddressLine1": "39669 N LUKE LN",
+      "AddressLine2": "",
+      "City": "San Tan Valley",
+      "State": "AZ",
+      "CountryCode": "US",
+      "ZipCode": "85140",
+      "PhoneNumber": "+1.4804448869",
+      "Email": "NSFLOURNOY@GMAIL.COM",
+      "ExtraParams": []
+    },
+    "AdminPrivacy": true,
+    "RegistrantPrivacy": true,
+    "TechPrivacy": true,
+    "RegistrarName": "Amazon Registrar, Inc.",
+    "WhoIsServer": "whois.registrar.amazon.com",
+    "RegistrarUrl": "http://registrar.amazon.com",
+    "AbuseContactEmail": "abuse@registrar.amazon.com",
+    "AbuseContactPhone": "+1.2062661000",
+    "CreationDate": "2025-08-06T21:04:15.713Z",
+    "UpdatedDate": "2025-08-06T21:14:36.893Z",
+    "ExpirationDate": "2026-08-06T21:04:15.713Z",
+    "StatusList": [
+      "addPeriod",
+      "ok"
+    ],
+    "DnssecKeys": [],
+    "BillingContact": {
+      "FirstName": "Nick",
+      "LastName": "Flournoy",
+      "ContactType": "COMPANY",
+      "OrganizationName": "Prostack LLC",
+      "AddressLine1": "39669 N LUKE LN",
+      "AddressLine2": "",
+      "City": "San Tan Valley",
+      "State": "AZ",
+      "CountryCode": "US",
+      "ZipCode": "85140",
+      "PhoneNumber": "+1.4804448869",
+      "Email": "NSFLOURNOY@GMAIL.COM",
+      "ExtraParams": []
+    },
+    "BillingPrivacy": true
+  },
+  "hostedZone": {
+    "HostedZone": {
+      "Id": "/hostedzone/Z09644762VPS77ZYCBQ3E",
+      "Name": "stackpro.io.",
+      "CallerReference": "RISWorkflow-RD:f33dacf5-66f8-4075-b0e6-3c05ea9f108d",
+      "Config": {
+        "Comment": "HostedZone created by Route53 Registrar",
+        "PrivateZone": false
+      },
+      "ResourceRecordSetCount": 2
+    },
+    "DelegationSet": {
+      "NameServers": [
+        "ns-1340.awsdns-39.org",
+        "ns-41.awsdns-05.com",
+        "ns-1718.awsdns-22.co.uk",
+        "ns-892.awsdns-47.net"
+      ]
+    },
+    "VPCs": []
+  },
+  "records": {
+    "ResourceRecordSets": [
+      {
+        "Name": "stackpro.io.",
+        "Type": "NS",
+        "TTL": 172800,
+        "ResourceRecords": [
+          {
+            "Value": "ns-1340.awsdns-39.org."
+          },
+          {
+            "Value": "ns-41.awsdns-05.com."
+          },
+          {
+            "Value": "ns-1718.awsdns-22.co.uk."
+          },
+          {
+            "Value": "ns-892.awsdns-47.net."
+          }
+        ]
+      },
+      {
+        "Name": "stackpro.io.",
+        "Type": "SOA",
+        "TTL": 900,
+        "ResourceRecords": [
+          {
+            "Value": "ns-1340.awsdns-39.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400"
+          }
+        ]
+      }
+    ],
+    "IsTruncated": false,
+    "MaxItems": "100"
+  },
+  "timestamp": "2025-08-08T15:02:39.632Z"
+}

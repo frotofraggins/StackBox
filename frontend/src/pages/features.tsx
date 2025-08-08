@@ -274,14 +274,14 @@ export default function Features() {
                   {/* Mock stats */}
                   <div className="grid grid-cols-2 gap-4 text-center text-sm">
                     <div>
-                      <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-2xl font-bold text-gray-900">
                         {activeFeature === 'crm' ? '47' : 
                          activeFeature === 'files' ? '1.2TB' :
                          activeFeature === 'website' ? '99.9%' :
                          activeFeature === 'email' ? '42%' :
                          activeFeature === 'booking' ? '156' : '94%'}
                       </div>
-                      <div className="text-gray-600">
+                      <div className="text-gray-800 font-semibold">
                         {activeFeature === 'crm' ? 'Active Deals' : 
                          activeFeature === 'files' ? 'Storage Used' :
                          activeFeature === 'website' ? 'Uptime' :
@@ -290,14 +290,14 @@ export default function Features() {
                       </div>
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-green-600">
+                      <div className="text-2xl font-bold text-green-800">
                         {activeFeature === 'crm' ? '+24%' : 
                          activeFeature === 'files' ? '100%' :
                          activeFeature === 'website' ? '2.3s' :
                          activeFeature === 'email' ? '1,847' :
                          activeFeature === 'booking' ? '4.8★' : '2.3s'}
                       </div>
-                      <div className="text-gray-600">
+                      <div className="text-gray-800 font-semibold">
                         {activeFeature === 'crm' ? 'Growth' : 
                          activeFeature === 'files' ? 'Security' :
                          activeFeature === 'website' ? 'Load Time' :

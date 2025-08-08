@@ -348,174 +348,174 @@ export default function Pricing() {
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-blue-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    <tr className="bg-primary/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         Email Marketing & Newsletters
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50 border-l-4 border-blue-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center bg-primary/10 border-l-4 border-primary">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-blue-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    <tr className="bg-primary/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         Built-in Messaging System
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50 border-l-4 border-blue-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center bg-primary/10 border-l-4 border-primary">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-blue-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    <tr className="bg-primary/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         SMS & WhatsApp Integration
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50 border-l-4 border-blue-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center bg-primary/10 border-l-4 border-primary">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-blue-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
+                    <tr className="bg-primary/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-primary rounded-full mr-3"></div>
                         Custom Domain Integration
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50 border-l-4 border-blue-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center bg-primary/10 border-l-4 border-primary">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
 
                     {/* Enterprise Features */}
-                    <tr className="bg-purple-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                    <tr className="bg-purple-900/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
                         AI-Powered Business Tools
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                      <td className="px-6 py-4 text-center">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center border-l-4 border-purple-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center border-l-4 border-purple-400">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-purple-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                    <tr className="bg-purple-900/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
                         White-Label & Custom Branding
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                      <td className="px-6 py-4 text-center">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center border-l-4 border-purple-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center border-l-4 border-purple-400">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
-                    <tr className="bg-purple-50">
-                      <td className="px-6 py-4 text-sm font-semibold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-purple-500 rounded-full mr-3"></div>
+                    <tr className="bg-purple-900/10">
+                      <td className="px-6 py-4 text-sm font-semibold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-purple-400 rounded-full mr-3"></div>
                         Advanced Messaging Automation
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-gray-100 rounded-full">
-                          <span className="text-gray-400 font-bold">✗</span>
+                      <td className="px-6 py-4 text-center">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-text-muted/20 rounded-full">
+                          <span className="text-text-muted font-bold">✗</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center border-l-4 border-purple-500">
-                        <div className="inline-flex items-center justify-center w-6 h-6 bg-green-100 rounded-full">
-                          <span className="text-green-600 font-bold">✓</span>
+                      <td className="px-6 py-4 text-center border-l-4 border-purple-400">
+                        <div className="inline-flex items-center justify-center w-6 h-6 bg-success/20 rounded-full">
+                          <span className="text-success font-bold">✓</span>
                         </div>
                       </td>
                     </tr>
 
                     {/* Support Comparison */}
-                    <tr className="bg-gray-50 border-t-2 border-gray-200">
-                      <td className="px-6 py-4 text-sm font-bold text-gray-900 flex items-center">
-                        <div className="w-2 h-2 bg-gray-600 rounded-full mr-3"></div>
+                    <tr className="bg-gray-700/20 border-t-2 border-border">
+                      <td className="px-6 py-4 text-sm font-bold text-text-light flex items-center">
+                        <div className="w-2 h-2 bg-text-secondary rounded-full mr-3"></div>
                         Support Level
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center px-3 py-1 bg-yellow-100 text-yellow-800 text-xs font-semibold rounded-full">
+                        <div className="inline-flex items-center justify-center px-3 py-1 bg-warning/20 text-warning text-xs font-semibold rounded-full">
                           Email Only
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-center bg-blue-50">
-                        <div className="inline-flex items-center justify-center px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                      <td className="px-6 py-4 text-center">
+                        <div className="inline-flex items-center justify-center px-3 py-1 bg-primary/20 text-primary text-xs font-semibold rounded-full">
                           Priority 24/7
                         </div>
                       </td>
                       <td className="px-6 py-4 text-center">
-                        <div className="inline-flex items-center justify-center px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">
+                        <div className="inline-flex items-center justify-center px-3 py-1 bg-purple-400/20 text-purple-300 text-xs font-semibold rounded-full">
                           Phone + Dedicated
                         </div>
                       </td>
