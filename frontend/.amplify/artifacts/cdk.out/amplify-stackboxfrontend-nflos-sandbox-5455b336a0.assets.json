@@ -1,0 +1,20 @@
+{
+  "version": "48.0.0",
+  "files": {
+    "e4c24af826b1a5443be8b2a236de54b1a203977724ef80bd1a46aebff5d245a9": {
+      "displayName": "amplify-stackboxfrontend-nflos-sandbox-5455b336a0 Template",
+      "source": {
+        "path": "amplify-stackboxfrontend-nflos-sandbox-5455b336a0.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region-221d9fc0": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "e4c24af826b1a5443be8b2a236de54b1a203977724ef80bd1a46aebff5d245a9.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
