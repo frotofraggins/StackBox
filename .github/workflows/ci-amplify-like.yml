@@ -1,0 +1,30 @@
+name: CI (Amplify-like)
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  amplify_like:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm -v
+      - name: Preflight (lockfile + engines)
+        run: node scripts/preflight-amplify.js
+      - name: Install (workspace)
+        run: pnpm install --frozen-lockfile
+      - name: Build workspace
+        run: pnpm -w build
+      - name: Build frontend
+        run: pnpm --filter ./frontend build

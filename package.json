@@ -4,6 +4,7 @@
   "description": "StackPro - Tech Stack-as-a-Service Platform",
   "main": "src/api/server.js",
   "scripts": {
+    "build": "turbo run build",
     "dev": "node src/api/server.js",
     "start": "NODE_ENV=production node src/api/server.js",
     "test": "node scripts/quick-test.js",
@@ -69,6 +70,8 @@
     "puppeteer": "^21.11.0"
   },
   "engines": {
-    "node": ">=22"
-  }
+    "node": ">=22 <23",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.12.3"
 }
