@@ -1,4 +1,5 @@
-const AWS = require('aws-sdk');
+const { S3Client, GetObjectCommand, ListObjectsV2Command, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
 const axios = require('axios');
 const { logger } = require('../logger');
 
@@ -15,8 +16,8 @@ const { logger } = require('../logger');
 class DatasetIngestionService {
   constructor(tenantId) {
     this.tenantId = tenantId;
-    this.s3 = new AWS.S3();
-    this.bedrock = new AWS.BedrockRuntime({ region: process.env.AWS_REGION || 'us-west-2' });
+    this.s3 = new S3Client({ region: process.env.AWS_REGION || 'us-west-2' });
+    this.bedrock = new BedrockRuntimeClient({ region: process.env.AWS_REGION || 'us-west-2' });
     this.baseBucket = process.env.AI_DOCS_BUCKET || 'stackpro-ai-docs';
     this.datasetBucket = process.env.DATASET_BUCKET || 'stackpro-public-datasets';
   }
@@ -272,10 +273,11 @@ class DatasetIngestionService {
     try {
       // Try to get from tenant metadata
       const metadataKey = `tenants/${this.tenantId}/metadata/business-info.json`;
-      const response = await this.s3.getObject({
+      const command = new GetObjectCommand({
         Bucket: this.baseBucket,
         Key: metadataKey
-      }).promise();
+      });
+      const response = await this.s3.send(command);
       
       return JSON.parse(response.Body.toString());
     } catch (error) {
@@ -295,12 +297,12 @@ class DatasetIngestionService {
    */
   async getTenantDocuments() {
     try {
-      const listParams = {
+      const listCommand = new ListObjectsV2Command({
         Bucket: this.baseBucket,
         Prefix: `tenants/${this.tenantId}/docs/`
-      };
+      });
 
-      const result = await this.s3.listObjectsV2(listParams).promise();
+      const result = await this.s3.send(listCommand);
       return result.Contents || [];
     } catch (error) {
       logger.error('Failed to get tenant documents:', error);
@@ -332,8 +334,9 @@ class DatasetIngestionService {
         })
       };
 
-      const response = await this.bedrock.invokeModel(claudeParams).promise();
-      const responseBody = JSON.parse(response.body.toString());
+      const command = new InvokeModelCommand(claudeParams);
+      const response = await this.bedrock.send(command);
+      const responseBody = JSON.parse(new TextDecoder().decode(response.body));
       
       const insights = {
         summary: responseBody.content[0].text,
@@ -407,14 +410,15 @@ Focus on actionable insights that can help improve business performance.`;
       tenant_id: this.tenantId
     };
 
-    await this.s3.putObject({
+    const putCommand = new PutObjectCommand({
       Bucket: this.baseBucket,
       Key: key,
       Body: JSON.stringify(document, null, 2),
       ContentType: 'application/json',
       ServerSideEncryption: 'aws:kms'
-    }).promise();
+    });
 
+    await this.s3.send(putCommand);
     logger.info(`Dataset stored: ${type} -> ${key}`);
   }
 
@@ -424,14 +428,15 @@ Focus on actionable insights that can help improve business performance.`;
   async storeInsights(insights) {
     const key = `tenants/${this.tenantId}/insights/combined-analysis-${Date.now()}.json`;
     
-    await this.s3.putObject({
+    const putCommand = new PutObjectCommand({
       Bucket: this.baseBucket,
       Key: key,
       Body: JSON.stringify(insights, null, 2),
       ContentType: 'application/json',
       ServerSideEncryption: 'aws:kms'
-    }).promise();
+    });
 
+    await this.s3.send(putCommand);
     logger.info(`Insights stored: ${key}`);
   }
 

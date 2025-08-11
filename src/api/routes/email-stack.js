@@ -1,5 +1,5 @@
 const express = require('express');
-const { emailFlags } = require('../../utils/email-flags');
+const { emailFlags } = require('../../utils/email-flags.js');
 const router = express.Router();
 
 /**

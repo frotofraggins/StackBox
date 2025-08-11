@@ -1585,3 +1585,5 @@
 {"level":"info","message":"  ✅ Email notifications: configured","service":"stackbox-deployment","timestamp":"2025-08-07 17:28:43"}
 {"level":"info","message":"🔒 Testing Tenant Isolation...","service":"stackbox-deployment","timestamp":"2025-08-07 17:28:43"}
 {"level":"info","message":"  ✅ Partition key isolation: verified","service":"stackbox-deployment","timestamp":"2025-08-07 17:28:43"}
+{"level":"info","message":"🗄️ Database service initialized (in-memory mode)","service":"stackbox-deployment","timestamp":"2025-08-11 14:03:16"}
+{"level":"info","message":"🗄️ Database service initialized (in-memory mode)","service":"stackbox-deployment","timestamp":"2025-08-11 14:17:23"}

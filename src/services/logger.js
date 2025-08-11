@@ -1,8 +1,10 @@
 const winston = require('winston');
-const AWS = require('aws-sdk');
+const { CloudWatchLogsClient, CreateLogStreamCommand, PutLogEventsCommand, DescribeLogStreamsCommand } = require('@aws-sdk/client-cloudwatch-logs');
 
 // Create CloudWatch Logs client
-const cloudWatchLogs = new AWS.CloudWatchLogs();
+const cloudWatchLogs = new CloudWatchLogsClient({
+  region: process.env.AWS_REGION || 'us-west-2'
+});
 
 // Custom CloudWatch transport
 class CloudWatchTransport extends winston.Transport {
@@ -40,7 +42,8 @@ class CloudWatchTransport extends winston.Transport {
         params.sequenceToken = this.sequenceToken;
       }
 
-      const result = await cloudWatchLogs.putLogEvents(params).promise();
+      const command = new PutLogEventsCommand(params);
+      const result = await cloudWatchLogs.send(command);
       this.sequenceToken = result.nextSequenceToken;
 
       callback();
@@ -52,22 +55,24 @@ class CloudWatchTransport extends winston.Transport {
 
   async createLogStreamIfNotExists() {
     try {
-      await cloudWatchLogs.createLogStream({
+      const createCommand = new CreateLogStreamCommand({
         logGroupName: this.logGroupName,
         logStreamName: this.logStreamName
-      }).promise();
+      });
+      await cloudWatchLogs.send(createCommand);
     } catch (error) {
-      if (error.code !== 'ResourceAlreadyExistsException') {
+      if (error.name !== 'ResourceAlreadyExistsException') {
         console.error('Failed to create log stream:', error);
       }
     }
 
     // Get existing sequence token if stream exists
     try {
-      const streams = await cloudWatchLogs.describeLogStreams({
+      const describeCommand = new DescribeLogStreamsCommand({
         logGroupName: this.logGroupName,
         logStreamNamePrefix: this.logStreamName
-      }).promise();
+      });
+      const streams = await cloudWatchLogs.send(describeCommand);
 
       const stream = streams.logStreams.find(s => s.logStreamName === this.logStreamName);
       if (stream && stream.uploadSequenceToken) {
