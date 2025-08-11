@@ -1,0 +1,223 @@
+/* StackPro Design System Tokens - Phase 2 Unified Palette */
+/* Updated: August 9, 2025 - Deep Navy to Azure with Teal Accent */
+
+:root {
+  /* Primary Brand Palette - Deep Navy to Azure */
+  --primary: #1F2A44;  /* deep navy */
+  --secondary: #2563EB;/* azure */
+  --accent: #10B981;   /* teal */
+  
+  /* Semantic Light Theme */
+  --bg: #FFFFFF;
+  --fg: #0F172A;
+  --muted: #475569;
+  --border: #E2E8F0;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --ring: #93C5FD;
+
+  /* Component Tokens */
+  --radius: 14px;
+  --radius-lg: 20px;
+  --dur: 150ms;
+  --ease: cubic-bezier(.2,.8,.2,1);
+
+  /* Shadows */
+  --shadow-1: 0 6px 16px rgba(2,6,23,.06);
+  --shadow-2: 0 14px 40px rgba(2,6,23,.12);
+
+  /* Logo & Brand */
+  --logo-color: var(--fg);
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg,#1F2A44 0%, #2563EB 100%);
+
+  /* Pricing Display */
+  --price-color: var(--primary);
+  --card-number: var(--accent);
+
+  /* AI Components */
+  --ai-chat-color: var(--secondary);
+}
+
+/* Dark Theme - Media Query */
+@media(prefers-color-scheme: dark){
+  :root {
+    --bg:#0B1220;
+    --fg:#E5E7EB;
+    --muted:#94A3B8;
+    --surface:#0F172A;
+    --surface-2:#111827;
+    --border:#1F2535;
+    --logo-color:#FFFFFF;
+    --grad-primary: linear-gradient(135deg,#101b33 0%, #1e40af 100%);
+  }
+}
+
+/* Manual Theme Classes for Theme Toggle */
+[data-theme="light"] {
+  --bg: #FFFFFF;
+  --fg: #0F172A;
+  --muted: #475569;
+  --border: #E2E8F0;
+  --surface: #FFFFFF;
+  --surface-2: #F8FAFC;
+  --logo-color: var(--fg);
+  --grad-primary: linear-gradient(135deg,#1F2A44 0%, #2563EB 100%);
+}
+
+[data-theme="dark"] {
+  --bg:#0B1220;
+  --fg:#E5E7EB;
+  --muted:#94A3B8;
+  --surface:#0F172A;
+  --surface-2:#111827;
+  --border:#1F2535;
+  --logo-color:#FFFFFF;
+  --grad-primary: linear-gradient(135deg,#101b33 0%, #1e40af 100%);
+}
+
+/* Utility Classes */
+.bg-background { background-color: var(--bg); }
+.bg-surface { background-color: var(--surface); }
+.bg-surface-2 { background-color: var(--surface-2); }
+.text-foreground { color: var(--fg); }
+.text-muted { color: var(--muted); }
+.text-primary { color: var(--primary); }
+.text-secondary { color: var(--secondary); }
+.text-accent { color: var(--accent); }
+.border-border { border-color: var(--border); }
+
+/* Enhanced Card System */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+  border-radius: var(--radius);
+  transition: all var(--dur) var(--ease);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-2px);
+}
+
+.card--featured {
+  position: relative;
+  box-shadow: var(--shadow-2);
+  border-color: var(--accent);
+}
+
+/* Enhanced Grid System */
+.grid-enhanced {
+  display: grid;
+  gap: 1.5rem;
+}
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--grad-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: white;
+}
+
+/* Enhanced Input System */
+.input-enhanced {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  color: var(--fg);
+  transition: all var(--dur) var(--ease);
+}
+
+.input-enhanced:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* Container System */
+.container-custom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Typography Scale */
+.text-h1 {
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.text-h2 {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+/* Hover Effects */
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Focus Ring */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--secondary);
+}
+
+/* Section Spacing */
+.section-spacing {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}

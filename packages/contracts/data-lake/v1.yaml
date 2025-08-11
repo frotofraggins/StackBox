@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: StackPro Data Lake API
+  version: '1.0.0'
+  description: |
+    Multi-tenant data ingestion and analytics platform for StackPro ecosystem.
+    
+    ## Authentication
+    - **JWT Bearer Token**: For web applications and user-facing clients
+    - **AWS IAM v4 Signature**: For server-to-server communication
+    
+    ## Multi-Tenant Context
+    All requests must include tenant context headers for proper data isolation.
+    
+    ## Degraded Mode
+    All responses include a `degraded` field indicating service health status.
+    Clients should handle degraded responses gracefully and show fallback UI.
+  contact:
+    name: StackPro API Support
+    email: api-support@stackpro.io
+  license:
+    name: Proprietary
+    
+servers:
+  - url: https://api-sandbox.stackpro.io/data-lake
+    description: Sandbox environment
+  - url: https://api.stackpro.io/data-lake  
+    description: Production environment
+
+security:
+  - BearerAuth: []
+  - AwsSignatureAuth: []
+
+paths:
+  /v1/data/upload:
+    post:
+      summary: Upload dataset for processing
+      description: |
+        Upload JSON or CSV data for ingestion into tenant data lake.
+        Phase 1: Dry-run validation only (no actual storage).
+      operationId: uploadData
+      tags:
+        - Data Ingestion
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/RequestId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datasetId:
+                  type: string
+                  description: Unique identifier for this dataset
+                  example: "customer_interactions_2025_08"
+                format:
+                  type: string
+                  enum: ['json', 'csv']
+                  example: 'json'
+                schema:
+                  type: object
+                  description: Optional schema definition for validation
+                  additionalProperties: true
+                data:
+                  type: array
+                  description: Array of data records
+                  items:
+                    type: object
+                    additionalProperties: true
+                metadata:
+                  type: object
+                  description: Optional metadata about the dataset
+                  additionalProperties: true
+              required:
+                - datasetId
+                - format
+                - data
+      responses:
+        '200':
+          description: Data validation successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  datasetId:
+                    type: string
+                    example: "customer_interactions_2025_08"
+                  recordCount:
+                    type: integer
+                    example: 1247
+                  validationResults:
+                    type: object
+                    properties:
+                      valid:
+                        type: boolean
+                        example: true
+                      warnings:
+                        type: array
+                        items:
+                          type: string
+                        example: ["Missing optional field 'customer_tier' in 15 records"]
+                      errors:
+                        type: array
+                        items:
+                          type: string
+                        example: []
+                  degraded:
+                    type: boolean
+                    description: Whether response is degraded due to service issues
+                    example: false
+                  requestId:
+                    type: string
+                    example: "req_1725928800_abc123"
+                required:
+                  - success
+                  - degraded
+                  - requestId
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/AuthorizationError'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /v1/data/{datasetId}:
+    get:
+      summary: Get dataset metadata
+      description: |
+        Retrieve metadata and status for a specific dataset.
+        Phase 1: Returns mock metadata for testing.
+      operationId: getDataset
+      tags:
+        - Data Query
+      parameters:
+        - $ref: '#/components/parameters/TenantId'
+        - $ref: '#/components/parameters/ClientId'
+        - $ref: '#/components/parameters/RequestId'
+        - name: datasetId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique dataset identifier
+          example: "customer_interactions_2025_08"
+      responses:
+        '200':
+          description: Dataset metadata retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datasetId:
+                    type: string
+                    example: "customer_interactions_2025_08"
+                  status:
+                    type: string
+                    enum: ['uploaded', 'processing', 'ready', 'error']
+                    example: 'ready'
+                  recordCount:
+                    type: integer
+                    example: 1247
+                  schema:
+                    type: object
+                    description: Inferred or provided schema
+                    additionalProperties: true
+                  createdAt:
+                    type: string
+                    format: date-time
+                    example: "2025-08-09T21:00:00Z"
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    example: "2025-08-09T21:05:00Z"
+                  metadata:
+                    type: object
+                    additionalProperties: true
+                  degraded:
+                    type: boolean
+                    example: false
+                  requestId:
+                    type: string
+                    example: "req_1725928800_def456"
+                required:
+                  - datasetId
+                  - status
+                  - degraded
+                  - requestId
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/AuthenticationError'
+        '403':
+          $ref: '#/components/responses/AuthorizationError'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token for user authentication
+    AwsSignatureAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS Signature Version 4 for service-to-service auth
+
+  parameters:
+    TenantId:
+      name: x-tenant-id
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Tenant identifier for multi-tenant isolation
+      example: "acme-corp"
+    
+    ClientId:
+      name: x-client-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Client application identifier
+      example: "acme-webapp"
+    
+    RequestId:
+      name: x-request-id
+      in: header
+      required: false
+      schema:
+        type: string
+      description: Unique request identifier for tracing
+      example: "req_1725928800_abc123"
+
+  responses:
+    ValidationError:
+      description: Request validation failed
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Validation failed"
+              code:
+                type: string
+                enum: ['VALIDATION_ERROR']
+                example: 'VALIDATION_ERROR'
+              details:
+                type: array
+                items:
+                  type: string
+                example: ["datasetId is required", "data array cannot be empty"]
+              degraded:
+                type: boolean
+                example: false
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+    AuthenticationError:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Authentication required"
+              code:
+                type: string
+                enum: ['AUTHENTICATION_ERROR']
+                example: 'AUTHENTICATION_ERROR'
+              degraded:
+                type: boolean
+                example: false
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+    AuthorizationError:
+      description: Insufficient permissions for this resource
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Insufficient permissions"
+              code:
+                type: string
+                enum: ['AUTHORIZATION_ERROR']
+                example: 'AUTHORIZATION_ERROR'
+              degraded:
+                type: boolean
+                example: false
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+    NotFound:
+      description: Requested resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Dataset not found"
+              code:
+                type: string
+                enum: ['NOT_FOUND']
+                example: 'NOT_FOUND'
+              degraded:
+                type: boolean
+                example: false
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+    RateLimited:
+      description: Rate limit exceeded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Rate limit exceeded"
+              code:
+                type: string
+                enum: ['RATE_LIMITED']
+                example: 'RATE_LIMITED'
+              retryAfter:
+                type: integer
+                description: Seconds to wait before retrying
+                example: 60
+              degraded:
+                type: boolean
+                example: false
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: "Internal server error"
+              code:
+                type: string
+                enum: ['INTERNAL_ERROR']
+                example: 'INTERNAL_ERROR'
+              degraded:
+                type: boolean
+                example: true
+              requestId:
+                type: string
+                example: "req_1725928800_abc123"
+            required:
+              - error
+              - code
+              - degraded
+              - requestId
+
+tags:
+  - name: Data Ingestion
+    description: Upload and validate datasets
+  - name: Data Query
+    description: Query dataset metadata and status

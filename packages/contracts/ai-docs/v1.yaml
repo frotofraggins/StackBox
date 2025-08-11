@@ -1,0 +1,673 @@
+openapi: 3.0.3
+info:
+  title: AI Document Analysis API
+  description: |
+    Secure document analysis service for extracting business insights, pain points, 
+    and capability recommendations from tenant-uploaded documents.
+    
+    **Security Features:**
+    - Per-tenant data isolation with dedicated S3 buckets
+    - KMS encryption for all document storage
+    - Signed URLs for secure document access
+    - No cross-tenant data leakage or model training
+    
+    **Privacy Compliance:**
+    - Documents processed in-memory only
+    - No persistent storage of document content
+    - Audit logging for all analysis requests
+    - HIPAA/SOC2 compliant processing pipeline
+  version: 1.0.0
+  contact:
+    name: StackPro AI Team
+    email: ai-support@stackpro.io
+servers:
+  - url: https://api.stackpro.io/v1/ai-docs
+    description: Production API
+  - url: https://sandbox-api.stackpro.io/v1/ai-docs
+    description: Sandbox API
+  - url: http://localhost:3001/api/ai-docs
+    description: Local Development
+
+paths:
+  /analyze:
+    post:
+      summary: Analyze Document for Business Insights
+      description: |
+        Upload and analyze a business document to extract:
+        - Pain points and operational challenges
+        - Recommended capability stacks
+        - Missing integrations or tools
+        - Industry-specific insights
+      operationId: analyzeDocument
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - document
+                - businessType
+              properties:
+                document:
+                  type: string
+                  format: binary
+                  description: Document file (PDF, DOCX, TXT, up to 50MB)
+                businessType:
+                  type: string
+                  enum: [
+                    "Construction", "Tradesmen", "Legal", "Retail", "Medical",
+                    "Real Estate", "Manufacturing", "Logistics", "Marketing Agencies",
+                    "Nonprofits", "E-commerce", "Hospitality", "Education",
+                    "Fitness/Wellness", "Technology Services", "Other"
+                  ]
+                  description: Primary business category for context
+                analysisType:
+                  type: string
+                  enum: ["pain-points", "capabilities", "full-analysis"]
+                  default: "full-analysis"
+                  description: Type of analysis to perform
+                priority:
+                  type: string
+                  enum: ["low", "normal", "high"]
+                  default: "normal"
+                  description: Processing priority level
+      responses:
+        '200':
+          description: Analysis completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '413':
+          description: Document too large (>50MB)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /analyze/{analysisId}:
+    get:
+      summary: Get Analysis Result
+      description: Retrieve the results of a previous document analysis
+      operationId: getAnalysisResult
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: analysisId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique analysis identifier
+      responses:
+        '200':
+          description: Analysis result retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+        '404':
+          description: Analysis not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /capabilities:
+    get:
+      summary: Get Available Capabilities
+      description: Retrieve the current library of available capability stacks and connectors
+      operationId: getCapabilities
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: businessType
+          in: query
+          schema:
+            type: string
+          description: Filter by business type
+        - name: category
+          in: query
+          schema:
+            type: string
+            enum: ["stacks", "connectors", "integrations"]
+          description: Filter by capability category
+      responses:
+        '200':
+          description: Capabilities retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stacks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CapabilityStack'
+                  connectors:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Connector'
+                  lastUpdated:
+                    type: string
+                    format: date-time
+
+  /health:
+    get:
+      summary: Health Check
+      description: Check service health and availability
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["healthy", "degraded"]
+                  timestamp:
+                    type: string
+                    format: date-time
+                  version:
+                    type: string
+                  aiModel:
+                    type: string
+                    description: Currently active AI model
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT token containing tenant and permission information
+
+  schemas:
+    AnalysisResult:
+      type: object
+      required:
+        - analysisId
+        - status
+        - createdAt
+      properties:
+        analysisId:
+          type: string
+          format: uuid
+          description: Unique analysis identifier
+        status:
+          type: string
+          enum: ["processing", "completed", "failed"]
+          description: Current analysis status
+        createdAt:
+          type: string
+          format: date-time
+          description: Analysis creation timestamp
+        completedAt:
+          type: string
+          format: date-time
+          description: Analysis completion timestamp
+        document:
+          $ref: '#/components/schemas/DocumentInfo'
+        insights:
+          $ref: '#/components/schemas/BusinessInsights'
+        recommendations:
+          $ref: '#/components/schemas/Recommendations'
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Overall confidence score for analysis
+        processingTimeMs:
+          type: integer
+          description: Processing duration in milliseconds
+
+    DocumentInfo:
+      type: object
+      properties:
+        filename:
+          type: string
+          description: Original document filename
+        fileType:
+          type: string
+          enum: ["pdf", "docx", "txt"]
+          description: Document type
+        fileSize:
+          type: integer
+          description: File size in bytes
+        pageCount:
+          type: integer
+          description: Number of pages (for PDF/DOCX)
+        wordCount:
+          type: integer
+          description: Estimated word count
+        language:
+          type: string
+          description: Detected document language
+        s3Key:
+          type: string
+          description: Internal S3 storage key (redacted in response)
+
+    BusinessInsights:
+      type: object
+      properties:
+        painPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/PainPoint'
+          description: Identified business challenges
+        opportunities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Opportunity'
+          description: Growth and improvement opportunities
+        keyMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeyMetric'
+          description: Important business metrics mentioned
+        stakeholders:
+          type: array
+          items:
+            type: string
+          description: Key stakeholders or departments mentioned
+
+    PainPoint:
+      type: object
+      required:
+        - category
+        - description
+        - severity
+      properties:
+        category:
+          type: string
+          enum: [
+            "process-inefficiency", "data-management", "communication",
+            "compliance", "customer-experience", "resource-management",
+            "integration", "reporting", "security", "scalability"
+          ]
+          description: Pain point category
+        description:
+          type: string
+          maxLength: 500
+          description: Detailed description of the pain point
+        severity:
+          type: string
+          enum: ["low", "medium", "high", "critical"]
+          description: Severity level
+        frequency:
+          type: string
+          enum: ["rare", "occasional", "frequent", "constant"]
+          description: How often this issue occurs
+        impact:
+          type: string
+          enum: ["minimal", "moderate", "significant", "severe"]
+          description: Business impact level
+        evidence:
+          type: array
+          items:
+            type: string
+          description: Text excerpts supporting this pain point
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence in pain point identification
+
+    Opportunity:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["automation", "integration", "optimization", "expansion"]
+        description:
+          type: string
+          maxLength: 500
+        estimatedImpact:
+          type: string
+          enum: ["low", "medium", "high"]
+        timeframe:
+          type: string
+          enum: ["immediate", "short-term", "medium-term", "long-term"]
+
+    KeyMetric:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Metric name
+        value:
+          type: string
+          description: Metric value (as extracted from document)
+        unit:
+          type: string
+          description: Unit of measurement
+        context:
+          type: string
+          description: Context where metric was mentioned
+
+    Recommendations:
+      type: object
+      properties:
+        capabilityStacks:
+          type: array
+          items:
+            $ref: '#/components/schemas/StackRecommendation'
+          description: Recommended capability stacks
+        connectors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectorRecommendation'
+          description: Recommended connectors
+        missingCapabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MissingCapability'
+          description: Identified gaps in our capability library
+        implementationPlan:
+          $ref: '#/components/schemas/ImplementationPlan'
+
+    StackRecommendation:
+      type: object
+      required:
+        - stackId
+        - name
+        - relevanceScore
+        - reasons
+      properties:
+        stackId:
+          type: string
+          description: Internal stack identifier
+        name:
+          type: string
+          description: Stack display name
+        category:
+          type: string
+          description: Stack category
+        relevanceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: How relevant this stack is to identified pain points
+        reasons:
+          type: array
+          items:
+            type: string
+          description: Why this stack is recommended
+        addressedPainPoints:
+          type: array
+          items:
+            type: string
+          description: Pain point categories this stack addresses
+        estimatedROI:
+          type: string
+          enum: ["low", "medium", "high"]
+          description: Estimated return on investment
+
+    ConnectorRecommendation:
+      type: object
+      required:
+        - connectorId
+        - name
+        - relevanceScore
+      properties:
+        connectorId:
+          type: string
+        name:
+          type: string
+        provider:
+          type: string
+          description: Third-party provider name
+        category:
+          type: string
+          enum: [
+            "crm", "accounting", "project-management", "communication",
+            "e-commerce", "analytics", "hr", "marketing", "support"
+          ]
+        relevanceScore:
+          type: number
+          minimum: 0
+          maximum: 1
+        integrationComplexity:
+          type: string
+          enum: ["simple", "moderate", "complex"]
+        monthlyUsage:
+          type: string
+          enum: ["light", "moderate", "heavy"]
+          description: Expected usage level
+
+    MissingCapability:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: ["stack", "connector", "integration"]
+        name:
+          type: string
+          description: Name of missing capability
+        description:
+          type: string
+          description: What this capability would do
+        demandScore:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: How much demand exists for this capability
+        developmentEffort:
+          type: string
+          enum: ["low", "medium", "high"]
+          description: Estimated development effort
+
+    ImplementationPlan:
+      type: object
+      properties:
+        phases:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImplementationPhase'
+        totalTimeEstimate:
+          type: string
+          description: Total implementation time estimate
+        priority:
+          type: string
+          enum: ["low", "medium", "high", "critical"]
+
+    ImplementationPhase:
+      type: object
+      properties:
+        phase:
+          type: integer
+          description: Phase number
+        name:
+          type: string
+          description: Phase name
+        description:
+          type: string
+          description: What happens in this phase
+        timeEstimate:
+          type: string
+          description: Time estimate for this phase
+        dependencies:
+          type: array
+          items:
+            type: string
+          description: What must be completed before this phase
+        deliverables:
+          type: array
+          items:
+            type: string
+          description: Expected outputs from this phase
+
+    CapabilityStack:
+      type: object
+      required:
+        - stackId
+        - name
+        - category
+      properties:
+        stackId:
+          type: string
+        name:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        businessTypes:
+          type: array
+          items:
+            type: string
+          description: Business types this stack is relevant for
+        painPointCategories:
+          type: array
+          items:
+            type: string
+          description: Pain point categories this stack addresses
+        maturityLevel:
+          type: string
+          enum: ["beta", "stable", "mature"]
+        pricing:
+          $ref: '#/components/schemas/PricingInfo'
+
+    Connector:
+      type: object
+      required:
+        - connectorId
+        - name
+        - provider
+      properties:
+        connectorId:
+          type: string
+        name:
+          type: string
+        provider:
+          type: string
+        category:
+          type: string
+        description:
+          type: string
+        authType:
+          type: string
+          enum: ["oauth2", "api-key", "basic-auth", "custom"]
+        rateLimit:
+          type: object
+          properties:
+            requests:
+              type: integer
+            period:
+              type: string
+        dataSync:
+          type: object
+          properties:
+            frequency:
+              type: string
+              enum: ["real-time", "hourly", "daily", "weekly"]
+            direction:
+              type: string
+              enum: ["inbound", "outbound", "bidirectional"]
+
+    PricingInfo:
+      type: object
+      properties:
+        model:
+          type: string
+          enum: ["free", "per-user", "per-transaction", "flat-rate", "usage-based"]
+        baseCost:
+          type: number
+          description: Base monthly cost in USD
+        scalingCost:
+          type: number
+          description: Additional cost per unit/user in USD
+
+    Error:
+      type: object
+      required:
+        - error
+        - message
+      properties:
+        error:
+          type: string
+          description: Error code
+        message:
+          type: string
+          description: Human-readable error message
+        details:
+          type: object
+          description: Additional error details
+        timestamp:
+          type: string
+          format: date-time
+        requestId:
+          type: string
+          description: Request identifier for debugging
+
+  examples:
+    AnalysisResultExample:
+      summary: Complete analysis result
+      value:
+        analysisId: "550e8400-e29b-41d4-a716-446655440000"
+        status: "completed"
+        createdAt: "2025-08-10T13:45:00Z"
+        completedAt: "2025-08-10T13:45:15Z"
+        document:
+          filename: "construction_project_report.pdf"
+          fileType: "pdf"
+          fileSize: 2485760
+          pageCount: 12
+          wordCount: 2847
+          language: "en"
+        insights:
+          painPoints:
+            - category: "process-inefficiency"
+              description: "Manual project scheduling causing delays and resource conflicts"
+              severity: "high"
+              frequency: "frequent"
+              impact: "significant"
+              confidence: 0.92
+        recommendations:
+          capabilityStacks:
+            - stackId: "project-management-suite"
+              name: "Project Management Suite"
+              category: "Operations"
+              relevanceScore: 0.95
+              reasons: ["Addresses scheduling conflicts", "Automates resource allocation"]
+              addressedPainPoints: ["process-inefficiency"]
+              estimatedROI: "high"
+        confidence: 0.89
+        processingTimeMs: 15420

@@ -1,0 +1,497 @@
+openapi: 3.0.3
+info:
+  title: StackPro Email Stack API
+  version: 1.0.0
+  description: |
+    Modular Email Stack capability with transactional forwarding, 
+    bulk marketing, and programmatic onboarding.
+    
+    Features:
+    - Cross-account DNS support (stackpro.io in domain account, infra in TARGET)
+    - Per-tenant email isolation with SES + Lambda + S3
+    - Campaign management with analytics
+    - Graceful degradation when features disabled
+    
+    All endpoints support graceful degradation with `degraded: true` responses.
+
+servers:
+  - url: https://api.stackpro.io/v1
+    description: Production API
+  - url: http://localhost:3001/api
+    description: Development API
+
+paths:
+  /email/domains/request-setup:
+    post:
+      summary: Request email domain setup
+      description: |
+        Start domain verification process and return DNS records to configure.
+        Supports both delegated subdomain and full zone management.
+      tags: [Domain Setup]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenantId, domain, mode, addresses]
+              properties:
+                tenantId:
+                  type: string
+                  pattern: '^[a-z0-9_-]+$'
+                  example: 't_acme'
+                domain:
+                  type: string
+                  format: hostname
+                  example: 'mail.acme-inc.com'
+                mode:
+                  type: string
+                  enum: [delegated-subdomain, full-zone]
+                  example: 'delegated-subdomain'
+                addresses:
+                  type: array
+                  items:
+                    type: string
+                  example: ['admin', 'info', 'support']
+                forwardTo:
+                  type: string
+                  format: email
+                  example: 'owner@acme.com'
+      responses:
+        '200':
+          description: Setup initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  setupId:
+                    type: string
+                    example: 'setup_acme_20250810'
+                  domain:
+                    type: string
+                    example: 'mail.acme-inc.com'
+                  status:
+                    type: string
+                    enum: [pending-dns, pending-verification, verified, failed]
+                    example: 'pending-dns'
+                  dnsRecords:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DNSRecord'
+                  nextSteps:
+                    type: array
+                    items:
+                      type: string
+                  estimatedTime:
+                    type: string
+                    example: '5-15 minutes after DNS propagation'
+                  degraded:
+                    type: boolean
+                    example: false
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '503':
+          $ref: '#/components/responses/ServiceDegraded'
+
+  /email/domains/{domain}:
+    get:
+      summary: Get domain verification status
+      description: Check current status of domain setup and validation
+      tags: [Domain Setup]
+      parameters:
+        - name: domain
+          in: path
+          required: true
+          schema:
+            type: string
+            format: hostname
+      responses:
+        '200':
+          description: Domain status retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  domain:
+                    type: string
+                    example: 'mail.acme-inc.com'
+                  verified:
+                    type: boolean
+                    example: true
+                  dkimEnabled:
+                    type: boolean
+                    example: true
+                  dkimTokens:
+                    type: array
+                    items:
+                      type: string
+                  spfRecord:
+                    type: string
+                    example: 'v=spf1 include:amazonses.com ~all'
+                  dmarcRecord:
+                    type: string
+                    example: 'v=DMARC1; p=quarantine; rua=mailto:admin@acme.com'
+                  addresses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EmailAddress'
+                  lastChecked:
+                    type: string
+                    format: date-time
+                  degraded:
+                    type: boolean
+                    example: false
+
+  /email/addresses:
+    post:
+      summary: Create email address route
+      description: |
+        Create forwarding, transactional, or no-reply email addresses
+        for a verified domain.
+      tags: [Address Management]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenantId, domain, address, type]
+              properties:
+                tenantId:
+                  type: string
+                  example: 't_acme'
+                domain:
+                  type: string
+                  example: 'mail.acme-inc.com'
+                address:
+                  type: string
+                  example: 'support'
+                type:
+                  type: string
+                  enum: [forwarding, transactional, no-reply]
+                  example: 'forwarding'
+                forwardTo:
+                  type: string
+                  format: email
+                  example: 'owner@acme.com'
+                displayName:
+                  type: string
+                  example: 'ACME Support Team'
+      responses:
+        '201':
+          description: Email address created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmailAddress'
+
+  /email/campaigns:
+    post:
+      summary: Create email campaign
+      description: Create marketing campaign draft with templates and tracking
+      tags: [Marketing]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenantId, subject, html]
+              properties:
+                tenantId:
+                  type: string
+                  example: 't_acme'
+                subject:
+                  type: string
+                  example: 'Welcome to ACME Inc!'
+                html:
+                  type: string
+                  example: '<h1>Welcome!</h1><p>Thanks for joining us.</p>'
+                text:
+                  type: string
+                  example: 'Welcome! Thanks for joining us.'
+                fromAddress:
+                  type: string
+                  example: 'info@mail.acme-inc.com'
+                fromName:
+                  type: string
+                  example: 'ACME Team'
+                listId:
+                  type: string
+                  example: 'default'
+                tags:
+                  type: array
+                  items:
+                    type: string
+                  example: ['welcome', 'onboarding']
+      responses:
+        '201':
+          description: Campaign created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Campaign'
+
+  /email/campaigns/{campaignId}/metrics:
+    get:
+      summary: Get campaign analytics
+      description: Retrieve opens, clicks, bounces, and unsubscribe metrics
+      tags: [Analytics]
+      parameters:
+        - name: campaignId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Campaign metrics retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CampaignMetrics'
+
+  /email/identity/test:
+    post:
+      summary: Test email identity
+      description: |
+        Send loopback test email to verify forwarding rules and 
+        S3 archiving are working correctly.
+      tags: [Testing]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenantId, domain]
+              properties:
+                tenantId:
+                  type: string
+                  example: 't_acme'
+                domain:
+                  type: string
+                  example: 'mail.acme-inc.com'
+                testType:
+                  type: string
+                  enum: [forwarding, archive, full]
+                  example: 'full'
+      responses:
+        '200':
+          description: Test initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  testId:
+                    type: string
+                  status:
+                    type: string
+                    enum: [sent, delivered, failed]
+                  message:
+                    type: string
+                  degraded:
+                    type: boolean
+
+components:
+  schemas:
+    DNSRecord:
+      type: object
+      properties:
+        name:
+          type: string
+          example: '_amazonses.mail.acme-inc.com'
+        type:
+          type: string
+          enum: [TXT, CNAME, NS, MX]
+          example: 'TXT'
+        value:
+          type: string
+          example: 'abc123def456'
+        ttl:
+          type: integer
+          example: 300
+        priority:
+          type: integer
+          example: 10
+        description:
+          type: string
+          example: 'SES domain verification record'
+
+    EmailAddress:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'addr_support_acme'
+        tenantId:
+          type: string
+          example: 't_acme'
+        address:
+          type: string
+          example: 'support'
+        domain:
+          type: string
+          example: 'mail.acme-inc.com'
+        fullAddress:
+          type: string
+          example: 'support@mail.acme-inc.com'
+        type:
+          type: string
+          enum: [forwarding, transactional, no-reply]
+        forwardTo:
+          type: string
+          example: 'owner@acme.com'
+        displayName:
+          type: string
+          example: 'ACME Support'
+        enabled:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        lastUsed:
+          type: string
+          format: date-time
+
+    Campaign:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 'camp_welcome_acme_001'
+        tenantId:
+          type: string
+          example: 't_acme'
+        subject:
+          type: string
+          example: 'Welcome to ACME Inc!'
+        status:
+          type: string
+          enum: [draft, scheduled, sending, sent, failed]
+          example: 'draft'
+        fromAddress:
+          type: string
+          example: 'info@mail.acme-inc.com'
+        fromName:
+          type: string
+          example: 'ACME Team'
+        recipientCount:
+          type: integer
+          example: 0
+        createdAt:
+          type: string
+          format: date-time
+        scheduledAt:
+          type: string
+          format: date-time
+        sentAt:
+          type: string
+          format: date-time
+
+    CampaignMetrics:
+      type: object
+      properties:
+        campaignId:
+          type: string
+          example: 'camp_welcome_acme_001'
+        sent:
+          type: integer
+          example: 1250
+        delivered:
+          type: integer
+          example: 1200
+        opens:
+          type: integer
+          example: 480
+        uniqueOpens:
+          type: integer
+          example: 320
+        clicks:
+          type: integer
+          example: 85
+        uniqueClicks:
+          type: integer
+          example: 62
+        bounces:
+          type: integer
+          example: 15
+        complaints:
+          type: integer
+          example: 2
+        unsubscribes:
+          type: integer
+          example: 8
+        openRate:
+          type: number
+          format: float
+          example: 0.267
+        clickRate:
+          type: number
+          format: float
+          example: 0.071
+        lastUpdated:
+          type: string
+          format: date-time
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters or missing required fields
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: 'Invalid domain format'
+              degraded:
+                type: boolean
+                example: false
+
+    ServiceDegraded:
+      description: Service temporarily degraded - safe fallback mode
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: 'Email stack temporarily unavailable'
+              degraded:
+                type: boolean
+                example: true
+              fallbackGuidance:
+                type: string
+                example: 'Manual DNS configuration required'
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: x-api-key
+
+security:
+  - BearerAuth: []
+  - ApiKeyAuth: []
+
+tags:
+  - name: Domain Setup
+    description: Domain verification and DNS configuration
+  - name: Address Management
+    description: Email address creation and forwarding
+  - name: Marketing
+    description: Campaign creation and management
+  - name: Analytics
+    description: Email metrics and reporting
+  - name: Testing
+    description: Email system testing and validation

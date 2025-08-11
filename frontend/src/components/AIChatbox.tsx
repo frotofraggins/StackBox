@@ -156,14 +156,15 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
     return (
       <button
         onClick={onToggle}
-        className="fixed bottom-6 right-6 bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all transform hover:scale-110 z-50 group"
+        className="fixed bottom-6 right-6 text-white p-4 rounded-full shadow-[var(--shadow-2)] hover-scale z-50 group transition-all duration-[var(--dur)] ease-[var(--ease)]"
+        style={{ background: 'var(--ai-chat-color)' }}
         title="Chat with StackPro AI"
       >
         <MessageCircle size={24} />
-        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
+        <span className="absolute -top-2 -right-2 bg-[color:var(--danger)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center animate-pulse">
           1
         </span>
-        <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+        <div className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-[color:var(--fg)] text-[color:var(--bg)] text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
           Have questions? Chat with AI ✨
         </div>
       </button>
@@ -171,29 +172,29 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl border flex flex-col z-50 animate-slide-up">
+    <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-[color:var(--surface)] rounded-[var(--radius)] shadow-[var(--shadow-2)] border border-[color:var(--border)] flex flex-col z-50 fade-in-enhanced">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 rounded-t-lg flex items-center justify-between">
+      <div className="text-white p-4 rounded-t-[var(--radius)] flex items-center justify-between" style={{ background: 'var(--grad-primary)' }}>
         <div className="flex items-center space-x-2">
           <div className="w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
             <Bot size={16} />
           </div>
           <div>
             <div className="font-semibold">StackPro AI</div>
-            <div className="text-xs text-blue-100">Usually replies instantly</div>
+            <div className="text-xs text-white/70">Usually replies instantly</div>
           </div>
         </div>
         <div className="flex items-center space-x-1">
           <button
             onClick={onToggle}
-            className="text-white hover:text-blue-200 p-1"
+            className="text-white hover:text-white/80 p-1 transition-colors duration-[var(--dur)] ease-[var(--ease)]"
             title="Minimize chat"
           >
             <Minimize2 size={16} />
           </button>
           <button
             onClick={onToggle}
-            className="text-white hover:text-blue-200 p-1"
+            className="text-white hover:text-white/80 p-1 transition-colors duration-[var(--dur)] ease-[var(--ease)]"
             title="Close chat"
           >
             <X size={16} />
@@ -210,20 +211,24 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
           >
             <div className={`flex space-x-2 max-w-[80%] ${message.sender === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                message.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100'
-              }`}>
-                {message.sender === 'user' ? <User size={16} /> : <Bot size={16} className="text-gray-600" />}
+                message.sender === 'user' 
+                  ? 'text-white' 
+                  : 'bg-[color:var(--surface-2)] text-[color:var(--muted)]'
+              }`}
+              style={message.sender === 'user' ? { background: 'var(--secondary)' } : {}}>
+                {message.sender === 'user' ? <User size={16} /> : <Bot size={16} />}
               </div>
               <div className={`rounded-lg p-3 ${
                 message.sender === 'user'
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-800'
-              }`}>
+                  ? 'text-white'
+                  : 'bg-[color:var(--surface-2)] text-[color:var(--fg)] border border-[color:var(--border)]'
+              }`}
+              style={message.sender === 'user' ? { background: 'var(--secondary)' } : {}}>
                 <div className="whitespace-pre-wrap text-sm leading-relaxed">
                   {message.content}
                 </div>
                 <div className={`text-xs mt-1 ${
-                  message.sender === 'user' ? 'text-blue-100' : 'text-gray-500'
+                  message.sender === 'user' ? 'text-white/70' : 'text-[color:var(--muted)]'
                 }`}>
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
@@ -235,14 +240,14 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
         {isLoading && (
           <div className="flex justify-start">
             <div className="flex space-x-2">
-              <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
-                <Bot size={16} className="text-gray-600" />
+              <div className="w-8 h-8 bg-[color:var(--surface-2)] rounded-full flex items-center justify-center">
+                <Bot size={16} className="text-[color:var(--muted)]" />
               </div>
-              <div className="bg-gray-100 rounded-lg p-3">
+              <div className="bg-[color:var(--surface-2)] border border-[color:var(--border)] rounded-lg p-3">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-[color:var(--muted)] rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-[color:var(--muted)] rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-[color:var(--muted)] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -254,9 +259,9 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
 
       {/* Contact Form Modal */}
       {showContactForm && (
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 rounded-lg">
-          <div className="bg-white rounded-lg p-6 w-full max-w-sm">
-            <h3 className="font-semibold mb-4 text-center">Get Your Personal Demo</h3>
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 rounded-[var(--radius)]">
+          <div className="bg-[color:var(--surface)] rounded-[var(--radius)] p-6 w-full max-w-sm border border-[color:var(--border)] shadow-[var(--shadow-2)]">
+            <h3 className="font-semibold mb-4 text-center text-[color:var(--fg)]">Get Your Personal Demo</h3>
             <form onSubmit={handleContactSubmit}>
               <div className="space-y-4">
                 <input
@@ -264,7 +269,7 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
                   placeholder="Your Name"
                   value={userName}
                   onChange={(e) => setUserName(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-enhanced w-full"
                   required
                 />
                 <input
@@ -272,20 +277,21 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
                   placeholder="Email Address"
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-enhanced w-full"
                   required
                 />
                 <div className="flex space-x-2">
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                    className="flex-1 text-white py-2 rounded-lg transition-all duration-[var(--dur)] ease-[var(--ease)] hover:opacity-90"
+                    style={{ background: 'var(--secondary)' }}
                   >
                     Submit
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowContactForm(false)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="px-4 py-2 border border-[color:var(--border)] rounded-lg hover:bg-[color:var(--surface-2)] transition-colors duration-[var(--dur)] ease-[var(--ease)] text-[color:var(--fg)]"
                   >
                     Cancel
                   </button>
@@ -298,14 +304,14 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
 
       {/* Quick Actions */}
       {messages.length === 1 && (
-        <div className="p-4 border-t">
-          <div className="text-xs text-gray-500 mb-2">Quick questions:</div>
+        <div className="p-4 border-t border-[color:var(--border)]">
+          <div className="text-xs text-[color:var(--muted)] mb-2">Quick questions:</div>
           <div className="grid grid-cols-2 gap-2">
             {quickActions.map((action, index) => (
               <button
                 key={index}
                 onClick={() => sendMessage(action.message)}
-                className="text-xs bg-gray-100 hover:bg-gray-200 text-gray-700 px-2 py-1 rounded transition-colors"
+                className="text-xs bg-[color:var(--surface-2)] hover:bg-[color:var(--border)] text-[color:var(--fg)] px-2 py-1 rounded transition-all duration-[var(--dur)] ease-[var(--ease)] hover-scale"
               >
                 {action.label}
               </button>
@@ -315,7 +321,7 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
       )}
 
       {/* Input */}
-      <div className="p-4 border-t">
+      <div className="p-4 border-t border-[color:var(--border)]">
         <div className="flex space-x-2">
           <input
             ref={inputRef}
@@ -324,19 +330,20 @@ export default function AIChatbox({ isOpen, onToggle }: AIChatboxProps) {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="input-enhanced flex-1 text-sm"
             disabled={isLoading}
           />
           <button
             onClick={() => sendMessage(inputMessage)}
             disabled={!inputMessage.trim() || isLoading}
-            className="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+            className="text-white p-2 rounded-lg transition-all duration-[var(--dur)] ease-[var(--ease)] hover:opacity-90 hover-scale disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ background: inputMessage.trim() && !isLoading ? 'var(--accent)' : 'var(--muted)' }}
           >
             <Send size={16} />
           </button>
         </div>
-        <div className="text-xs text-gray-400 mt-1 text-center">
-          Powered by AWS Bedrock AI ✨
+        <div className="text-xs text-[color:var(--muted)] mt-1 text-center">
+          <span className="text-[color:var(--accent)]">Powered by AWS Bedrock AI ✨</span>
         </div>
       </div>
     </div>

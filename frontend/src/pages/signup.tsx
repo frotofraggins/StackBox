@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, User, Building } from 'lucide-react'
+import ThemeToggle from '../components/theme/ThemeToggle'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -90,17 +91,22 @@ export default function Signup() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-dark py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary py-12 px-4 sm:px-6 lg:px-8">
+        {/* Theme Toggle - Fixed Position */}
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
+
         <div className="max-w-2xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block">
-              <div className="text-3xl font-bold text-primary mb-4">StackPro</div>
+              <div className="text-3xl font-bold text-white mb-4">StackPro</div>
             </Link>
-            <h1 className="text-3xl font-bold text-text-light mb-2">
+            <h1 className="text-3xl font-bold text-white mb-2">
               Start your free trial
             </h1>
-            <p className="text-text-light/80">
+            <p className="text-white/80">
               Already have an account?{' '}
               <Link href="/login" className="font-medium text-accent hover:text-accent/80">
                 Sign in here
@@ -109,8 +115,8 @@ export default function Signup() {
           </div>
 
           {/* Plan Selection */}
-          <div className="card-glass mb-6">
-            <h2 className="text-lg font-semibold text-text-dark mb-4">Choose Your Plan</h2>
+          <div className="bg-background rounded-lg shadow-lg p-6 border border-border mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-4">Choose Your Plan</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {Object.entries(plans).map(([key, plan]) => (
                 <button
@@ -120,39 +126,39 @@ export default function Signup() {
                   className={`p-4 rounded-lg border-2 text-left transition-colors ${
                     selectedPlan === key
                       ? 'border-primary bg-primary/10'
-                      : 'border-gray-200 hover:border-primary/50'
+                      : 'border-border hover:border-primary/50'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold text-text-dark">{plan.name}</h3>
+                    <h3 className="font-semibold text-foreground">{plan.name}</h3>
                     {key === 'business' && (
-                      <span className="bg-primary text-white px-2 py-1 rounded text-xs font-semibold animate-pulse-glow">
+                      <span className="bg-primary text-white px-2 py-1 rounded text-xs font-semibold">
                         Popular
                       </span>
                     )}
                   </div>
-                  <div className="text-2xl font-bold text-gradient-primary mb-1">{plan.price}</div>
-                  <div className="text-sm text-text-secondary">{plan.description}</div>
+                  <div className="text-2xl font-bold text-primary mb-1">{plan.price}</div>
+                  <div className="text-sm text-muted">{plan.description}</div>
                 </button>
               ))}
             </div>
-            <p className="text-sm text-text-muted mt-3">
+            <p className="text-sm text-muted mt-3">
               ✅ All plans include 7-day free trial • No credit card required • Cancel anytime
             </p>
           </div>
 
           {/* Signup Form */}
-          <div className="card-glass">
+          <div className="bg-background rounded-lg shadow-lg p-8 border border-border">
             <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Name Fields */}
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="firstName" className="form-label">
+                  <label htmlFor="firstName" className="block text-sm font-medium text-foreground mb-2">
                     First name
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <User className="h-5 w-5 text-gray-400" />
+                      <User className="h-5 w-5 text-muted" />
                     </div>
                     <input
                       id="firstName"
@@ -161,14 +167,14 @@ export default function Signup() {
                       required
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="form-input pl-10"
+                      className="w-full px-4 py-3 pl-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                       placeholder="John"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="lastName" className="form-label">
+                  <label htmlFor="lastName" className="block text-sm font-medium text-foreground mb-2">
                     Last name
                   </label>
                   <div className="mt-1">
@@ -179,7 +185,7 @@ export default function Signup() {
                       required
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="form-input"
+                      className="w-full px-4 py-3 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                       placeholder="Doe"
                     />
                   </div>
@@ -188,12 +194,12 @@ export default function Signup() {
 
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="form-label">
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                   Work email address
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-gray-400" />
+                    <Mail className="h-5 w-5 text-muted" />
                   </div>
                   <input
                     id="email"
@@ -203,7 +209,7 @@ export default function Signup() {
                     required
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="form-input pl-10"
+                    className="w-full px-4 py-3 pl-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                     placeholder="you@company.com"
                   />
                 </div>
@@ -211,12 +217,12 @@ export default function Signup() {
 
               {/* Company Field */}
               <div>
-                <label htmlFor="company" className="form-label">
+                <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
                   Company name
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Building className="h-5 w-5 text-gray-400" />
+                    <Building className="h-5 w-5 text-muted" />
                   </div>
                   <input
                     id="company"
@@ -225,7 +231,7 @@ export default function Signup() {
                     required
                     value={formData.company}
                     onChange={handleInputChange}
-                    className="form-input pl-10"
+                    className="w-full px-4 py-3 pl-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                     placeholder="Your Company LLC"
                   />
                 </div>
@@ -234,12 +240,12 @@ export default function Signup() {
               {/* Password Fields */}
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="password" className="form-label">
+                  <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
                     Password
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Lock className="h-5 w-5 text-gray-400" />
+                      <Lock className="h-5 w-5 text-muted" />
                     </div>
                     <input
                       id="password"
@@ -248,14 +254,14 @@ export default function Signup() {
                       required
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="form-input pl-10 pr-10"
+                      className="w-full px-4 py-3 pl-10 pr-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                       placeholder="••••••••"
                     />
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="text-gray-400 hover:text-primary"
+                        className="text-muted hover:text-primary transition-colors"
                       >
                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
@@ -264,7 +270,7 @@ export default function Signup() {
                 </div>
 
                 <div>
-                  <label htmlFor="confirmPassword" className="form-label">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-foreground mb-2">
                     Confirm password
                   </label>
                   <div className="mt-1 relative rounded-md shadow-sm">
@@ -275,14 +281,14 @@ export default function Signup() {
                       required
                       value={formData.confirmPassword}
                       onChange={handleInputChange}
-                      className="form-input pr-10"
+                      className="w-full px-4 py-3 pr-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                       placeholder="••••••••"
                     />
                     <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="text-gray-400 hover:text-primary"
+                        className="text-muted hover:text-primary transition-colors"
                       >
                         {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
@@ -292,7 +298,7 @@ export default function Signup() {
               </div>
 
               {/* Password Requirements */}
-              <div className="text-sm text-text-muted">
+              <div className="text-sm text-muted">
                 Password must contain at least 8 characters with uppercase, lowercase, and a number.
               </div>
 
@@ -305,17 +311,17 @@ export default function Signup() {
                     type="checkbox"
                     checked={agreeTerms}
                     onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
+                    className="h-4 w-4 text-primary focus:ring-primary border-border rounded"
                   />
                 </div>
                 <div className="ml-3 text-sm">
-                  <label htmlFor="agreeTerms" className="text-text-secondary">
+                  <label htmlFor="agreeTerms" className="text-muted">
                     I agree to the{' '}
-                    <Link href="/terms" className="font-medium text-primary hover:text-primary/80">
+                    <Link href="/terms" className="font-medium text-primary hover:text-secondary">
                       Terms of Service
                     </Link>{' '}
                     and{' '}
-                    <Link href="/privacy" className="font-medium text-primary hover:text-primary/80">
+                    <Link href="/privacy" className="font-medium text-primary hover:text-secondary">
                       Privacy Policy
                     </Link>
                   </label>
@@ -327,13 +333,15 @@ export default function Signup() {
                 <button
                   type="submit"
                   disabled={isLoading || !agreeTerms}
-                  className={`btn-large w-full ${
-                    isLoading || !agreeTerms ? 'btn-disabled' : 'btn-primary'
+                  className={`w-full px-6 py-4 rounded-lg font-semibold text-lg transition-all ${
+                    isLoading || !agreeTerms 
+                      ? 'bg-muted/40 text-muted cursor-not-allowed' 
+                      : 'bg-primary text-white hover:opacity-90'
                   }`}
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -350,10 +358,10 @@ export default function Signup() {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+                  <span className="px-2 bg-background text-muted">Or sign up with</span>
                 </div>
               </div>
 
@@ -361,7 +369,7 @@ export default function Signup() {
                 {/* Google Signup */}
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-border rounded-lg shadow-sm bg-background text-sm font-medium text-muted hover:bg-[color:var(--border)]/20 transition-colors"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -375,7 +383,7 @@ export default function Signup() {
                 {/* Microsoft Signup */}
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-border rounded-lg shadow-sm bg-background text-sm font-medium text-muted hover:bg-[color:var(--border)]/20 transition-colors"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
                     <path fill="#f25022" d="M1 1h10v10H1z"/>
@@ -389,21 +397,21 @@ export default function Signup() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-8 pt-6 border-t border-gray-200">
+            <div className="mt-8 pt-6 border-t border-border">
               <div className="text-center">
-                <p className="text-sm text-gray-600 mb-4">Trusted by thousands of businesses</p>
+                <p className="text-sm text-muted mb-4">Trusted by thousands of businesses</p>
                 <div className="flex justify-center items-center space-x-6 opacity-60">
                   <div className="flex items-center space-x-2">
-                    <div className="w-6 h-6 bg-orange-500 rounded"></div>
-                    <span className="text-sm font-medium">AWS Hosted</span>
+                    <div className="w-6 h-6 bg-warning rounded"></div>
+                    <span className="text-sm font-medium text-foreground">AWS Hosted</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-6 h-6 bg-green-500 rounded"></div>
-                    <span className="text-sm font-medium">SOC2 Ready</span>
+                    <div className="w-6 h-6 bg-success rounded"></div>
+                    <span className="text-sm font-medium text-foreground">SOC2 Ready</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <div className="w-6 h-6 bg-blue-500 rounded"></div>
-                    <span className="text-sm font-medium">99.9% Uptime</span>
+                    <div className="w-6 h-6 bg-secondary rounded"></div>
+                    <span className="text-sm font-medium text-foreground">99.9% Uptime</span>
                   </div>
                 </div>
               </div>
@@ -412,7 +420,7 @@ export default function Signup() {
 
           {/* Back to Home */}
           <div className="mt-6 text-center">
-            <Link href="/" className="text-sm text-gray-600 hover:text-gray-800">
+            <Link href="/" className="text-sm text-white/80 hover:text-white transition-colors">
               ← Back to StackPro.io
             </Link>
           </div>

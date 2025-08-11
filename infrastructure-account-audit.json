@@ -1,0 +1,201 @@
+{
+  "timestamp": "2025-08-11T18:44:28.801Z",
+  "account": "304052673868",
+  "services": {
+    "route53": [
+      {
+        "Id": "/hostedzone/Z0102907XGKTL09TFV38",
+        "Name": "sandbox.stackpro.io.",
+        "CallerReference": "1754803796.64849",
+        "Config": {
+          "PrivateZone": false
+        },
+        "ResourceRecordSetCount": 3
+      },
+      {
+        "Id": "/hostedzone/Z0293767219852CNS3KMT",
+        "Name": "stackpro.io.",
+        "CallerReference": "stackpro-transfer-",
+        "Config": {
+          "PrivateZone": false
+        },
+        "ResourceRecordSetCount": 14
+      }
+    ],
+    "ses": [
+      "stackpro.io"
+    ],
+    "lambda": [
+      {
+        "FunctionName": "stackpro-sandbox-tenant-lock",
+        "FunctionArn": "arn:aws:lambda:us-west-2:304052673868:function:stackpro-sandbox-tenant-lock",
+        "Runtime": "nodejs18.x",
+        "Role": "arn:aws:iam::304052673868:role/StackPro-Sandbox-TenantLock-Role",
+        "Handler": "index.handler",
+        "CodeSize": 1233,
+        "Description": "StackPro sandbox tenant lock function for abuse protection",
+        "Timeout": 30,
+        "MemorySize": 256,
+        "LastModified": "2025-08-08T16:14:22.593+0000",
+        "CodeSha256": "sWl33lJtqEr5C0GFP/ZGeA5dnzoFAmsmJfSc5JR2a6c=",
+        "Version": "$LATEST",
+        "Environment": {
+          "Variables": {
+            "QUOTAS_TABLE": "stackpro-sandbox-quotas",
+            "ABUSE_PROTECTION_ENABLED": "true"
+          }
+        },
+        "TracingConfig": {
+          "Mode": "PassThrough"
+        },
+        "RevisionId": "9f03912b-9861-4f2f-8021-dfa8b6dc2ed7",
+        "PackageType": "Zip",
+        "Architectures": [
+          "x86_64"
+        ],
+        "EphemeralStorage": {
+          "Size": 512
+        },
+        "SnapStart": {
+          "ApplyOn": "None",
+          "OptimizationStatus": "Off"
+        },
+        "LoggingConfig": {
+          "LogFormat": "Text",
+          "LogGroup": "/aws/lambda/stackpro-sandbox-tenant-lock"
+        }
+      },
+      {
+        "FunctionName": "stackpro-email-forwarder",
+        "FunctionArn": "arn:aws:lambda:us-west-2:304052673868:function:stackpro-email-forwarder",
+        "Runtime": "nodejs18.x",
+        "Role": "arn:aws:iam::304052673868:role/stackpro-lambda-email-role",
+        "Handler": "lambda-email-forwarder-fixed.handler",
+        "CodeSize": 2075,
+        "Description": "Automatically forward @stackpro.io emails to nsflournoy@gmail.com",
+        "Timeout": 3,
+        "MemorySize": 128,
+        "LastModified": "2025-08-10T20:12:59.000+0000",
+        "CodeSha256": "3DUfyPZ/t5TaesLEHhd2Ib+zU40sZ2Ng7jGVYIwMYow=",
+        "Version": "$LATEST",
+        "TracingConfig": {
+          "Mode": "PassThrough"
+        },
+        "RevisionId": "ddaf2810-1e22-491c-83b5-fe14132916ec",
+        "PackageType": "Zip",
+        "Architectures": [
+          "x86_64"
+        ],
+        "EphemeralStorage": {
+          "Size": 512
+        },
+        "SnapStart": {
+          "ApplyOn": "None",
+          "OptimizationStatus": "Off"
+        },
+        "LoggingConfig": {
+          "LogFormat": "Text",
+          "LogGroup": "/aws/lambda/stackpro-email-forwarder"
+        }
+      }
+    ],
+    "acm": [
+      {
+        "CertificateArn": "arn:aws:acm:us-west-2:304052673868:certificate/2b683549-81e3-47c2-8929-3ae0e26c7328",
+        "DomainName": "stackpro.io",
+        "SubjectAlternativeNameSummaries": [
+          "stackpro.io",
+          "*.stackpro.io"
+        ],
+        "HasAdditionalSubjectAlternativeNames": false,
+        "Status": "ISSUED",
+        "Type": "AMAZON_ISSUED",
+        "KeyAlgorithm": "RSA-2048",
+        "KeyUsages": [
+          "DIGITAL_SIGNATURE",
+          "KEY_ENCIPHERMENT"
+        ],
+        "ExtendedKeyUsages": [
+          "TLS_WEB_SERVER_AUTHENTICATION"
+        ],
+        "ExportOption": "DISABLED",
+        "InUse": false,
+        "RenewalEligibility": "INELIGIBLE",
+        "NotBefore": "2025-08-05T17:00:00-07:00",
+        "NotAfter": "2026-09-04T16:59:59-07:00",
+        "CreatedAt": "2025-08-06T14:23:15.711000-07:00",
+        "IssuedAt": "2025-08-06T14:24:34.013000-07:00"
+      },
+      {
+        "CertificateArn": "arn:aws:acm:us-west-2:304052673868:certificate/7436438f-a12a-4d0b-820f-a2b3b59986db",
+        "DomainName": "sandbox.stackpro.io",
+        "SubjectAlternativeNameSummaries": [
+          "sandbox.stackpro.io",
+          "*.sandbox.stackpro.io"
+        ],
+        "HasAdditionalSubjectAlternativeNames": false,
+        "Status": "ISSUED",
+        "Type": "AMAZON_ISSUED",
+        "KeyAlgorithm": "RSA-2048",
+        "KeyUsages": [
+          "DIGITAL_SIGNATURE",
+          "KEY_ENCIPHERMENT"
+        ],
+        "ExtendedKeyUsages": [
+          "TLS_WEB_SERVER_AUTHENTICATION"
+        ],
+        "ExportOption": "DISABLED",
+        "InUse": false,
+        "RenewalEligibility": "INELIGIBLE",
+        "NotBefore": "2025-08-09T17:00:00-07:00",
+        "NotAfter": "2026-09-08T16:59:59-07:00",
+        "CreatedAt": "2025-08-10T05:30:38.357000-07:00",
+        "IssuedAt": "2025-08-10T16:38:13.696000-07:00"
+      }
+    ],
+    "amplify": [
+      {
+        "appId": "d3m3k3uuuvlvyv",
+        "appArn": "arn:aws:amplify:us-west-2:304052673868:apps/d3m3k3uuuvlvyv",
+        "name": "StackPro-Frontend",
+        "tags": {},
+        "description": "StackPro Production Frontend - Full Stack Application",
+        "repository": "https://github.com/frotofraggins/stackbox",
+        "platform": "WEB",
+        "createTime": "2025-08-08T10:38:00.771000-07:00",
+        "updateTime": "2025-08-09T11:36:55.176000-07:00",
+        "iamServiceRoleArn": "arn:aws:iam::304052673868:role/amplifyconsole-backend-role",
+        "environmentVariables": {
+          "AMPLIFY_NODEJS_VERSION": "22"
+        },
+        "defaultDomain": "d3m3k3uuuvlvyv.amplifyapp.com",
+        "enableBranchAutoBuild": false,
+        "enableBranchAutoDeletion": false,
+        "enableBasicAuth": false,
+        "customRules": [
+          {
+            "source": "/<*>",
+            "target": "/index.html",
+            "status": "404-200"
+          }
+        ],
+        "productionBranch": {
+          "lastDeployTime": "2025-08-09T11:41:53.503000-07:00",
+          "status": "SUCCEED",
+          "branchName": "main"
+        },
+        "buildSpec": "version: 1\napplications:\n  - appRoot: frontend\n    frontend:\n      phases:\n        preBuild:\n          commands:\n            - nvm install 22.11.0\n            - nvm use 22.11.0\n            - nvm alias default 22.11.0\n            - export NODE_VERSION=22.11.0\n            - node --version\n            - npm --version\n            - npm ci --include=dev\n        build:\n          commands:\n            - npm run build\n      artifacts:\n        baseDirectory: .next\n        files:\n          - '**/*'\n      cache:\n        paths:\n          - node_modules/**/*\n          - .next/cache/**/*",
+        "customHeaders": "",
+        "enableAutoBranchCreation": false,
+        "repositoryCloneMethod": "TOKEN",
+        "cacheConfig": {
+          "type": "AMPLIFY_MANAGED_NO_COOKIES"
+        },
+        "webhookCreateTime": "2025-08-08T17:45:11.520000-07:00",
+        "jobConfig": {
+          "buildComputeType": "STANDARD_8GB"
+        }
+      }
+    ]
+  }
+}

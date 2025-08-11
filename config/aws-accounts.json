@@ -1,0 +1,72 @@
+{
+  "project": "StackPro",
+  "CRITICAL_WARNING": "⚠️  ENSURE CORRECT AWS ACCOUNT BEFORE ANY DEPLOYMENTS ⚠️",
+  "authorizedAccounts": {
+    "domain-holder": {
+      "accountId": "788363206718",
+      "alias": "stackpro-domain-account",
+      "description": "AWS account where stackpro.io domain is currently registered",
+      "domains": ["stackpro.io"],
+      "user": "nflos",
+      "role": "SOURCE - Domain holder (will transfer FROM here)",
+      "status": "temporary-holder"
+    },
+    "target-infrastructure": {
+      "accountId": "304052673868",
+      "alias": "stackpro-infrastructure",
+      "description": "TARGET AWS account where ALL infrastructure should be deployed",
+      "domains": ["stackpro.io", "sandbox.stackpro.io"],
+      "user": "nflos",
+      "role": "TARGET - All deployments go here",
+      "status": "primary-deployment-target"
+    },
+    "WRONG-ACCOUNT": {
+      "accountId": "564507211043",
+      "alias": "INCORRECT-ACCOUNT",
+      "description": "❌ WRONG ACCOUNT - Do not deploy here",
+      "status": "BLOCKED - sandbox.stackpro.io was incorrectly created here",
+      "action_required": "Need to clean up resources and recreate in correct account"
+    }
+  },
+  "currentAccount": {
+    "accountId": "564507211043",
+    "status": "❌ WRONG ACCOUNT",
+    "verified": true,
+    "lastChecked": "2025-08-11T17:18:00Z",
+    "warning": "Currently connected to WRONG account - switch to 304052673868"
+  },
+  "migrationPlan": {
+    "step1": "Transfer domain from 788363206718 to 304052673868",
+    "step2": "Clean up sandbox.stackpro.io resources from 564507211043",
+    "step3": "Recreate sandbox.stackpro.io in 304052673868",
+    "step4": "All future deployments to 304052673868 only"
+  },
+  "safeguards": {
+    "enforceAccountValidation": true,
+    "blockedAccounts": ["564507211043"],
+    "allowedDeploymentAccount": "304052673868",
+    "allowedRegions": ["us-west-2", "us-east-1"],
+    "requireConfirmation": true
+  },
+  "infrastructure": {
+    "route53": {
+      "hostedZones": [
+        {
+          "domain": "sandbox.stackpro.io",
+          "zoneId": "Z03003622XXIRS6PI6W6W",
+          "status": "❌ DEPLOYED TO WRONG ACCOUNT",
+          "currentAccount": "564507211043",
+          "shouldBeInAccount": "304052673868",
+          "action": "MIGRATE TO CORRECT ACCOUNT"
+        }
+      ]
+    }
+  },
+  "nextSteps": [
+    "1. Switch AWS CLI profile to account 304052673868",
+    "2. Verify correct account with: aws sts get-caller-identity",
+    "3. Run domain transfer script to move from 788363206718 → 304052673868",
+    "4. Clean up wrong resources in 564507211043",
+    "5. Re-run E2E tests against correct infrastructure"
+  ]
+}

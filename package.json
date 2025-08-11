@@ -13,7 +13,8 @@
     "test-stripe": "node scripts/test-stripe-integration.js",
     "setup": "node scripts/setup.js",
     "health": "curl http://localhost:3002/health || echo 'API server not running'",
-    "quick-test": "node scripts/quick-test.js"
+    "quick-test": "node scripts/quick-test.js",
+    "cost-check": "node scripts/cost-sanity-check.js"
   },
   "keywords": [
     "saas",
@@ -37,13 +38,15 @@
     "@aws-sdk/client-elastic-load-balancing-v2": "^3.863.0",
     "@aws-sdk/client-eventbridge": "^3.863.0",
     "@aws-sdk/client-iam": "^3.454.0",
-    "@aws-sdk/client-lambda": "^3.863.0",
+    "@aws-sdk/client-lambda": "^3.864.0",
     "@aws-sdk/client-rds": "^3.863.0",
     "@aws-sdk/client-route-53": "^3.454.0",
     "@aws-sdk/client-s3": "^3.454.0",
     "@aws-sdk/client-secrets-manager": "^3.863.0",
+    "@aws-sdk/client-ses": "^3.864.0",
     "@aws-sdk/client-sesv2": "^3.454.0",
     "@aws-sdk/client-sts": "^3.454.0",
+    "@aws-sdk/s3-request-presigner": "^3.864.0",
     "archiver": "^7.0.1",
     "aws-sdk": "^2.1692.0",
     "axios": "^1.6.2",
@@ -55,6 +58,8 @@
     "helmet": "^8.1.0",
     "joi": "^18.0.0",
     "jsonwebtoken": "^9.0.2",
+    "mailparser": "^3.6.5",
+    "multer": "^2.0.2",
     "stripe": "^14.9.0",
     "winston": "^3.11.0",
     "ws": "^8.18.3"
@@ -64,6 +69,6 @@
     "puppeteer": "^21.11.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22"
   }
 }

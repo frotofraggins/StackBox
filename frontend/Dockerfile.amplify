@@ -1,0 +1,34 @@
+FROM node:22-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install AWS CLI and other tools
+RUN apk add --no-cache \
+    curl \
+    python3 \
+    py3-pip \
+    aws-cli
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --include=dev
+
+# Copy amplify configuration
+COPY amplify/ ./amplify/
+COPY tsconfig.json ./
+COPY next.config.js ./
+
+# Expose ports for Amplify sandbox
+EXPOSE 4566
+
+# Set environment variables
+ENV NODE_ENV=development
+ENV AWS_ACCESS_KEY_ID=test
+ENV AWS_SECRET_ACCESS_KEY=test
+ENV AWS_DEFAULT_REGION=us-west-2
+
+# Start Amplify sandbox
+CMD ["npx", "ampx", "sandbox", "--once"]

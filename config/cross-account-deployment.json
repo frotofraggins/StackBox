@@ -1,0 +1,29 @@
+{
+  "strategy": "cross-account-profiles",
+  "clineAccount": "564507211043",
+  "infrastructureAccount": "304052673868",
+  "domainAccount": "788363206718",
+  "setupCommands": [
+    "# Set up infrastructure profile (one-time setup)",
+    "aws configure --profile infrastructure",
+    "# Account ID: 304052673868",
+    "# Region: us-west-2",
+    "",
+    "# Deploy sandbox.stackpro.io to CORRECT account",
+    "AWS_PROFILE=infrastructure node scripts/setup-sandbox-dns.js",
+    "",
+    "# Set up email forwarding in CORRECT account",
+    "AWS_PROFILE=infrastructure node scripts/setup-sandbox-email-forwarding.js",
+    "",
+    "# Deploy Amplify to CORRECT account",
+    "AWS_PROFILE=infrastructure node scripts/deploy-amplify-sandbox.js",
+    "",
+    "# Run E2E tests against CORRECT infrastructure",
+    "node scripts/e2e-test-suite.js",
+    "",
+    "# Verify everything is in correct account",
+    "AWS_PROFILE=infrastructure aws route53 list-hosted-zones --query \"HostedZones[?contains(Name, 'sandbox')]\""
+  ],
+  "deploymentScript": "scripts/deploy-cross-account.sh",
+  "status": "ready-for-manual-profile-setup"
+}

@@ -555,9 +555,31 @@ app.post('/api/create-checkout-session', async (req, res) => {
 
 // Import routes
 const siteBuilderRoutes = require('./routes/site-builder');
+const capabilitiesRoutes = require('./routes/capabilities');
+const dataLakeRoutes = require('./routes/data-lake');
+const aiDocsRoutes = require('./routes/ai-docs');
+const aiGapAnalysisRoutes = require('./routes/ai-gap-analysis');
+const emailStackRoutes = require('./routes/email-stack');
+const datasetIngestionRoutes = require('./routes/dataset-ingestion');
 
 // Site builder routes
 app.use('/api/site-builder', siteBuilderRoutes);
+
+// Capabilities registry
+app.use('/capabilities', capabilitiesRoutes);
+
+// Data Lake mock handlers (behind feature flag)
+app.use('/api/data-lake', dataLakeRoutes);
+
+// AI-powered routes
+app.use('/api/ai-docs', aiDocsRoutes);
+app.use('/api/ai-gap-analysis', aiGapAnalysisRoutes);
+
+// Email stack (feature-flagged)
+app.use('/api/email', emailStackRoutes);
+
+// Dataset ingestion (Phase 3.1 capability)
+app.use('/api/data-ingestion', require('./routes/data-ingestion'));
 
 // Stripe webhook endpoint
 app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {

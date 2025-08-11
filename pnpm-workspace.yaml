@@ -1,0 +1,4 @@
+packages:
+  - 'packages/clients/*'
+  - 'packages/contracts/*'
+  - 'packages/runtime/*'

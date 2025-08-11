@@ -1,0 +1,412 @@
+openapi: 3.0.3
+info:
+  title: StackPro Messaging API
+  description: Real-time messaging capability for StackPro platform
+  version: 1.0.0
+  license:
+    name: MIT
+servers:
+  - url: 'https://{apigw-id}.execute-api.us-west-2.amazonaws.com/sandbox/messaging'
+    description: Sandbox environment
+    variables:
+      apigw-id:
+        default: 'placeholder'
+        description: API Gateway ID
+paths:
+  /v1/threads:
+    get:
+      summary: List message threads
+      description: Retrieve all message threads for the authenticated user/tenant
+      operationId: listThreads
+      parameters:
+        - name: x-tenant-id
+          in: header
+          required: false
+          schema:
+            type: string
+          description: Tenant identifier for multi-tenant requests
+        - name: x-client-id
+          in: header
+          required: false
+          schema:
+            type: string
+          description: Client application identifier
+        - name: x-request-id
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Request correlation ID
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: Maximum number of threads to return
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Pagination cursor for next page
+      responses:
+        '200':
+          description: Thread list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  threads:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Thread'
+                  cursor:
+                    type: string
+                    nullable: true
+                    description: Cursor for next page of results
+                  hasMore:
+                    type: boolean
+                    description: Whether more threads are available
+                  degraded:
+                    type: boolean
+                    description: True if service is in degraded mode
+                required:
+                  - threads
+                  - degraded
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      security:
+        - IAMAuth: []
+        - JWTAuth: ['msg.read']
+
+  /v1/threads/{threadId}/messages:
+    get:
+      summary: Get messages in a thread
+      description: Retrieve messages for a specific thread
+      operationId: getThreadMessages
+      parameters:
+        - name: threadId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Thread identifier
+        - name: x-tenant-id
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: x-client-id
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: x-request-id
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Pagination cursor
+      responses:
+        '200':
+          description: Messages retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Message'
+                  thread:
+                    $ref: '#/components/schemas/Thread'
+                  cursor:
+                    type: string
+                    nullable: true
+                  hasMore:
+                    type: boolean
+                  degraded:
+                    type: boolean
+                required:
+                  - messages
+                  - thread
+                  - degraded
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      security:
+        - IAMAuth: []
+        - JWTAuth: ['msg.read']
+
+  /v1/messages:
+    post:
+      summary: Send a message
+      description: Send a new message to a thread
+      operationId: sendMessage
+      parameters:
+        - name: x-tenant-id
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: x-client-id
+          in: header
+          required: false
+          schema:
+            type: string
+        - name: x-request-id
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                threadId:
+                  type: string
+                  description: Target thread identifier
+                text:
+                  type: string
+                  maxLength: 4000
+                  description: Message content
+                type:
+                  type: string
+                  enum: ['text', 'system', 'notification']
+                  default: 'text'
+                  description: Message type
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Optional message metadata
+              required:
+                - threadId
+                - text
+      responses:
+        '201':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    $ref: '#/components/schemas/Message'
+                  degraded:
+                    type: boolean
+                required:
+                  - message
+                  - degraded
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalError'
+      security:
+        - IAMAuth: []
+        - JWTAuth: ['msg.write']
+
+components:
+  schemas:
+    Thread:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Thread identifier
+        title:
+          type: string
+          nullable: true
+          description: Thread title
+        participants:
+          type: array
+          items:
+            type: string
+          description: List of participant IDs
+        createdAt:
+          type: string
+          format: date-time
+          description: Thread creation timestamp
+        updatedAt:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        lastMessage:
+          $ref: '#/components/schemas/Message'
+          nullable: true
+          description: Most recent message in thread
+        unreadCount:
+          type: integer
+          minimum: 0
+          description: Number of unread messages
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional thread metadata
+      required:
+        - id
+        - participants
+        - createdAt
+        - updatedAt
+        - unreadCount
+
+    Message:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Message identifier
+        threadId:
+          type: string
+          description: Parent thread identifier
+        senderId:
+          type: string
+          description: Message sender identifier
+        text:
+          type: string
+          description: Message content
+        type:
+          type: string
+          enum: ['text', 'system', 'notification']
+          description: Message type
+        createdAt:
+          type: string
+          format: date-time
+          description: Message creation timestamp
+        editedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Last edit timestamp
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Additional message metadata
+      required:
+        - id
+        - threadId
+        - senderId
+        - text
+        - type
+        - createdAt
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Human-readable error message
+        code:
+          type: string
+          enum: 
+            - 'VALIDATION_ERROR'
+            - 'AUTHENTICATION_ERROR'
+            - 'AUTHORIZATION_ERROR'
+            - 'NOT_FOUND'
+            - 'RATE_LIMITED'
+            - 'SERVICE_UNAVAILABLE'
+            - 'INTERNAL_ERROR'
+          description: Machine-readable error code
+        degraded:
+          type: boolean
+          description: True if error occurred due to degraded service
+        requestId:
+          type: string
+          description: Request correlation ID for debugging
+      required:
+        - error
+        - code
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Invalid request parameters"
+            code: "VALIDATION_ERROR"
+            degraded: false
+            requestId: "req_123456789"
+
+    Unauthorized:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Authentication required"
+            code: "AUTHENTICATION_ERROR"
+            degraded: false
+            requestId: "req_123456789"
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Thread not found"
+            code: "NOT_FOUND"
+            degraded: false
+            requestId: "req_123456789"
+
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            error: "Internal server error"
+            code: "INTERNAL_ERROR"
+            degraded: true
+            requestId: "req_123456789"
+
+  securitySchemes:
+    IAMAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: AWS IAM Signature Version 4
+      
+    JWTAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: StackPro service JWT token

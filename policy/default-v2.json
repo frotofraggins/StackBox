@@ -1,0 +1,45 @@
+{
+  "version": "2.0",
+  "description": "Default data anonymization policy for StackPro marketplace",
+  "rules": [
+    {
+      "field": "email",
+      "type": "email",
+      "action": "hash",
+      "salt": "stackpro-salt-2025"
+    },
+    {
+      "field": "phone",
+      "type": "phone",
+      "action": "mask",
+      "pattern": "XXX-XXX-{last4}"
+    },
+    {
+      "field": "ip_address",
+      "type": "ip",
+      "action": "truncate",
+      "precision": "subnet"
+    },
+    {
+      "field": "user_agent",
+      "type": "string",
+      "action": "generalize",
+      "categories": ["chrome", "firefox", "safari", "mobile", "other"]
+    },
+    {
+      "field": "location",
+      "type": "geo",
+      "action": "blur",
+      "radius_km": 10
+    }
+  ],
+  "k_anonymity": {
+    "enabled": true,
+    "k": 20,
+    "quasi_identifiers": ["age_range", "zip_prefix", "device_type"]
+  },
+  "retention": {
+    "raw_data_days": 90,
+    "anonymized_data_days": 730
+  }
+}

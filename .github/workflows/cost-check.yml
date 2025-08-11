@@ -1,0 +1,97 @@
+name: Weekly Cost Check
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to check'
+        required: true
+        default: 'sandbox'
+        type: choice
+        options:
+          - sandbox
+          - production
+
+jobs:
+  cost-check:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'sandbox' }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Run Cost Sanity Check
+        id: cost-check
+        run: |
+          echo "Running cost sanity check..."
+          node scripts/cost-sanity-check.js --json > cost-report.json
+          
+          # Store the exit code
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+          
+          # Create summary
+          cat cost-report.json | jq -r '"Cost Check Status: " + .overallStatus + "\nEstimated Cost: $" + (.estimatedCost | tostring) + "\nCritical Services: " + ([.metrics[] | select(.status == "critical")] | length | tostring)'
+          
+      - name: Upload Cost Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cost-report-${{ github.event.inputs.environment || 'sandbox' }}
+          path: cost-report.json
+          
+      - name: Comment on PR (if exists)
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = JSON.parse(fs.readFileSync('cost-report.json', 'utf8'));
+            
+            const statusIcon = report.overallStatus === 'healthy' ? '✅' : 
+                             report.overallStatus === 'warning' ? '⚠️' : '❌';
+            
+            const body = `## 💰 Cost Sanity Check Report
+            
+            **Status**: ${statusIcon} ${report.overallStatus.toUpperCase()}
+            **Estimated Cost**: $${report.estimatedCost.toFixed(2)}
+            **Timestamp**: ${new Date(report.timestamp).toLocaleString()}
+            
+            ### Service Usage
+            ${report.metrics.map(m => 
+              `- ${m.status === 'healthy' ? '✅' : m.status === 'warning' ? '⚠️' : '❌'} **${m.service}**: ${m.current.toFixed(0)} / ${m.limit} ${m.unit} (${m.percentage.toFixed(1)}%)`
+            ).join('\n')}
+            
+            ${report.budget ? `**Budget**: $${report.budget.spent.toFixed(2)} / $${report.budget.amount.toFixed(2)}` : '**Budget**: Not configured ⚠️'}
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+            
+      - name: Fail if costs are critical
+        if: steps.cost-check.outputs.exit_code == '3'
+        run: |
+          echo "❌ Cost check failed - some services exceeding free tier limits"
+          exit 1

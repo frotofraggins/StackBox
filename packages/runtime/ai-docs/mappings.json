@@ -1,0 +1,377 @@
+[
+  {
+    "businessType": "Construction",
+    "painPoints": [
+      "Project tracking",
+      "Bid management", 
+      "Safety compliance",
+      "Equipment maintenance",
+      "Change order management",
+      "Material procurement",
+      "Labor scheduling",
+      "Quality control",
+      "Permit management",
+      "Cost overruns"
+    ],
+    "recommendedStacks": [
+      "Project Management",
+      "Document Management", 
+      "IoT Safety Sensors",
+      "Fleet Tracking",
+      "Bid Estimation Tools",
+      "Compliance Management",
+      "Equipment Management",
+      "Quality Control System"
+    ]
+  },
+  {
+    "businessType": "Tradesmen",
+    "painPoints": [
+      "Job scheduling",
+      "Invoicing",
+      "Customer leads",
+      "Inventory tracking",
+      "Mobile payments",
+      "Route optimization",
+      "Customer communication",
+      "Parts ordering",
+      "Time tracking",
+      "Estimate creation"
+    ],
+    "recommendedStacks": [
+      "Scheduling & Dispatch",
+      "CRM",
+      "Accounting Integration",
+      "Inventory Management", 
+      "Field Service Mobile App",
+      "Payment Processing",
+      "Route Optimization",
+      "Customer Portal"
+    ]
+  },
+  {
+    "businessType": "Legal",
+    "painPoints": [
+      "Document management",
+      "Case tracking", 
+      "Billing hours",
+      "Compliance",
+      "Client intake",
+      "Court calendar management",
+      "Legal research",
+      "Contract review",
+      "Client communication",
+      "Document automation"
+    ],
+    "recommendedStacks": [
+      "Case Management",
+      "Document Automation",
+      "Time Tracking",
+      "Compliance Tools",
+      "E-Signature Integration",
+      "Legal Research Platform",
+      "Client Portal",
+      "Court Calendar System"
+    ]
+  },
+  {
+    "businessType": "Retail",
+    "painPoints": [
+      "Inventory tracking",
+      "POS integration",
+      "Supplier management",
+      "Customer loyalty",
+      "E-commerce sync",
+      "Price management",
+      "Staff scheduling",
+      "Sales analytics",
+      "Return processing",
+      "Multi-location management"
+    ],
+    "recommendedStacks": [
+      "POS System",
+      "Inventory Management",
+      "Supplier Portal",
+      "Loyalty Program", 
+      "E-commerce Integration",
+      "Price Management",
+      "Staff Scheduling",
+      "Analytics Dashboard"
+    ]
+  },
+  {
+    "businessType": "Medical",
+    "painPoints": [
+      "Patient scheduling",
+      "Billing & insurance",
+      "HIPAA compliance",
+      "Medical record access",
+      "Telehealth",
+      "Prescription management",
+      "Lab integration",
+      "Patient communication",
+      "Referral management",
+      "Quality reporting"
+    ],
+    "recommendedStacks": [
+      "Practice Management",
+      "EHR Integration",
+      "HIPAA Compliance Suite",
+      "Billing Tools",
+      "Telehealth Platform",
+      "Prescription Management",
+      "Lab Integration",
+      "Patient Portal"
+    ]
+  },
+  {
+    "businessType": "Real Estate",
+    "painPoints": [
+      "Listing management",
+      "Client communication",
+      "Document signing",
+      "Lead tracking",
+      "Market analysis",
+      "Transaction management",
+      "Property valuation",
+      "Marketing automation",
+      "Commission tracking",
+      "Compliance documentation"
+    ],
+    "recommendedStacks": [
+      "CRM",
+      "Listing Syndication",
+      "E-Signature",
+      "Lead Gen Tools",
+      "Market Analytics",
+      "Transaction Management",
+      "Marketing Automation",
+      "Commission Tracking"
+    ]
+  },
+  {
+    "businessType": "Manufacturing",
+    "painPoints": [
+      "Production scheduling",
+      "Quality control",
+      "Inventory",
+      "Supplier chain tracking",
+      "Maintenance scheduling",
+      "Workforce management",
+      "Order management",
+      "Compliance reporting",
+      "Cost tracking",
+      "Equipment monitoring"
+    ],
+    "recommendedStacks": [
+      "ERP System",
+      "Quality Control Tools",
+      "Inventory Management",
+      "Supplier Portal",
+      "Maintenance Scheduling",
+      "Production Planning",
+      "Compliance Reporting",
+      "IoT Monitoring"
+    ]
+  },
+  {
+    "businessType": "Logistics",
+    "painPoints": [
+      "Route optimization",
+      "Fleet tracking",
+      "Load planning",
+      "Compliance",
+      "Customer notifications",
+      "Fuel management",
+      "Driver management",
+      "Warehouse management",
+      "Delivery scheduling",
+      "Performance tracking"
+    ],
+    "recommendedStacks": [
+      "TMS",
+      "Fleet Tracking",
+      "Route Optimization Tools",
+      "Compliance Suite",
+      "Customer Tracking Portal",
+      "Warehouse Management",
+      "Driver Management",
+      "Fuel Management"
+    ]
+  },
+  {
+    "businessType": "Marketing Agencies",
+    "painPoints": [
+      "Campaign tracking",
+      "Client approvals",
+      "Asset management",
+      "Reporting",
+      "Lead scoring",
+      "Time tracking",
+      "Budget management",
+      "Creative collaboration",
+      "Performance analytics",
+      "Client billing"
+    ],
+    "recommendedStacks": [
+      "Campaign Management",
+      "Client Approval Workflow",
+      "Digital Asset Manager",
+      "Analytics Dashboard",
+      "Lead Scoring Tool",
+      "Time Tracking",
+      "Budget Management",
+      "Creative Collaboration"
+    ]
+  },
+  {
+    "businessType": "Nonprofits",
+    "painPoints": [
+      "Donor tracking",
+      "Grant management",
+      "Volunteer scheduling",
+      "Event planning",
+      "Fundraising",
+      "Program management",
+      "Compliance reporting",
+      "Communication",
+      "Impact measurement",
+      "Financial transparency"
+    ],
+    "recommendedStacks": [
+      "Donor CRM",
+      "Grant Tracking",
+      "Volunteer Management",
+      "Event Tools",
+      "Fundraising Platform",
+      "Program Management",
+      "Impact Measurement",
+      "Communication Tools"
+    ]
+  },
+  {
+    "businessType": "E-commerce",
+    "painPoints": [
+      "Product management",
+      "Inventory sync",
+      "Shipping automation",
+      "Returns management",
+      "Customer reviews",
+      "Order fulfillment",
+      "Payment processing",
+      "Marketing automation",
+      "Analytics tracking",
+      "Multi-channel management"
+    ],
+    "recommendedStacks": [
+      "E-commerce Platform",
+      "Inventory Sync",
+      "Shipping Integration",
+      "Returns Portal",
+      "Review Management",
+      "Order Management",
+      "Payment Gateway",
+      "Marketing Automation"
+    ]
+  },
+  {
+    "businessType": "Hospitality",
+    "painPoints": [
+      "Booking management",
+      "Guest communication",
+      "Inventory",
+      "Maintenance",
+      "Event hosting",
+      "Staff scheduling",
+      "Revenue management",
+      "Guest experience",
+      "Housekeeping coordination",
+      "Food & beverage management"
+    ],
+    "recommendedStacks": [
+      "Booking Engine",
+      "CRM",
+      "Inventory Management",
+      "Maintenance Tracking",
+      "Event Planning Tools",
+      "Staff Scheduling",
+      "Revenue Management",
+      "Guest Experience Platform"
+    ]
+  },
+  {
+    "businessType": "Education",
+    "painPoints": [
+      "Student enrollment",
+      "Grade tracking",
+      "Course scheduling",
+      "Parent communication",
+      "Resource sharing",
+      "Attendance tracking",
+      "Learning management",
+      "Assessment tools",
+      "Administrative tasks",
+      "Compliance reporting"
+    ],
+    "recommendedStacks": [
+      "LMS",
+      "Student Information System",
+      "Course Scheduling",
+      "Parent Communication Tools",
+      "Digital Resource Library",
+      "Assessment Platform",
+      "Administrative Tools",
+      "Compliance Reporting"
+    ]
+  },
+  {
+    "businessType": "Fitness/Wellness",
+    "painPoints": [
+      "Class booking",
+      "Membership management",
+      "Trainer scheduling",
+      "Billing",
+      "Client progress tracking",
+      "Equipment maintenance",
+      "Nutrition tracking",
+      "Marketing campaigns",
+      "Retention management",
+      "Performance analytics"
+    ],
+    "recommendedStacks": [
+      "Booking Platform",
+      "Membership CRM",
+      "Trainer Scheduling",
+      "Billing Tools",
+      "Progress Tracking App",
+      "Nutrition Platform",
+      "Marketing Automation",
+      "Analytics Dashboard"
+    ]
+  },
+  {
+    "businessType": "Technology Services",
+    "painPoints": [
+      "Ticket tracking",
+      "Asset management",
+      "Client onboarding",
+      "SLAs",
+      "Remote monitoring",
+      "Knowledge management",
+      "Time tracking",
+      "Billing automation",
+      "Performance monitoring",
+      "Security compliance"
+    ],
+    "recommendedStacks": [
+      "Help Desk",
+      "Asset Management",
+      "Client Onboarding",
+      "SLA Tracking",
+      "Remote Monitoring Suite",
+      "Knowledge Base",
+      "Time Tracking",
+      "Security Monitoring"
+    ]
+  }
+]

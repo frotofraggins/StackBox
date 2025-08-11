@@ -1,0 +1,230 @@
+openapi: 3.0.3
+info:
+  title: StackPro Data Ingestion API
+  version: 1.0.0
+  description: Ingest first‑party data (IoT & non‑IoT), register datasets, manage sources, and monitor ingest jobs.
+servers:
+  - url: https://api.sandbox.stackpro.io/data-ingestion
+    description: sandbox
+tags:
+  - name: sources
+  - name: datasets
+  - name: ingest
+  - name: status
+security:
+  - bearerAuth: []
+  - sigv4: []
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+  parameters:
+    TenantId:
+      name: x-tenant-id
+      in: header
+      required: true
+      schema: { type: string }
+    ClientId:
+      name: x-client-id
+      in: header
+      required: false
+      schema: { type: string }
+    RequestId:
+      name: x-request-id
+      in: header
+      required: false
+      schema: { type: string }
+  schemas:
+    DegradedResponse:
+      type: object
+      properties:
+        degraded: { type: boolean, default: true }
+        reason: { type: string }
+    Source:
+      type: object
+      required: [sourceId, kind, label, status]
+      properties:
+        sourceId: { type: string }
+        kind:
+          type: string
+          enum: [iot, pos, crm, web, erp, logs, sftp, api, batch]
+        label: { type: string }
+        status: { type: string, enum: [configured, connected, error] }
+        metadata: { type: object, additionalProperties: true }
+    Dataset:
+      type: object
+      required: [datasetId, title, class, schemaRef]
+      properties:
+        datasetId: { type: string }
+        title: { type: string }
+        class:
+          type: string
+          enum: [iot, pos, crm, web, erp, logs, custom]
+        schemaRef: { type: string, description: "e.g. pos_sales_min_v1" }
+        retentionDays: { type: integer, default: 365 }
+        piiPolicyId: { type: string, default: "default-v2" }
+        status: { type: string, enum: [registered, ready, ingesting, error], default: registered }
+        tags:
+          type: array
+          items: { type: string }
+    IngestRequest:
+      type: object
+      required: [datasetId, format]
+      properties:
+        datasetId: { type: string }
+        format: { type: string, enum: [jsonl, csv, parquet, json] }
+        compression: { type: string, enum: [none, gzip, zstd], default: none }
+        payload:
+          description: Inline payload for small dev uploads (<= 1MB)
+          type: array
+          items: { type: object }
+    IngestInitResponse:
+      type: object
+      properties:
+        uploadUrl: { type: string }
+        expiresAt: { type: string, format: date-time }
+        objectKey: { type: string }
+    JobStatus:
+      type: object
+      properties:
+        jobId: { type: string }
+        datasetId: { type: string }
+        status: { type: string, enum: [queued, running, succeeded, failed, degraded] }
+        metrics:
+          type: object
+          properties:
+            bytes: { type: integer }
+            records: { type: integer }
+            errors: { type: integer }
+        startedAt: { type: string, format: date-time }
+        finishedAt: { type: string, format: date-time }
+paths:
+  /v1/sources:
+    get:
+      tags: [sources]
+      summary: List configured sources for tenant
+      parameters: [ { $ref: '#/components/parameters/TenantId' }, { $ref: '#/components/parameters/ClientId' } ]
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sources:
+                    type: array
+                    items: { $ref: '#/components/schemas/Source' }
+                  degraded: { type: boolean }
+        '503':
+          description: degraded
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DegradedResponse' }
+  /v1/datasets:
+    post:
+      tags: [datasets]
+      summary: Register a dataset for ingestion
+      parameters: [ { $ref: '#/components/parameters/TenantId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Dataset' }
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Dataset' }
+        '503':
+          description: degraded
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DegradedResponse' }
+    get:
+      tags: [datasets]
+      summary: List datasets
+      parameters: [ { $ref: '#/components/parameters/TenantId' } ]
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datasets:
+                    type: array
+                    items: { $ref: '#/components/schemas/Dataset' }
+                  degraded: { type: boolean }
+  /v1/ingest/init:
+    post:
+      tags: [ingest]
+      summary: Create a signed upload for large files
+      parameters: [ { $ref: '#/components/parameters/TenantId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [datasetId, format]
+              properties:
+                datasetId: { type: string }
+                format: { type: string, enum: [jsonl, csv, parquet, json] }
+                compression: { type: string, enum: [none, gzip, zstd], default: none }
+      responses:
+        '200':
+          description: upload ready
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/IngestInitResponse' }
+        '503':
+          description: degraded
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DegradedResponse' }
+  /v1/ingest/submit:
+    post:
+      tags: [ingest]
+      summary: Finalize an upload to queue an ingest job
+      parameters: [ { $ref: '#/components/parameters/TenantId' } ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [datasetId, objectKey]
+              properties:
+                datasetId: { type: string }
+                objectKey: { type: string }
+      responses:
+        '202':
+          description: job queued
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobStatus' }
+  /v1/jobs/{jobId}:
+    get:
+      tags: [status]
+      summary: Get job status
+      parameters:
+        - { $ref: '#/components/parameters/TenantId' }
+        - name: jobId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/JobStatus' }

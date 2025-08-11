@@ -1,0 +1,5 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "paths": ["/", "/pricing", "/features", "/dashboard", "/login"],
+  "viewports": [[1440, 900], [390, 844]]
+}

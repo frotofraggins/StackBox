@@ -1,0 +1,27 @@
+{
+  "schemaMap": {
+    "pos_sales_min_v1": {
+      "class": "pos",
+      "granularity": "minute",
+      "required": ["minute","store","metrics"],
+      "fields": {
+        "minute": "datetime",
+        "store": "string",
+        "region": "string",
+        "metrics.orders": "number",
+        "metrics.revenue": "number"
+      }
+    },
+    "web_sessions_min_v1": {
+      "class": "web",
+      "granularity": "minute",
+      "required": ["minute","metrics"],
+      "fields": {
+        "minute": "datetime",
+        "region": "string",
+        "metrics.sessions": "number",
+        "metrics.bounceRate": "number"
+      }
+    }
+  }
+}

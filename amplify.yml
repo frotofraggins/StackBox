@@ -5,21 +5,30 @@ applications:
       phases:
         preBuild:
           commands:
-            - nvm install 22
-            - nvm use 22
+            - cd frontend
+            - corepack enable
+            - node -v
             - npm ci
         build:
           commands:
             - npm run build
       artifacts:
-        baseDirectory: out
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
+    runtime:
+      name: nodejs
+      version: 22
     customHeaders: []
-    redirects:
-      - source: </^((?!(?:.*\\.).+)$|^$)>    # anything w/o a dot (no file extension)
-        target: /index.html
-        status: 200
+    environmentVariables:
+      - name: AMPLIFY_MONOREPO_APP_ROOT
+        value: frontend
+      - name: NEXT_PUBLIC_API_URL
+        value: /api
+      - name: NEXT_PUBLIC_WS_URL
+        value: wss://ws-sandbox.stackpro.io
+      - name: NEXT_PUBLIC_ENV
+        value: sandbox

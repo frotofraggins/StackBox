@@ -1,0 +1,437 @@
+{
+  "Construction": [
+    {
+      "name": "Procore",
+      "category": "project-management",
+      "description": "Construction project management and collaboration platform",
+      "provider": "Procore Technologies",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "PlanGrid",
+      "category": "document-management",
+      "description": "Construction blueprint and document management",
+      "provider": "Autodesk",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    },
+    {
+      "name": "QuickBooks",
+      "category": "accounting",
+      "description": "Small business accounting and financial management",
+      "provider": "Intuit",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Tradesmen": [
+    {
+      "name": "Jobber",
+      "category": "field-service",
+      "description": "Field service management for home service businesses",
+      "provider": "Jobber",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Housecall Pro",
+      "category": "field-service",
+      "description": "Scheduling and customer management for home services",
+      "provider": "Housecall Pro",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Xero",
+      "category": "accounting",
+      "description": "Cloud-based accounting software",
+      "provider": "Xero",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Legal": [
+    {
+      "name": "Clio",
+      "category": "case-management",
+      "description": "Legal practice management software",
+      "provider": "Clio",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "MyCase",
+      "category": "case-management",
+      "description": "Legal case management and client portal",
+      "provider": "MyCase",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "DocuSign",
+      "category": "e-signature",
+      "description": "Electronic signature and document management",
+      "provider": "DocuSign",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Retail": [
+    {
+      "name": "Square POS",
+      "category": "pos",
+      "description": "Point-of-sale system for retail businesses",
+      "provider": "Square",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Shopify",
+      "category": "e-commerce",
+      "description": "E-commerce platform and online store builder",
+      "provider": "Shopify",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Lightspeed",
+      "category": "pos",
+      "description": "Retail POS and inventory management system",
+      "provider": "Lightspeed",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    }
+  ],
+  "Medical": [
+    {
+      "name": "Athenahealth",
+      "category": "ehr",
+      "description": "Electronic health records and practice management",
+      "provider": "Athenahealth",
+      "integrationComplexity": "complex",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "DrChrono",
+      "category": "ehr",
+      "description": "Cloud-based EHR and practice management",
+      "provider": "DrChrono",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Kareo",
+      "category": "practice-management",
+      "description": "Medical practice management and billing",
+      "provider": "Kareo",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Real Estate": [
+    {
+      "name": "MLS Grid",
+      "category": "listing",
+      "description": "Multiple listing service data platform",
+      "provider": "MLS Grid",
+      "integrationComplexity": "complex",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Zillow Premier Agent",
+      "category": "lead-generation",
+      "description": "Real estate lead generation and CRM",
+      "provider": "Zillow",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    },
+    {
+      "name": "DotLoop",
+      "category": "transaction-management",
+      "description": "Real estate transaction management platform",
+      "provider": "Zillow Group",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Manufacturing": [
+    {
+      "name": "SAP Business One",
+      "category": "erp",
+      "description": "Enterprise resource planning for manufacturing",
+      "provider": "SAP",
+      "integrationComplexity": "complex",
+      "authType": "custom",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Fishbowl",
+      "category": "inventory",
+      "description": "Manufacturing inventory management system",
+      "provider": "Fishbowl",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "MasterControl",
+      "category": "quality-management",
+      "description": "Quality and compliance management system",
+      "provider": "MasterControl",
+      "integrationComplexity": "complex",
+      "authType": "oauth2",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Logistics": [
+    {
+      "name": "Samsara",
+      "category": "fleet-management",
+      "description": "Fleet management and IoT platform",
+      "provider": "Samsara",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "DAT Load Board",
+      "category": "load-matching",
+      "description": "Freight matching and load board platform",
+      "provider": "DAT Solutions",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "McLeod",
+      "category": "tms",
+      "description": "Transportation management system",
+      "provider": "McLeod Software",
+      "integrationComplexity": "complex",
+      "authType": "custom",
+      "monthlyUsage": "heavy"
+    }
+  ],
+  "Marketing Agencies": [
+    {
+      "name": "HubSpot",
+      "category": "crm",
+      "description": "Inbound marketing and CRM platform",
+      "provider": "HubSpot",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Google Ads",
+      "category": "advertising",
+      "description": "Google advertising platform",
+      "provider": "Google",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Facebook Ads Manager",
+      "category": "advertising",
+      "description": "Facebook and Instagram advertising platform",
+      "provider": "Meta",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    }
+  ],
+  "Nonprofits": [
+    {
+      "name": "Salesforce Nonprofit Cloud",
+      "category": "donor-management",
+      "description": "CRM platform designed for nonprofits",
+      "provider": "Salesforce",
+      "integrationComplexity": "complex",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "DonorPerfect",
+      "category": "donor-management",
+      "description": "Fundraising and donor management software",
+      "provider": "DonorPerfect",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    },
+    {
+      "name": "GrantHub",
+      "category": "grant-management",
+      "description": "Grant tracking and management platform",
+      "provider": "GrantHub",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "light"
+    }
+  ],
+  "E-commerce": [
+    {
+      "name": "WooCommerce",
+      "category": "e-commerce",
+      "description": "WordPress e-commerce plugin",
+      "provider": "Automattic",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Amazon Seller Central",
+      "category": "marketplace",
+      "description": "Amazon marketplace integration",
+      "provider": "Amazon",
+      "integrationComplexity": "complex",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "ShipStation",
+      "category": "shipping",
+      "description": "Multi-carrier shipping software",
+      "provider": "ShipStation",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Hospitality": [
+    {
+      "name": "Booking.com",
+      "category": "reservation",
+      "description": "Online accommodation booking platform",
+      "provider": "Booking Holdings",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "OpenTable",
+      "category": "reservation",
+      "description": "Restaurant reservation and management platform",
+      "provider": "OpenTable",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    },
+    {
+      "name": "Toast POS",
+      "category": "pos",
+      "description": "Restaurant point-of-sale system",
+      "provider": "Toast",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    }
+  ],
+  "Education": [
+    {
+      "name": "Google Classroom",
+      "category": "lms",
+      "description": "Learning management system by Google",
+      "provider": "Google",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Canvas",
+      "category": "lms",
+      "description": "Learning management system for education",
+      "provider": "Instructure",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "PowerSchool",
+      "category": "student-information",
+      "description": "Student information system",
+      "provider": "PowerSchool",
+      "integrationComplexity": "complex",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Fitness/Wellness": [
+    {
+      "name": "MindBody",
+      "category": "booking",
+      "description": "Fitness and wellness business management platform",
+      "provider": "MindBody",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "MyFitnessPal",
+      "category": "nutrition",
+      "description": "Nutrition tracking and meal planning app",
+      "provider": "MyFitnessPal",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "light"
+    },
+    {
+      "name": "Zen Planner",
+      "category": "gym-management",
+      "description": "Gym and fitness studio management software",
+      "provider": "Zen Planner",
+      "integrationComplexity": "moderate",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    }
+  ],
+  "Technology Services": [
+    {
+      "name": "Zendesk",
+      "category": "support",
+      "description": "Customer service and support ticketing system",
+      "provider": "Zendesk",
+      "integrationComplexity": "simple",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "Jira Service Management",
+      "category": "itsm",
+      "description": "IT service management and ticketing platform",
+      "provider": "Atlassian",
+      "integrationComplexity": "moderate",
+      "authType": "oauth2",
+      "monthlyUsage": "heavy"
+    },
+    {
+      "name": "PagerDuty",
+      "category": "incident-management",
+      "description": "Incident response and alerting platform",
+      "provider": "PagerDuty",
+      "integrationComplexity": "simple",
+      "authType": "api-key",
+      "monthlyUsage": "moderate"
+    }
+  ]
+}

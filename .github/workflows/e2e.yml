@@ -1,0 +1,84 @@
+name: E2E Tests
+on: [pull_request]
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          
+      - name: Install dependencies
+        run: npm i -g pnpm && pnpm i
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          
+      - name: DNS Precheck
+        run: node scripts/dns-precheck.js
+        
+      - name: Run E2E Test Suite
+        run: node scripts/e2e-test-suite.js
+        
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-artifacts
+          path: |
+            TEST_SUMMARY.md
+            artifacts/**
+            logs/**
+            
+      - name: Create GitHub Issues on Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Read test results
+            let testResults = {};
+            try {
+              testResults = JSON.parse(fs.readFileSync('logs/summary.json', 'utf8'));
+            } catch (error) {
+              console.log('Could not read test results');
+            }
+            
+            // Create issue for failed E2E tests
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `E2E Tests Failed - ${context.sha.substring(0, 7)}`,
+              body: `
+            ## E2E Test Failure Report
+            
+            **Commit**: ${context.sha}
+            **Run**: ${context.runId}
+            **PR**: #${context.payload.pull_request?.number || 'N/A'}
+            
+            ### Test Results
+            \`\`\`json
+            ${JSON.stringify(testResults, null, 2)}
+            \`\`\`
+            
+            ### Artifacts
+            Check the workflow run for detailed logs and artifacts.
+            
+            ### Next Steps
+            1. Review the failed tests in the artifacts
+            2. Check DNS propagation status
+            3. Verify infrastructure deployment
+            4. Re-run tests after fixes
+            `,
+              labels: ['bug', 'e2e-failure', 'ci']
+            });

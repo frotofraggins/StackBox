@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import ThemeToggle from '../components/theme/ThemeToggle'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -56,16 +57,21 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen bg-gradient-dark flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        {/* Theme Toggle - Fixed Position */}
+        <div className="fixed top-4 right-4 z-50">
+          <ThemeToggle />
+        </div>
+
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           {/* Logo */}
           <Link href="/" className="flex justify-center">
-            <div className="text-3xl font-bold text-primary">StackPro</div>
+            <div className="text-3xl font-bold text-white">StackPro</div>
           </Link>
-          <h2 className="mt-6 text-center text-3xl font-bold text-text-light">
+          <h2 className="mt-6 text-center text-3xl font-bold text-white">
             Welcome back
           </h2>
-          <p className="mt-2 text-center text-sm text-text-light/80">
+          <p className="mt-2 text-center text-sm text-white/80">
             Don't have an account?{' '}
             <Link href="/signup" className="font-medium text-accent hover:text-accent/80">
               Sign up for free
@@ -74,16 +80,16 @@ export default function Login() {
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="card-glass">
+          <div className="bg-background rounded-lg shadow-2xl p-8 border border-border">
             <form className="space-y-6" onSubmit={handleSubmit}>
               {/* Email Field */}
               <div>
-                <label htmlFor="email" className="form-label">
+                <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
                   Email address
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Mail className="h-5 w-5 text-text-muted" />
+                    <Mail className="h-5 w-5 text-muted" />
                   </div>
                   <input
                     id="email"
@@ -93,7 +99,7 @@ export default function Login() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="form-input pl-10"
+                    className="w-full px-4 py-3 pl-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -101,12 +107,12 @@ export default function Login() {
 
               {/* Password Field */}
               <div>
-                <label htmlFor="password" className="form-label">
+                <label htmlFor="password" className="block text-sm font-medium text-foreground mb-2">
                   Password
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <Lock className="h-5 w-5 text-text-muted" />
+                    <Lock className="h-5 w-5 text-muted" />
                   </div>
                   <input
                     id="password"
@@ -116,14 +122,14 @@ export default function Login() {
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="form-input pl-10 pr-10"
+                    className="w-full px-4 py-3 pl-10 pr-10 border border-border rounded-lg bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-primary transition-colors"
                     placeholder="••••••••"
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="text-text-muted hover:text-primary transition-colors"
+                      className="text-muted hover:text-primary transition-colors"
                     >
                       {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
@@ -140,15 +146,15 @@ export default function Login() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 text-primary focus:ring-primary border-border bg-surface rounded"
+                    className="h-4 w-4 text-primary focus:ring-primary border-border bg-background rounded"
                   />
-                  <label htmlFor="remember-me" className="ml-2 block text-sm text-text-light">
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-foreground">
                     Remember me
                   </label>
                 </div>
 
                 <div className="text-sm">
-                  <Link href="/forgot-password" className="font-medium text-primary hover:text-primary/80">
+                  <Link href="/forgot-password" className="font-medium text-primary hover:text-secondary">
                     Forgot your password?
                   </Link>
                 </div>
@@ -159,11 +165,15 @@ export default function Login() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`btn-large w-full ${isLoading ? 'btn-disabled' : 'btn-primary'}`}
+                  className={`w-full px-6 py-4 rounded-lg font-semibold text-lg transition-all ${
+                    isLoading 
+                      ? 'bg-muted/40 text-muted cursor-not-allowed' 
+                      : 'bg-primary text-white hover:opacity-90'
+                  }`}
                 >
                   {isLoading ? (
                     <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -180,10 +190,10 @@ export default function Login() {
             <div className="mt-6">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
+                  <div className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                  <span className="px-2 bg-background text-muted">Or continue with</span>
                 </div>
               </div>
 
@@ -191,7 +201,7 @@ export default function Login() {
                 {/* Google Login */}
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-border rounded-lg shadow-sm bg-background text-sm font-medium text-muted hover:bg-[color:var(--border)]/20 transition-colors"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -205,7 +215,7 @@ export default function Login() {
                 {/* Microsoft Login */}
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center py-2 px-4 border border-border rounded-lg shadow-sm bg-background text-sm font-medium text-muted hover:bg-[color:var(--border)]/20 transition-colors"
                 >
                   <svg className="h-5 w-5" viewBox="0 0 24 24">
                     <path fill="#f25022" d="M1 1h10v10H1z"/>
@@ -220,22 +230,22 @@ export default function Login() {
           </div>
 
           {/* Demo Account */}
-          <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-blue-800 mb-2">
+          <div className="mt-6 bg-accent/10 border border-accent/20 rounded-lg p-4">
+            <h3 className="text-sm font-medium text-accent mb-2">
               🎯 Try Demo Account
             </h3>
-            <div className="text-xs text-blue-700 space-y-1">
+            <div className="text-xs text-foreground space-y-1">
               <div><strong>Email:</strong> demo@stackpro.io</div>
               <div><strong>Password:</strong> demo123</div>
             </div>
-            <p className="text-xs text-blue-600 mt-2">
+            <p className="text-xs text-muted mt-2">
               Use these credentials to explore the full StackPro dashboard.
             </p>
           </div>
 
           {/* Back to Home */}
           <div className="mt-6 text-center">
-            <Link href="/" className="text-sm text-gray-600 hover:text-gray-800">
+            <Link href="/" className="text-sm text-white/80 hover:text-white transition-colors">
               ← Back to StackPro.io
             </Link>
           </div>

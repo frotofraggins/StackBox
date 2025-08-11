@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next build",
+    "preview": "next start -p 3000",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "sandbox": "npx ampx sandbox",
-    "deploy": "npx ampx pipeline deploy --branch main"
+    "deploy": "npx ampx pipeline deploy --branch main",
+    "snap:before": "npm run build && npm run preview & sleep 3 && node ../tools/visual-diff/capture.js before",
+    "snap:after": "npm run build && npm run preview & sleep 3 && node ../tools/visual-diff/capture.js after",
+    "snap:index": "node ../tools/visual-diff/index.js",
+    "health": "node -e \"fetch('http://localhost:3000/health').then(r=>r.json()).then(console.log)\""
   },
   "dependencies": {
     "@aws-amplify/backend": "^1.16.1",
