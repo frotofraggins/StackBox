@@ -3,19 +3,20 @@
  * Cost Sanity Check Script
  * Monitors AWS free-tier usage and costs
  */
-const AWS = require('aws-sdk');
+const { CloudWatchClient, GetMetricStatisticsCommand } = require('@aws-sdk/client-cloudwatch');
+const { BudgetsClient, DescribeBudgetsCommand } = require('@aws-sdk/client-budgets');
 
-// Configure AWS
-AWS.config.update({ region: process.env.AWS_REGION || 'us-west-2' });
-
-const cloudwatch = new AWS.CloudWatch();
-const budgets = new AWS.Budgets();
+// Configure AWS clients
+const region = process.env.AWS_REGION || 'us-west-2';
+const cloudwatch = new CloudWatchClient({ region });
+const budgets = new BudgetsClient({ region: 'us-east-1' }); // Budgets is global service in us-east-1
 
 async function checkBudget() {
   try {
-    const result = await budgets.describeBudgets({ 
+    const command = new DescribeBudgetsCommand({ 
       AccountId: process.env.AWS_ACCOUNT_ID || 'default' 
-    }).promise();
+    });
+    const result = await budgets.send(command);
     
     const budget = result.Budgets?.find(b => 
       b.BudgetName?.includes('stackpro') || 
@@ -53,7 +54,8 @@ async function getMetric(namespace, metricName, dimensions = []) {
       Dimensions: dimensions,
     };
     
-    const result = await cloudwatch.getMetricStatistics(params).promise();
+    const command = new GetMetricStatisticsCommand(params);
+    const result = await cloudwatch.send(command);
     const datapoints = result.Datapoints || [];
     
     if (datapoints.length === 0) return 0;

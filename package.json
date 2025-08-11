@@ -29,7 +29,9 @@
   "dependencies": {
     "@aws-sdk/client-acm": "^3.863.0",
     "@aws-sdk/client-amplify": "^3.863.0",
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.864.0",
     "@aws-sdk/client-apigatewayv2": "^3.863.0",
+    "@aws-sdk/client-appconfig": "^3.864.0",
     "@aws-sdk/client-budgets": "^3.863.0",
     "@aws-sdk/client-cloudfront": "^3.863.0",
     "@aws-sdk/client-cloudwatch": "^3.863.0",
@@ -71,7 +73,10 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.2",
-    "puppeteer": "^21.11.0"
+    "puppeteer": "^21.11.0",
+    "turbo": "^1.13.4",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
   },
   "engines": {
     "node": ">=22 <23",

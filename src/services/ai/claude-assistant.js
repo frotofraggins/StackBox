@@ -1,9 +1,15 @@
-const AWS = require('aws-sdk');
+const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, GetCommand, QueryCommand } = require('@aws-sdk/lib-dynamodb');
 
 class ClaudeAssistant {
   constructor() {
-    this.bedrock = new AWS.BedrockRuntime();
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    const region = process.env.AWS_REGION || 'us-west-2';
+    
+    // Initialize AWS SDK v3 clients
+    this.bedrock = new BedrockRuntimeClient({ region });
+    const dynamoDbClient = new DynamoDBClient({ region });
+    this.dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
     this.logger = require('../logger');
     
     // Import our custom services
@@ -196,13 +202,14 @@ class ClaudeAssistant {
 
       // Try to get client-specific config from database
       try {
-        const result = await this.dynamodb.get({
+        const command = new GetCommand({
           TableName: 'StackPro-AIEmbeddings',
           Key: {
             clientId,
             documentId: 'client-config'
           }
-        }).promise();
+        });
+        const result = await this.dynamodb.send(command);
 
         if (result.Item) {
           return { ...defaultConfig, ...result.Item.config };
@@ -349,12 +356,13 @@ class ClaudeAssistant {
           messages: payload.messages
         };
 
-        const response = await this.bedrock.invokeModel({
+        const command = new InvokeModelCommand({
           modelId: this.claudeModel,
           contentType: 'application/json',
           accept: 'application/json',
           body: JSON.stringify(requestBody)
-        }).promise();
+        });
+        const response = await this.bedrock.send(command);
 
         const responseBody = JSON.parse(new TextDecoder().decode(response.body));
 
@@ -427,7 +435,7 @@ class ClaudeAssistant {
    */
   async getConversationHistory(conversationId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: 'StackPro-ChatHistory',
         KeyConditionExpression: 'conversationId = :conversationId',
         ExpressionAttributeValues: {
@@ -435,7 +443,8 @@ class ClaudeAssistant {
         },
         ScanIndexForward: true, // Oldest first
         Limit: this.conversationHistoryLimit * 2 // Account for user/assistant pairs
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       return result.Items || [];
 
@@ -462,7 +471,7 @@ class ClaudeAssistant {
 
     try {
       // Store conversation turn
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-ChatHistory',
         Item: {
           conversationId,
@@ -478,7 +487,8 @@ class ClaudeAssistant {
           timestamp,
           ttl: Math.floor(Date.now() / 1000) + (90 * 24 * 60 * 60) // 90 days
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       this.logger.info(`Conversation turn stored`, {
         conversationId,
@@ -505,7 +515,7 @@ class ClaudeAssistant {
       const timestamp = new Date().toISOString();
       const date = timestamp.split('T')[0];
 
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-AIUsage',
         Item: {
           clientId,
@@ -514,7 +524,8 @@ class ClaudeAssistant {
           ...usageData,
           service: 'claude-assistant'
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
     } catch (error) {
       this.logger.error(`Failed to track AI usage`, {
@@ -534,7 +545,7 @@ class ClaudeAssistant {
     const conversationId = `conv-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-ChatHistory',
         Item: {
           conversationId,
@@ -546,7 +557,8 @@ class ClaudeAssistant {
           messageCount: 0,
           type: 'conversation-metadata'
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       return conversationId;
     } catch (error) {
@@ -561,7 +573,7 @@ class ClaudeAssistant {
    */
   async getClientConversations(clientId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: 'StackPro-ChatHistory',
         IndexName: 'ClientIndex',
         KeyConditionExpression: 'clientId = :clientId',
@@ -574,7 +586,8 @@ class ClaudeAssistant {
           ':type': 'conversation-metadata'
         },
         ScanIndexForward: false // Newest first
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       return result.Items.map(item => ({
         conversationId: item.conversationId,
@@ -596,7 +609,7 @@ class ClaudeAssistant {
    */
   async updateClientConfig(clientId, config) {
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-AIEmbeddings',
         Item: {
           clientId,
@@ -605,7 +618,8 @@ class ClaudeAssistant {
           type: 'client-config',
           updatedAt: new Date().toISOString()
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       this.logger.info(`Client AI config updated`, {
         clientId,

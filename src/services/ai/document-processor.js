@@ -1,4 +1,7 @@
-const AWS = require('aws-sdk');
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectsCommand } = require('@aws-sdk/client-s3');
+const { TextractClient, DetectDocumentTextCommand } = require('@aws-sdk/client-textract');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, GetCommand, QueryCommand, DeleteCommand } = require('@aws-sdk/lib-dynamodb');
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -8,9 +11,13 @@ const textract = require('textract'); // For various document formats
 
 class DocumentProcessor {
   constructor() {
-    this.s3 = new AWS.S3();
-    this.textract = new AWS.Textract();
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    const region = process.env.AWS_REGION || 'us-west-2';
+    
+    // Initialize AWS SDK v3 clients
+    this.s3 = new S3Client({ region });
+    this.textract = new TextractClient({ region });
+    const dynamoDbClient = new DynamoDBClient({ region });
+    this.dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
     this.logger = require('../logger');
     
     this.bucketName = 'stackpro-knowledge-base';
@@ -130,7 +137,7 @@ class DocumentProcessor {
   async storeRawFile(clientId, documentId, fileData, fileBuffer) {
     const key = `${clientId}/documents/raw/${documentId}/${fileData.originalname}`;
     
-    await this.s3.upload({
+    const command = new PutObjectCommand({
       Bucket: this.bucketName,
       Key: key,
       Body: fileBuffer,
@@ -141,12 +148,13 @@ class DocumentProcessor {
         'original-name': fileData.originalname,
         'uploaded-at': new Date().toISOString()
       },
-      Tags: [
+      Tagging: [
         { Key: 'ClientId', Value: clientId },
         { Key: 'DocumentId', Value: documentId },
         { Key: 'Type', Value: 'raw-document' }
       ].map(tag => `${tag.Key}=${tag.Value}`).join('&')
-    }).promise();
+    });
+    await this.s3.send(command);
 
     return key;
   }
@@ -194,11 +202,12 @@ class DocumentProcessor {
    */
   async extractFromPDF(fileBuffer) {
     try {
-      const result = await this.textract.detectDocumentText({
+      const command = new DetectDocumentTextCommand({
         Document: {
           Bytes: fileBuffer
         }
-      }).promise();
+      });
+      const result = await this.textract.send(command);
 
       const text = result.Blocks
         .filter(block => block.BlockType === 'LINE')
@@ -302,11 +311,12 @@ class DocumentProcessor {
    */
   async extractWithTextract(fileBuffer, mimeType) {
     try {
-      const result = await this.textract.detectDocumentText({
+      const command = new DetectDocumentTextCommand({
         Document: {
           Bytes: fileBuffer
         }
-      }).promise();
+      });
+      const result = await this.textract.send(command);
 
       return result.Blocks
         .filter(block => block.BlockType === 'LINE')
@@ -324,7 +334,7 @@ class DocumentProcessor {
   async storeProcessedText(clientId, documentId, textContent) {
     const key = `${clientId}/documents/processed/${documentId}/text.txt`;
     
-    await this.s3.upload({
+    const command = new PutObjectCommand({
       Bucket: this.bucketName,
       Key: key,
       Body: textContent,
@@ -335,12 +345,13 @@ class DocumentProcessor {
         'processed-at': new Date().toISOString(),
         'text-length': textContent.length.toString()
       },
-      Tags: [
+      Tagging: [
         { Key: 'ClientId', Value: clientId },
         { Key: 'DocumentId', Value: documentId },
         { Key: 'Type', Value: 'processed-text' }
       ].map(tag => `${tag.Key}=${tag.Value}`).join('&')
-    }).promise();
+    });
+    await this.s3.send(command);
 
     return key;
   }
@@ -349,7 +360,7 @@ class DocumentProcessor {
    * Store document metadata in DynamoDB
    */
   async storeMetadata(clientId, documentId, metadata) {
-    await this.dynamodb.put({
+    const command = new PutCommand({
       TableName: 'StackPro-AIEmbeddings',
       Item: {
         clientId,
@@ -358,7 +369,8 @@ class DocumentProcessor {
         type: 'document-metadata',
         timestamp: new Date().toISOString()
       }
-    }).promise();
+    });
+    await this.dynamodb.send(command);
   }
 
   /**
@@ -366,7 +378,7 @@ class DocumentProcessor {
    */
   async storeErrorMetadata(clientId, documentId, errorData) {
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-AIEmbeddings',
         Item: {
           clientId,
@@ -375,7 +387,8 @@ class DocumentProcessor {
           type: 'document-error',
           timestamp: new Date().toISOString()
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
     } catch (error) {
       this.logger.error('Failed to store error metadata', { error: error.message });
     }
@@ -386,13 +399,14 @@ class DocumentProcessor {
    */
   async getDocumentMetadata(clientId, documentId) {
     try {
-      const result = await this.dynamodb.get({
+      const command = new GetCommand({
         TableName: 'StackPro-AIEmbeddings',
         Key: {
           clientId,
           documentId
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       return result.Item || null;
     } catch (error) {
@@ -410,10 +424,11 @@ class DocumentProcessor {
         throw new Error('Document not found or not processed');
       }
 
-      const result = await this.s3.getObject({
+      const command = new GetObjectCommand({
         Bucket: this.bucketName,
         Key: metadata.processedS3Key
-      }).promise();
+      });
+      const result = await this.s3.send(command);
 
       return result.Body.toString('utf-8');
     } catch (error) {
@@ -426,7 +441,7 @@ class DocumentProcessor {
    */
   async listClientDocuments(clientId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: 'StackPro-AIEmbeddings',
         KeyConditionExpression: 'clientId = :clientId',
         FilterExpression: '#type = :type',
@@ -437,7 +452,8 @@ class DocumentProcessor {
           ':clientId': clientId,
           ':type': 'document-metadata'
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       return result.Items.map(item => ({
         documentId: item.documentId,
@@ -473,22 +489,24 @@ class DocumentProcessor {
       }
 
       if (objectsToDelete.length > 0) {
-        await this.s3.deleteObjects({
+        const deleteCommand = new DeleteObjectsCommand({
           Bucket: this.bucketName,
           Delete: {
             Objects: objectsToDelete
           }
-        }).promise();
+        });
+        await this.s3.send(deleteCommand);
       }
 
       // Delete metadata from DynamoDB
-      await this.dynamodb.delete({
+      const deleteMetadataCommand = new DeleteCommand({
         TableName: 'StackPro-AIEmbeddings',
         Key: {
           clientId,
           documentId
         }
-      }).promise();
+      });
+      await this.dynamodb.send(deleteMetadataCommand);
 
       this.logger.info(`Document deleted successfully`, {
         clientId,

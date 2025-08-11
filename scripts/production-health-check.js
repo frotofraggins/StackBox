@@ -5,7 +5,12 @@
  * Comprehensive testing suite for production deployment
  */
 
-const AWS = require('aws-sdk');
+const { CloudWatchClient, GetMetricStatisticsCommand, ListMetricsCommand, DescribeAlarmsCommand } = require('@aws-sdk/client-cloudwatch');
+const { RDSClient, DescribeDBInstancesCommand } = require('@aws-sdk/client-rds');
+const { S3Client, ListBucketsCommand, HeadBucketCommand, GetBucketPolicyCommand, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { DynamoDBClient, ListTablesCommand } = require('@aws-sdk/client-dynamodb');
+const { BudgetsClient, DescribeBudgetsCommand, DescribeNotificationsForBudgetCommand } = require('@aws-sdk/client-budgets');
+const { STSClient, GetCallerIdentityCommand } = require('@aws-sdk/client-sts');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
@@ -39,27 +44,15 @@ const HEALTH_CONFIG = {
 
 class ProductionHealthChecker {
   constructor() {
-    // AWS clients
-    this.cloudwatch = new AWS.CloudWatch({ 
-      region: HEALTH_CONFIG.region,
-      credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-    });
-    this.rds = new AWS.RDS({ 
-      region: HEALTH_CONFIG.region,
-      credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-    });
-    this.s3 = new AWS.S3({ 
-      region: HEALTH_CONFIG.region,
-      credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-    });
-    this.dynamodb = new AWS.DynamoDB({ 
-      region: HEALTH_CONFIG.region,
-      credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-    });
-    this.budgets = new AWS.Budgets({ 
-      region: 'us-east-1', // Budgets API is global
-      credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-    });
+    // AWS v3 clients
+    const clientConfig = { region: HEALTH_CONFIG.region };
+    
+    this.cloudwatch = new CloudWatchClient(clientConfig);
+    this.rds = new RDSClient(clientConfig);
+    this.s3 = new S3Client(clientConfig);
+    this.dynamodb = new DynamoDBClient(clientConfig);
+    this.budgets = new BudgetsClient({ region: 'us-east-1' }); // Budgets API is global
+    this.sts = new STSClient(clientConfig);
     
     this.testResults = {
       frontend: { status: 'pending', tests: [] },
@@ -166,7 +159,8 @@ class ProductionHealthChecker {
     
     try {
       // Find RDS instances
-      const instances = await this.rds.describeDBInstances().promise();
+      const command = new DescribeDBInstancesCommand({});
+      const instances = await this.rds.send(command);
       const stackProInstance = instances.DBInstances.find(db => 
         db.DBInstanceIdentifier.includes('stackpro')
       );
@@ -208,7 +202,8 @@ class ProductionHealthChecker {
     
     try {
       // Find S3 buckets
-      const buckets = await this.s3.listBuckets().promise();
+      const command = new ListBucketsCommand({});
+      const buckets = await this.s3.send(command);
       const stackProBucket = buckets.Buckets.find(bucket => 
         bucket.Name.includes('stackpro')
       );
@@ -218,15 +213,17 @@ class ProductionHealthChecker {
       }
       
       // Test 1: Bucket accessibility
-      await this.s3.headBucket({ Bucket: stackProBucket.Name }).promise();
+      const headBucketCommand = new HeadBucketCommand({ Bucket: stackProBucket.Name });
+      await this.s3.send(headBucketCommand);
       this.addTestResult('storage', 'S3 Bucket Access', 'passed', 
         `Bucket: ${stackProBucket.Name}`);
       
       // Test 2: Bucket policies
       try {
-        const policy = await this.s3.getBucketPolicy({ 
+        const policyCommand = new GetBucketPolicyCommand({ 
           Bucket: stackProBucket.Name 
-        }).promise();
+        });
+        const policy = await this.s3.send(policyCommand);
         this.addTestResult('storage', 'Bucket Policy', 'passed', 'Policy configured');
       } catch (policyError) {
         if (policyError.code === 'NoSuchBucketPolicy') {
@@ -253,7 +250,8 @@ class ProductionHealthChecker {
     
     try {
       // Test 1: DynamoDB tables
-      const tables = await this.dynamodb.listTables().promise();
+      const listTablesCommand = new ListTablesCommand({});
+      const tables = await this.dynamodb.send(listTablesCommand);
       const messagingTables = tables.TableNames.filter(table => 
         table.includes('stackpro') && 
         (table.includes('messages') || table.includes('connections') || table.includes('rooms'))
@@ -289,15 +287,17 @@ class ProductionHealthChecker {
     
     try {
       // Test 1: CloudWatch metrics
-      const metricsList = await this.cloudwatch.listMetrics({
+      const listMetricsCommand = new ListMetricsCommand({
         Namespace: 'AWS/ApplicationELB'
-      }).promise();
+      });
+      const metricsList = await this.cloudwatch.send(listMetricsCommand);
       
       this.addTestResult('monitoring', 'CloudWatch Metrics', 'passed',
         `Found ${metricsList.Metrics.length} metrics`);
       
       // Test 2: CloudWatch alarms
-      const alarms = await this.cloudwatch.describeAlarms().promise();
+      const alarmsCommand = new DescribeAlarmsCommand({});
+      const alarms = await this.cloudwatch.send(alarmsCommand);
       const stackProAlarms = alarms.MetricAlarms.filter(alarm =>
         alarm.AlarmName.includes('stackpro') || alarm.AlarmName.includes('StackPro')
       );
@@ -320,15 +320,14 @@ class ProductionHealthChecker {
     
     try {
       // Get account ID
-      const sts = new AWS.STS({
-        credentials: new AWS.SharedIniFileCredentials({ profile: HEALTH_CONFIG.profile })
-      });
-      const identity = await sts.getCallerIdentity().promise();
+      const identityCommand = new GetCallerIdentityCommand({});
+      const identity = await this.sts.send(identityCommand);
       
       // Test 1: Budget existence
-      const budgets = await this.budgets.describeBudgets({
+      const budgetsCommand = new DescribeBudgetsCommand({
         AccountId: identity.Account
-      }).promise();
+      });
+      const budgets = await this.budgets.send(budgetsCommand);
       
       const stackProBudget = budgets.Budgets.find(budget => 
         budget.BudgetName.includes('stackpro') || budget.BudgetName.includes('StackPro')
@@ -339,10 +338,11 @@ class ProductionHealthChecker {
           `Budget: ${stackProBudget.BudgetName}, Limit: $${stackProBudget.BudgetLimit.Amount}`);
         
         // Test 2: Budget alerts
-        const notifications = await this.budgets.describeNotificationsForBudget({
+        const notificationsCommand = new DescribeNotificationsForBudgetCommand({
           AccountId: identity.Account,
           BudgetName: stackProBudget.BudgetName
-        }).promise();
+        });
+        const notifications = await this.budgets.send(notificationsCommand);
         
         this.addTestResult('budget', 'Budget Alerts', 
           notifications.Notifications.length > 0 ? 'passed' : 'warning',
@@ -497,18 +497,20 @@ class ProductionHealthChecker {
       const testKey = 'health-check/test-file.txt';
       const testData = `Health check test file created at ${new Date().toISOString()}`;
       
-      await this.s3.putObject({
+      const putCommand = new PutObjectCommand({
         Bucket: bucketName,
         Key: testKey,
         Body: testData,
         ContentType: 'text/plain'
-      }).promise();
+      });
+      await this.s3.send(putCommand);
       
       // Test file download
-      const downloadResult = await this.s3.getObject({
+      const getCommand = new GetObjectCommand({
         Bucket: bucketName,
         Key: testKey
-      }).promise();
+      });
+      const downloadResult = await this.s3.send(getCommand);
       
       if (downloadResult.Body.toString() === testData) {
         this.addTestResult('storage', 'S3 Upload/Download', 'passed',
@@ -518,10 +520,11 @@ class ProductionHealthChecker {
       }
       
       // Cleanup test file
-      await this.s3.deleteObject({
+      const deleteCommand = new DeleteObjectCommand({
         Bucket: bucketName,
         Key: testKey
-      }).promise();
+      });
+      await this.s3.send(deleteCommand);
       
     } catch (error) {
       this.addTestResult('storage', 'S3 Upload/Download', 'failed', 

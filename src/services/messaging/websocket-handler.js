@@ -363,7 +363,7 @@ class WebSocketHandler {
   async storeConnection(connectionId, userId, clientId) {
     const ttl = Math.floor(Date.now() / 1000) + (24 * 60 * 60); // 24 hours
 
-    await dynamodb.put({
+    const command = new PutCommand({
       TableName: this.connectionsTable,
       Item: {
         connectionId,
@@ -373,17 +373,19 @@ class WebSocketHandler {
         channels: [], // Subscribed channels
         ttl
       }
-    }).promise();
+    });
+    await dynamodb.send(command);
   }
 
   /**
    * Get connection information
    */
   async getConnection(connectionId) {
-    const result = await dynamodb.get({
+    const command = new GetCommand({
       TableName: this.connectionsTable,
       Key: { connectionId }
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return result.Item || null;
   }
@@ -392,24 +394,26 @@ class WebSocketHandler {
    * Remove connection
    */
   async removeConnection(connectionId) {
-    await dynamodb.delete({
+    const command = new DeleteCommand({
       TableName: this.connectionsTable,
       Key: { connectionId }
-    }).promise();
+    });
+    await dynamodb.send(command);
   }
 
   /**
    * Get user's active connections
    */
   async getUserConnections(userId) {
-    const result = await dynamodb.query({
+    const command = new QueryCommand({
       TableName: this.connectionsTable,
       IndexName: 'UserIndex',
       KeyConditionExpression: 'userId = :userId',
       ExpressionAttributeValues: {
         ':userId': userId
       }
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return result.Items || [];
   }
@@ -435,10 +439,11 @@ class WebSocketHandler {
       item.connectedAt = now;
     }
 
-    await dynamodb.put({
+    const command = new PutCommand({
       TableName: this.presenceTable,
       Item: item
-    }).promise();
+    });
+    await dynamodb.send(command);
   }
 
   /**
@@ -500,13 +505,14 @@ class WebSocketHandler {
   async getChannelConnections(channelId) {
     // This is a simplified version - in production, you'd maintain 
     // channel subscription mappings more efficiently
-    const result = await dynamodb.scan({
+    const command = new ScanCommand({
       TableName: this.connectionsTable,
       FilterExpression: 'contains(channels, :channelId)',
       ExpressionAttributeValues: {
         ':channelId': channelId
       }
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return result.Items || [];
   }
@@ -515,14 +521,15 @@ class WebSocketHandler {
    * Get all connections for a client
    */
   async getClientConnections(clientId) {
-    const result = await dynamodb.query({
+    const command = new QueryCommand({
       TableName: this.connectionsTable,
       IndexName: 'ClientIndex',
       KeyConditionExpression: 'clientId = :clientId',
       ExpressionAttributeValues: {
         ':clientId': clientId
       }
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return result.Items || [];
   }
@@ -532,10 +539,11 @@ class WebSocketHandler {
    */
   async sendToConnection(connectionId, message) {
     try {
-      await apigateway.postToConnection({
+      const command = new PostToConnectionCommand({
         ConnectionId: connectionId,
         Data: JSON.stringify(message)
-      }).promise();
+      });
+      await apigateway.send(command);
 
     } catch (error) {
       if (error.statusCode === 410) {
@@ -550,24 +558,26 @@ class WebSocketHandler {
    * Add channel subscription to connection
    */
   async addChannelSubscription(connectionId, channelId) {
-    await dynamodb.update({
+    const command = new UpdateCommand({
       TableName: this.connectionsTable,
       Key: { connectionId },
       UpdateExpression: 'ADD channels :channelSet',
       ExpressionAttributeValues: {
-        ':channelSet': dynamodb.createSet([channelId])
+        ':channelSet': new Set([channelId])
       }
-    }).promise();
+    });
+    await dynamodb.send(command);
   }
 
   /**
    * Get channel information
    */
   async getChannel(channelId) {
-    const result = await dynamodb.get({
+    const command = new GetCommand({
       TableName: this.channelsTable,
       Key: { channelId }
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return result.Item || null;
   }
@@ -576,7 +586,7 @@ class WebSocketHandler {
    * Get recent messages for a channel
    */
   async getRecentMessages(channelId, limit = 50) {
-    const result = await dynamodb.query({
+    const command = new QueryCommand({
       TableName: this.messagesTable,
       KeyConditionExpression: 'channelId = :channelId',
       ExpressionAttributeValues: {
@@ -584,7 +594,8 @@ class WebSocketHandler {
       },
       ScanIndexForward: false, // Most recent first
       Limit: limit
-    }).promise();
+    });
+    const result = await dynamodb.send(command);
 
     return (result.Items || []).reverse(); // Return in chronological order
   }

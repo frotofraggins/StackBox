@@ -1,12 +1,20 @@
-const AWS = require('aws-sdk');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, GetCommand, QueryCommand, UpdateCommand } = require('@aws-sdk/lib-dynamodb');
+const { SNSClient, PublishCommand } = require('@aws-sdk/client-sns');
+const { SQSClient } = require('@aws-sdk/client-sqs');
+const { SESClient } = require('@aws-sdk/client-ses');
 const { logger } = require('../logger');
 
 class MessagingService {
   constructor() {
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
-    this.sns = new AWS.SNS();
-    this.sqs = new AWS.SQS();
-    this.ses = new AWS.SES();
+    const region = process.env.AWS_REGION || 'us-west-2';
+    
+    // Initialize AWS SDK v3 clients
+    const dynamoDbClient = new DynamoDBClient({ region });
+    this.dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
+    this.sns = new SNSClient({ region });
+    this.sqs = new SQSClient({ region });
+    this.ses = new SESClient({ region });
     
     // Table names
     this.connectionsTable = 'StackPro-Connections';
@@ -43,11 +51,12 @@ class MessagingService {
     };
 
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: this.channelsTable,
         Item: channel,
         ConditionExpression: 'attribute_not_exists(channelId)'
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       logger.info('Channel created successfully', {
         channelId,
@@ -59,7 +68,7 @@ class MessagingService {
       return channel;
 
     } catch (error) {
-      if (error.code === 'ConditionalCheckFailedException') {
+      if (error.name === 'ConditionalCheckFailedException') {
         throw new Error('Channel already exists');
       }
       throw new Error(`Failed to create channel: ${error.message}`);
@@ -71,7 +80,7 @@ class MessagingService {
    */
   async getClientChannels(clientId, userId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: this.channelsTable,
         IndexName: 'ClientIndex',
         KeyConditionExpression: 'clientId = :clientId',
@@ -81,7 +90,8 @@ class MessagingService {
           ':userId': userId,
           ':active': true
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       // Get unread counts for each channel
       const channelsWithCounts = await Promise.all(
@@ -119,15 +129,16 @@ class MessagingService {
         throw new Error('Permission denied');
       }
 
-      await this.dynamodb.update({
+      const command = new UpdateCommand({
         TableName: this.channelsTable,
         Key: { channelId },
         UpdateExpression: 'ADD members :userSet',
         ConditionExpression: 'attribute_exists(channelId)',
         ExpressionAttributeValues: {
-          ':userSet': this.dynamodb.createSet([userId])
+          ':userSet': new Set([userId])
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       // Create system message
       await this.createSystemMessage(channelId, channel.clientId, `${userId} joined the channel`);
@@ -176,10 +187,11 @@ class MessagingService {
       }
 
       // Store message
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: this.messagesTable,
         Item: message
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       // Send notifications for mentions
       if (message.mentions.length > 0) {
@@ -229,7 +241,8 @@ class MessagingService {
         params.ExclusiveStartKey = lastKey;
       }
 
-      const result = await this.dynamodb.query(params).promise();
+      const command = new QueryCommand(params);
+      const result = await this.dynamodb.send(command);
 
       return {
         messages: (result.Items || []).reverse(), // Return chronologically
@@ -259,10 +272,11 @@ class MessagingService {
     };
 
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: this.presenceTable,
         Item: presence
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       logger.info('User presence updated', {
         userId,
@@ -282,14 +296,15 @@ class MessagingService {
    */
   async getClientPresence(clientId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: this.presenceTable,
         IndexName: 'ClientIndex',
         KeyConditionExpression: 'clientId = :clientId',
         ExpressionAttributeValues: {
           ':clientId': clientId
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       return (result.Items || []).reduce((acc, presence) => {
         acc[presence.userId] = {
@@ -345,7 +360,7 @@ class MessagingService {
 
       const reactionKey = `reactions.${emoji}`;
       
-      await this.dynamodb.update({
+      const command = new UpdateCommand({
         TableName: this.messagesTable,
         Key: { channelId, messageId },
         UpdateExpression: 'ADD #reactions.#emoji :userSet',
@@ -354,9 +369,10 @@ class MessagingService {
           '#emoji': emoji
         },
         ExpressionAttributeValues: {
-          ':userSet': this.dynamodb.createSet([userId])
+          ':userSet': new Set([userId])
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       logger.info('Reaction added', {
         messageId,
@@ -395,10 +411,11 @@ class MessagingService {
 
     try {
       // Store notification
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: this.notificationsTable,
         Item: notificationRecord
-      }).promise();
+      });
+      await this.dynamodb.send(command);
 
       // Send via SNS (email, push, SMS)
       await this.publishNotification(userId, clientId, notification);
@@ -439,7 +456,8 @@ class MessagingService {
         params.ExpressionAttributeValues[':status'] = status;
       }
 
-      const result = await this.dynamodb.query(params).promise();
+      const command = new QueryCommand(params);
+      const result = await this.dynamodb.send(command);
 
       return result.Items || [];
 
@@ -451,18 +469,20 @@ class MessagingService {
   // Helper methods
 
   async getChannel(channelId) {
-    const result = await this.dynamodb.get({
+    const command = new GetCommand({
       TableName: this.channelsTable,
       Key: { channelId }
-    }).promise();
+    });
+    const result = await this.dynamodb.send(command);
     return result.Item || null;
   }
 
   async getMessage(channelId, messageId) {
-    const result = await this.dynamodb.get({
+    const command = new GetCommand({
       TableName: this.messagesTable,
       Key: { channelId, messageId }
-    }).promise();
+    });
+    const result = await this.dynamodb.send(command);
     return result.Item || null;
   }
 
@@ -472,24 +492,26 @@ class MessagingService {
   }
 
   async getChannelLastActivity(channelId) {
-    const result = await this.dynamodb.query({
+    const command = new QueryCommand({
       TableName: this.messagesTable,
       KeyConditionExpression: 'channelId = :channelId',
       ExpressionAttributeValues: { ':channelId': channelId },
       ScanIndexForward: false,
       Limit: 1
-    }).promise();
+    });
+    const result = await this.dynamodb.send(command);
 
     return result.Items?.[0]?.timestamp || null;
   }
 
   async updateChannelActivity(channelId, timestamp) {
-    await this.dynamodb.update({
+    const command = new UpdateCommand({
       TableName: this.channelsTable,
       Key: { channelId },
       UpdateExpression: 'SET lastActivity = :timestamp',
       ExpressionAttributeValues: { ':timestamp': timestamp }
-    }).promise();
+    });
+    await this.dynamodb.send(command);
   }
 
   async createSystemMessage(channelId, clientId, content) {
@@ -509,10 +531,11 @@ class MessagingService {
       deleted: false
     };
 
-    await this.dynamodb.put({
+    const command = new PutCommand({
       TableName: this.messagesTable,
       Item: message
-    }).promise();
+    });
+    await this.dynamodb.send(command);
   }
 
   extractMentions(content) {
@@ -545,7 +568,7 @@ class MessagingService {
     const topicArn = `arn:aws:sns:${process.env.AWS_REGION}:${process.env.AWS_ACCOUNT_ID}:stackpro-notifications-${clientId}`;
     
     try {
-      await this.sns.publish({
+      const command = new PublishCommand({
         TopicArn: topicArn,
         Message: JSON.stringify({
           userId,
@@ -553,7 +576,8 @@ class MessagingService {
           ...notification
         }),
         Subject: notification.title
-      }).promise();
+      });
+      await this.sns.send(command);
     } catch (error) {
       logger.warn('Failed to publish notification to SNS', {
         userId,

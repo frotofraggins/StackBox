@@ -1,10 +1,16 @@
-const AWS = require('aws-sdk');
+const { BedrockRuntimeClient, InvokeModelCommand } = require('@aws-sdk/client-bedrock-runtime');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, QueryCommand, UpdateCommand, BatchWriteCommand } = require('@aws-sdk/lib-dynamodb');
 const crypto = require('crypto');
 
 class EmbeddingService {
   constructor() {
-    this.bedrock = new AWS.BedrockRuntime();
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    const region = process.env.AWS_REGION || 'us-west-2';
+    
+    // Initialize AWS SDK v3 clients
+    this.bedrock = new BedrockRuntimeClient({ region });
+    const dynamoDbClient = new DynamoDBClient({ region });
+    this.dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
     this.logger = require('../logger');
     
     // Titan Embedding model configuration
@@ -165,12 +171,13 @@ class EmbeddingService {
         inputText: text.trim()
       };
 
-      const response = await this.bedrock.invokeModel({
+      const command = new InvokeModelCommand({
         modelId: this.embeddingModel,
         contentType: 'application/json',
         accept: 'application/json',
         body: JSON.stringify(payload)
-      }).promise();
+      });
+      const response = await this.bedrock.send(command);
 
       const responseBody = JSON.parse(new TextDecoder().decode(response.body));
       
@@ -188,7 +195,7 @@ class EmbeddingService {
       return responseBody.embedding;
 
     } catch (error) {
-      if (error.code === 'ValidationException' && error.message.includes('too long')) {
+      if (error.name === 'ValidationException' && error.message.includes('too long')) {
         // Text is too long, try truncating
         const truncatedText = text.substring(0, this.maxChunkSize - 100);
         this.logger.warn(`Text too long, truncating and retrying`, {
@@ -250,7 +257,7 @@ class EmbeddingService {
    * @param {Object} embeddingRecord - Complete embedding record
    */
   async storeEmbedding(embeddingRecord) {
-    await this.dynamodb.put({
+    const command = new PutCommand({
       TableName: 'StackPro-AIEmbeddings',
       Item: {
         ...embeddingRecord,
@@ -259,7 +266,8 @@ class EmbeddingService {
         GSI1PK: `${embeddingRecord.clientId}#${embeddingRecord.documentId}`,
         GSI1SK: `CHUNK#${embeddingRecord.chunkId}`
       }
-    }).promise();
+    });
+    await this.dynamodb.send(command);
   }
 
   /**
@@ -267,7 +275,7 @@ class EmbeddingService {
    */
   async storeEmbeddingError(clientId, documentId, chunkId, errorData) {
     try {
-      await this.dynamodb.put({
+      const command = new PutCommand({
         TableName: 'StackPro-AIEmbeddings',
         Item: {
           clientId,
@@ -277,7 +285,8 @@ class EmbeddingService {
           type: 'embedding-error',
           timestamp: new Date().toISOString()
         }
-      }).promise();
+      });
+      await this.dynamodb.send(command);
     } catch (error) {
       this.logger.error('Failed to store embedding error', { error: error.message });
     }
@@ -298,7 +307,7 @@ class EmbeddingService {
         expressionAttributeValues[`:${key}`] = statusData[key];
       });
 
-      await this.dynamodb.update({
+      const command = new UpdateCommand({
         TableName: 'StackPro-AIEmbeddings',
         Key: {
           clientId,
@@ -307,7 +316,8 @@ class EmbeddingService {
         UpdateExpression: `SET ${updateExpression.join(', ')}`,
         ExpressionAttributeNames: expressionAttributeNames,
         ExpressionAttributeValues: expressionAttributeValues
-      }).promise();
+      });
+      await this.dynamodb.send(command);
     } catch (error) {
       this.logger.error('Failed to update document embedding status', {
         clientId,
@@ -404,7 +414,8 @@ class EmbeddingService {
           params.ExclusiveStartKey = lastEvaluatedKey;
         }
 
-        const result = await this.dynamodb.query(params).promise();
+        const command = new QueryCommand(params);
+        const result = await this.dynamodb.send(command);
         allEmbeddings = allEmbeddings.concat(result.Items);
         lastEvaluatedKey = result.LastEvaluatedKey;
 
@@ -455,7 +466,7 @@ class EmbeddingService {
    */
   async getDocumentEmbeddingsSummary(clientId, documentId) {
     try {
-      const result = await this.dynamodb.query({
+      const command = new QueryCommand({
         TableName: 'StackPro-AIEmbeddings',
         KeyConditionExpression: 'clientId = :clientId AND begins_with(documentId, :documentId)',
         FilterExpression: '#type = :type',
@@ -467,7 +478,8 @@ class EmbeddingService {
           ':documentId': documentId,
           ':type': 'embedding-chunk'
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(command);
 
       const chunks = result.Items;
       
@@ -493,14 +505,15 @@ class EmbeddingService {
   async deleteDocumentEmbeddings(clientId, documentId) {
     try {
       // Get all chunks for the document
-      const result = await this.dynamodb.query({
+      const queryCommand = new QueryCommand({
         TableName: 'StackPro-AIEmbeddings',
         KeyConditionExpression: 'clientId = :clientId AND begins_with(documentId, :documentId)',
         ExpressionAttributeValues: {
           ':clientId': clientId,
           ':documentId': documentId
         }
-      }).promise();
+      });
+      const result = await this.dynamodb.send(queryCommand);
 
       // Delete all chunks in batches
       const chunks = result.Items;
@@ -517,11 +530,12 @@ class EmbeddingService {
           }
         }));
 
-        await this.dynamodb.batchWrite({
+        const batchCommand = new BatchWriteCommand({
           RequestItems: {
             'StackPro-AIEmbeddings': deleteRequests
           }
-        }).promise();
+        });
+        await this.dynamodb.send(batchCommand);
       }
 
       this.logger.info(`Deleted ${chunks.length} embedding chunks`, {
