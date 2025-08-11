@@ -5,20 +5,28 @@ applications:
       phases:
         preBuild:
           commands:
-            - cd frontend
-            - corepack enable
-            - node -v
-            - npm ci
+            - echo "🚀 Starting Amplify build for StackPro Frontend"
+            - echo "📦 Installing pnpm globally..."
+            - npm install -g pnpm@latest
+            - echo "🔧 Setting up workspace..."
+            - cd ..
+            - pnpm install --frozen-lockfile
+            - echo "✅ Dependencies installed"
         build:
           commands:
-            - npm run build
+            - echo "🏗️ Building frontend..."
+            - cd frontend
+            - pnpm run build
+            - echo "✅ Build completed"
       artifacts:
-        baseDirectory: .next
+        baseDirectory: frontend/.next
         files:
           - '**/*'
       cache:
         paths:
           - node_modules/**/*
+          - frontend/node_modules/**/*
+          - frontend/.next/cache/**/*
     runtime:
       name: nodejs
       version: 22
@@ -32,3 +40,5 @@ applications:
         value: wss://ws-sandbox.stackpro.io
       - name: NEXT_PUBLIC_ENV
         value: sandbox
+      - name: NODE_OPTIONS
+        value: "--max_old_space_size=4096"
