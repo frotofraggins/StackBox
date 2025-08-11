@@ -1,9 +1,15 @@
-const AWS = require('aws-sdk');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand, GetCommand, DeleteCommand, QueryCommand, UpdateCommand, ScanCommand } = require('@aws-sdk/lib-dynamodb');
+const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require('@aws-sdk/client-apigatewaymanagementapi');
 const { logger } = require('../logger');
 
 // Initialize AWS services
-const dynamodb = new AWS.DynamoDB.DocumentClient();
-const apigateway = new AWS.ApiGatewayManagementApi({
+const region = process.env.AWS_REGION || 'us-west-2';
+const dynamoDbClient = new DynamoDBClient({ region });
+const dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
+
+const apigateway = new ApiGatewayManagementApiClient({
+  region,
   endpoint: process.env.WEBSOCKET_API_ENDPOINT
 });
 
@@ -231,10 +237,11 @@ class WebSocketHandler {
     };
 
     // Store message in DynamoDB
-    await dynamodb.put({
+    const putCommand = new PutCommand({
       TableName: this.messagesTable,
       Item: message
-    }).promise();
+    });
+    await dynamodb.send(putCommand);
 
     // Broadcast message to channel subscribers
     await this.broadcastToChannel(channelId, {

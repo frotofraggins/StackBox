@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
 const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
 const { simpleParser } = require('mailparser');

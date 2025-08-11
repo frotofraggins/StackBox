@@ -1,15 +1,23 @@
-const AWS = require('aws-sdk');
+const { SNSClient, CreateTopicCommand, PublishCommand, SubscribeCommand } = require('@aws-sdk/client-sns');
+const { SQSClient, CreateQueueCommand, ReceiveMessageCommand, DeleteMessageCommand } = require('@aws-sdk/client-sqs');
+const { SESClient, SendEmailCommand } = require('@aws-sdk/client-ses');
+const { DynamoDBClient } = require('@aws-sdk/client-dynamodb');
+const { DynamoDBDocumentClient, PutCommand } = require('@aws-sdk/lib-dynamodb');
 const { logger } = require('../logger');
 
 class NotificationService {
   constructor() {
-    this.sns = new AWS.SNS();
-    this.sqs = new AWS.SQS();
-    this.ses = new AWS.SES();
-    this.dynamodb = new AWS.DynamoDB.DocumentClient();
+    const region = process.env.AWS_REGION || 'us-west-2';
+    
+    this.sns = new SNSClient({ region });
+    this.sqs = new SQSClient({ region });
+    this.ses = new SESClient({ region });
+    
+    const dynamoDbClient = new DynamoDBClient({ region });
+    this.dynamodb = DynamoDBDocumentClient.from(dynamoDbClient);
     
     // Service configuration
-    this.region = process.env.AWS_REGION || 'us-west-2';
+    this.region = region;
     this.accountId = process.env.AWS_ACCOUNT_ID;
     this.notificationsTable = 'StackPro-Notifications';
   }
@@ -164,7 +172,8 @@ class NotificationService {
         ]
       };
 
-      const result = await this.ses.sendEmail(emailParams).promise();
+      const command = new SendEmailCommand(emailParams);
+      const result = await this.ses.send(command);
       
       logger.info('Email notification sent', {
         userId,
@@ -226,7 +235,8 @@ class NotificationService {
         MessageStructure: 'json'
       };
 
-      const result = await this.sns.publish(params).promise();
+      const command = new PublishCommand(params);
+      const result = await this.sns.send(command);
       
       logger.info('Push notification sent', {
         userId,
@@ -279,7 +289,8 @@ class NotificationService {
         }
       };
 
-      const result = await this.sns.publish(params).promise();
+      const command = new PublishCommand(params);
+      const result = await this.sns.send(command);
       
       logger.info('SMS notification sent', {
         userId,
@@ -331,7 +342,8 @@ class NotificationService {
         }
       };
 
-      const result = await this.sns.publish(params).promise();
+      const command = new PublishCommand(params);
+      const result = await this.sns.send(command);
       
       logger.info('In-app notification sent', {
         userId,
@@ -364,7 +376,8 @@ class NotificationService {
         MessageAttributeNames: ['All']
       };
 
-      const result = await this.sqs.receiveMessage(params).promise();
+      const receiveCommand = new ReceiveMessageCommand(params);
+      const result = await this.sqs.send(receiveCommand);
       const messages = result.Messages || [];
 
       logger.info('Processing notification queue', {
@@ -377,10 +390,11 @@ class NotificationService {
           await this.processNotificationMessage(message);
           
           // Delete processed message
-          await this.sqs.deleteMessage({
+          const deleteCommand = new DeleteMessageCommand({
             QueueUrl: queueUrl,
             ReceiptHandle: message.ReceiptHandle
-          }).promise();
+          });
+          await this.sqs.send(deleteCommand);
 
         } catch (error) {
           logger.error('Failed to process notification message', {
@@ -443,7 +457,8 @@ class NotificationService {
       ]
     };
 
-    return await this.sns.createTopic(params).promise();
+    const command = new CreateTopicCommand(params);
+    return await this.sns.send(command);
   }
 
   async createMessageQueue(clientId) {
@@ -462,7 +477,8 @@ class NotificationService {
       }
     };
 
-    return await this.sqs.createQueue(params).promise();
+    const command = new CreateQueueCommand(params);
+    return await this.sqs.send(command);
   }
 
   async createDeadLetterQueue(clientId) {
@@ -480,7 +496,8 @@ class NotificationService {
       }
     };
 
-    return await this.sqs.createQueue(params).promise();
+    const command = new CreateQueueCommand(params);
+    return await this.sqs.send(command);
   }
 
   async subscribeQueueToTopic(topicArn, queueUrl) {
@@ -490,7 +507,8 @@ class NotificationService {
       Endpoint: queueUrl
     };
 
-    return await this.sns.subscribe(params).promise();
+    const command = new SubscribeCommand(params);
+    return await this.sns.send(command);
   }
 
   async storeNotification(notification) {
@@ -502,10 +520,11 @@ class NotificationService {
       ttl
     };
 
-    await this.dynamodb.put({
+    const command = new PutCommand({
       TableName: this.notificationsTable,
       Item: item
-    }).promise();
+    });
+    await this.dynamodb.send(command);
   }
 
   async getUserEmail(userId, clientId) {
