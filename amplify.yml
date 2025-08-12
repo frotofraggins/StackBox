@@ -16,7 +16,7 @@ frontend:
         - pnpm install --frozen-lockfile
     build:
       commands:
-        - pnpm build
+        - pnpm --filter stackbox-frontend... build
   artifacts:
     baseDirectory: out/full/frontend/.next
     files:
