@@ -1,28 +1,29 @@
 version: 1
 env:
   runtime: nodejs22.x
-
+  variables:
+    NODE_OPTIONS: "--max-old-space-size=4096"
+    PUPPETEER_SKIP_DOWNLOAD: "true"
 frontend:
   phases:
     preBuild:
       commands:
-        - echo "🔎 Preflight AWS account"
         - node scripts/preflight-aws-account.js
         - corepack enable
-        - corepack prepare pnpm@9.12.3 --activate
-        - pnpm -v && node -v
-        - pnpm -w install --no-frozen-lockfile
+        - npx turbo prune --scope=stackbox-frontend --docker
+        - cd out/full
+        - pnpm install --frozen-lockfile
     build:
       commands:
-        - echo "🏗️ Building frontend only"
-        - cd frontend && pnpm build
+        - pnpm build
   artifacts:
-    baseDirectory: frontend/.next
+    baseDirectory: out/full/frontend/.next
     files:
-      - '**/*'
+      - 'standalone/**/*'
+      - 'static/**/*'
+      - 'public/**/*'
   cache:
     paths:
-      - .npm-cache/**/*
-      - node_modules/**/*
-      - frontend/node_modules/**/*
-      - pnpm-store/**/*
+      - out/full/node_modules/**/*
+      - out/full/frontend/node_modules/**/*
+      - out/full/pnpm-store/**/*
