@@ -1,22 +1,19 @@
 version: 1
-env:
-  runtime: nodejs22.x
 applications:
   - appRoot: frontend
     frontend:
       phases:
         preBuild:
           commands:
-            - echo "🧰 Enabling corepack (pnpm) on preinstalled Node 22"
+            - echo "🔧 Installing Node 22 via nvm"
+            - nvm install 22
+            - nvm use 22
             - node -v
+            - echo "🧰 Enabling corepack (pnpm)"
             - corepack enable
             - corepack prepare pnpm@10.14.0 --activate
             - cd ..
-            - echo "📦 Pruning workspace to frontend dependencies only"
-            - npx turbo prune --scope=frontend --docker
-            - mv out/json/ .
-            - mv out/pnpm-lock.yaml ./pnpm-lock.yaml
-            - echo "📦 Installing pruned dependencies"
+            - echo "📦 Installing workspace dependencies"
             - pnpm install --frozen-lockfile
             - cd frontend
         build:
@@ -31,7 +28,7 @@ applications:
         paths:
           - node_modules/**/*
           - frontend/node_modules/**/*
-          - pnpm-store/**/*
+          - ../pnpm-store/**/*
         key: pnpm-store-cache
     # optional if using Amplify backend categories:
     backend:
