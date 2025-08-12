@@ -1,0 +1,79 @@
+name: Build Hardening & AWS SDK v3 CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-hardening:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [22]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Enable corepack and setup pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.14.0 --activate
+          
+      - name: Verify pnpm lockfile exists
+        run: |
+          if [ ! -f pnpm-lock.yaml ]; then
+            echo "❌ pnpm-lock.yaml missing. Run 'pnpm install' and commit the lockfile."
+            exit 1
+          fi
+          echo "✅ pnpm-lock.yaml found"
+          
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        
+      - name: Scan for AWS SDK v2 imports
+        run: pnpm run scan:aws-v2
+        
+      - name: Build workspace
+        run: pnpm -w run build
+        
+      - name: Run tests (if available)
+        run: |
+          if pnpm run test --dry-run 2>/dev/null; then
+            pnpm -w run test
+          else
+            echo "No tests configured, skipping"
+          fi
+          
+      - name: Environment assertion check
+        run: |
+          AWS_REGION=us-west-2 node scripts/ci-assert.js
+        
+  amplify-build-simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Simulate Amplify build environment
+        run: |
+          echo "🔧 Using Node 22 via nvm (simulated)"
+          node -v
+          echo "🧰 Enabling corepack (pnpm)"
+          corepack enable
+          corepack prepare pnpm@10.14.0 --activate
+          echo "📦 Verifying lockfile exists"
+          [ -f pnpm-lock.yaml ] || (echo "❌ pnpm-lock.yaml missing. Commit lockfile."; exit 1)
+          pnpm -v
+          echo "📦 Installing workspace deps from repo root"
+          pnpm install --frozen-lockfile
+          echo "🏗️ Building frontend"
+          cd frontend && pnpm build

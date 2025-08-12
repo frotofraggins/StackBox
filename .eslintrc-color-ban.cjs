@@ -1,6 +1,16 @@
 module.exports = {
   overrides: [
     {
+      files: ['**/*.{js,ts,tsx}'],
+      rules: {
+        'no-restricted-imports': ['error', {
+          'paths': [
+            { 'name': 'aws-sdk', 'message': 'Use @aws-sdk/* v3 clients instead.' }
+          ]
+        }]
+      }
+    },
+    {
       files: ['frontend/src/**/*.{ts,tsx,js,jsx}'],
       rules: {
         'no-restricted-syntax': [

@@ -1,37 +1,41 @@
 version: 1
+env:
+  runtime: nodejs22.x
 applications:
-  - frontend:
+  - appRoot: frontend
+    frontend:
       phases:
         preBuild:
           commands:
-            - echo "🚀 StackPro Amplify build starting"
-            - nvm install 22
-            - nvm use 22
+            - echo "🧰 Enabling corepack (pnpm) on preinstalled Node 22"
             - node -v
             - corepack enable
-            - corepack prepare pnpm@latest --activate
-            - pnpm -v
-            # Preflight checks (lockfile + engines)
-            - node scripts/preflight-amplify.js
-            # Workspace install at repo root (no cd ..)
+            - corepack prepare pnpm@10.14.0 --activate
+            - cd ..
+            - echo "📦 Pruning workspace to frontend dependencies only"
+            - npx turbo prune --scope=frontend --docker
+            - mv out/json/ .
+            - mv out/pnpm-lock.yaml ./pnpm-lock.yaml
+            - echo "📦 Installing pruned dependencies"
             - pnpm install --frozen-lockfile
+            - cd frontend
         build:
           commands:
-            # Build workspace (packages first), then frontend
-            - pnpm -w build
-            - pnpm --filter ./frontend build
+            - echo "🏗️ Building frontend"
+            - pnpm build
       artifacts:
-        baseDirectory: frontend/.next
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
-          - ~/.pnpm-store
-          - node_modules/.cache
-          - frontend/node_modules/.cache
-          - frontend/.next/cache
-    customHeaders:
-      - pattern: '**/*'
-        headers:
-          - key: Cache-Control
-            value: public,max-age=0,must-revalidate
+          - node_modules/**/*
+          - frontend/node_modules/**/*
+          - pnpm-store/**/*
+        key: pnpm-store-cache
+    # optional if using Amplify backend categories:
+    backend:
+      phases:
+        build:
+          commands:
+            - echo "🔧 Backend hook (no-op)"

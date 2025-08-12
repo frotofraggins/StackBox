@@ -97,6 +97,9 @@ public
 # AWS
 .aws/
 
+# Amplify Hosting Cache
+/.amplify-hosting/**
+
 # Vercel
 .vercel
 
