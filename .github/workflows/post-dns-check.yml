@@ -1,8 +1,8 @@
 name: Post-DNS Automatic E2E
 on:
-  schedule:
-    # Check every 5 minutes for DNS resolution
-    - cron: '*/5 * * * *'
+  # schedule:
+  #   # Check every 5 minutes for DNS resolution
+  #   - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -21,6 +21,7 @@ jobs:
         run: npm i -g pnpm && pnpm i
         
       - name: Configure AWS credentials
+        if: ${{ secrets.AWS_ACCESS_KEY_ID != '' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}

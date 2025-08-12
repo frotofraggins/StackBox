@@ -1,9 +1,9 @@
 name: Weekly Cost Check
 
 on:
-  schedule:
-    # Run every Monday at 9 AM UTC
-    - cron: '0 9 * * 1'
+  # schedule:
+  #   # Run every Monday at 9 AM UTC
+  #   - cron: '0 9 * * 1'
   workflow_dispatch:
     inputs:
       environment:
@@ -48,6 +48,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
             
       - name: Configure AWS Credentials
+        if: ${{ secrets.AWS_ACCESS_KEY_ID != '' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
