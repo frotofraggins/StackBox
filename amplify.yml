@@ -7,16 +7,28 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "--- PREBUILD START ---"
+        - free -h && df -h
         - nvm install 22 && nvm use 22
         - node scripts/preflight-aws-account.js
         - corepack enable
+        - echo "--- TURBO PRUNE START ---"
+        - free -h && df -h
         - npx turbo prune --scope=stackbox-frontend --docker
+        - echo "--- INSTALL START ---"
+        - free -h && df -h
         - mv out/pnpm-lock.yaml out/full/pnpm-lock.yaml
         - cd out/full
         - pnpm install --frozen-lockfile
+        - echo "--- PREBUILD END ---"
+        - free -h && df -h
     build:
       commands:
+        - echo "--- BUILD START ---"
+        - free -h && df -h
         - pnpm --filter stackbox-frontend... build
+        - echo "--- BUILD END ---"
+        - free -h && df -h
   artifacts:
     baseDirectory: out/full/frontend/.next
     files:
