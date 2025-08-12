@@ -199,20 +199,20 @@ class HTTPClient {
 
         clearTimeout(timeoutId);
 
-        const responseData = await response.json();
+        const responseData: any = await response.json();
 
         if (!response.ok) {
           // Handle HTTP errors gracefully
           return {
-            error: responseData.error || `HTTP ${response.status}: ${response.statusText}`,
+            error: responseData?.error || `HTTP ${response.status}: ${response.statusText}`,
             degraded: true,
-            fallbackGuidance: responseData.fallbackGuidance || 'Service temporarily unavailable',
+            fallbackGuidance: responseData?.fallbackGuidance || 'Service temporarily unavailable',
           };
         }
 
         return {
-          data: responseData,
-          degraded: responseData.degraded || false,
+          data: responseData as T,
+          degraded: responseData?.degraded || false,
         };
 
       } catch (error: any) {

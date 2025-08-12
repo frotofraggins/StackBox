@@ -1,4 +1,4 @@
-import { AppConfigDataClient, GetConfigurationCommand } from '@aws-sdk/client-appconfig-data'
+import { AppConfigDataClient, GetLatestConfigurationCommand } from '@aws-sdk/client-appconfigdata'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb'
 
@@ -76,18 +76,15 @@ async function getFromAppConfig(flagKey: string, config: FlagConfig): Promise<st
   try {
     initializeClients(config)
     
-    const command = new GetConfigurationCommand({
-      Application: config.appConfigApplication,
-      Environment: config.appConfigEnvironment,
-      Configuration: config.appConfigConfiguration,
-      ClientId: `stackpro-flags-${Date.now()}`
+    const command = new GetLatestConfigurationCommand({
+      ConfigurationToken: `stackpro-flags-${Date.now()}`
     })
     
     const response = await appConfigClient!.send(command)
     
-    if (response.Content) {
+    if (response.Configuration) {
       const decoder = new TextDecoder()
-      const configJson = JSON.parse(decoder.decode(response.Content))
+      const configJson = JSON.parse(decoder.decode(response.Configuration))
       return configJson[flagKey] || null
     }
   } catch (error) {
