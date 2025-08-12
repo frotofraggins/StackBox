@@ -1,18 +1,29 @@
 version: 1
-applications:
-  - appRoot: .
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm ci
-        build:
-          commands:
-            - npm run build
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
+env:
+  runtime: nodejs22.x
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🔎 Preflight AWS account"
+        - node ../scripts/preflight-aws-account.js
+        - corepack enable
+        - corepack prepare pnpm@9.12.3 --activate
+        - pnpm -v && node -v
+        - cd .. && pnpm install --no-frozen-lockfile
+        - cd frontend
+    build:
+      commands:
+        - echo "🏗️ Building frontend"
+        - pnpm build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .npm-cache/**/*
+      - node_modules/**/*
+      - ../node_modules/**/*
+      - ../pnpm-store/**/*

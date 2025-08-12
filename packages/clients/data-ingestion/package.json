@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
-  "scripts": { "build": "tsup src/index.ts --format esm --dts --minify" },
+  "scripts": { "build": "tsup src/index.ts --format esm --dts --minify --platform=browser" },
   "files": ["dist"],
   "engines": { "node": ">=22" }
 }

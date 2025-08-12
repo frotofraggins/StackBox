@@ -4,6 +4,8 @@
   "description": "StackPro - Tech Stack-as-a-Service Platform",
   "main": "src/api/server.js",
   "scripts": {
+    "preflight:aws": "node scripts/preflight-aws-account.js",
+    "build:ci": "pnpm -w install --no-frozen-lockfile && pnpm -w build",
     "build": "turbo run build --filter=...[origin/main]",
     "build:all": "turbo run build --parallel",
     "dev": "node src/api/server.js",

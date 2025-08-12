@@ -8,7 +8,7 @@
     "dist/**/*"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsup src/index.ts --format cjs,esm --dts --platform=browser",
     "clean": "rm -rf dist",
     "dev": "tsc --watch",
     "test": "echo \"No tests yet\" && exit 0"

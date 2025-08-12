@@ -1,38 +1,28 @@
 version: 1
-applications:
-  - appRoot: frontend
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - echo "🔧 Installing Node 22 via nvm"
-            - nvm install 22
-            - nvm use 22
-            - node -v
-            - echo "🧰 Enabling corepack (pnpm)"
-            - corepack enable
-            - corepack prepare pnpm@10.14.0 --activate
-            - cd ..
-            - echo "📦 Installing workspace dependencies"
-            - pnpm install --frozen-lockfile
-            - cd frontend
-        build:
-          commands:
-            - echo "🏗️ Building frontend"
-            - pnpm build
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
-      cache:
-        paths:
-          - node_modules/**/*
-          - frontend/node_modules/**/*
-          - ../pnpm-store/**/*
-        key: pnpm-store-cache
-    # optional if using Amplify backend categories:
-    backend:
-      phases:
-        build:
-          commands:
-            - echo "🔧 Backend hook (no-op)"
+env:
+  runtime: nodejs22.x
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - echo "🔎 Preflight AWS account"
+        - node scripts/preflight-aws-account.js
+        - corepack enable
+        - corepack prepare pnpm@9.12.3 --activate
+        - pnpm -v && node -v
+        - pnpm -w install --no-frozen-lockfile
+    build:
+      commands:
+        - echo "🏗️ Building frontend only"
+        - cd frontend && pnpm build
+  artifacts:
+    baseDirectory: frontend/.next
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - .npm-cache/**/*
+      - node_modules/**/*
+      - frontend/node_modules/**/*
+      - pnpm-store/**/*

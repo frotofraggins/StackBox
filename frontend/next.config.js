@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   productionBrowserSourceMaps: false,
-  output: 'standalone',
+  experimental: { forceSwcTransforms: true },
   images: {
     domains: ['stackpro-sandbox-assets.s3.amazonaws.com'],
   },
