@@ -2,6 +2,8 @@
 node_modules/
 **/node_modules/
 frontend/node_modules/
+pnpm-store/
+.pnpm-debug.log
 
 # Build outputs
 frontend/.next/
@@ -60,6 +62,10 @@ next-env.d.ts
 
 # Output of 'npm pack'
 *.tgz
+
+# Package build outputs
+packages/*/dist/
+packages/*/build/
 
 # Yarn Integrity file
 .yarn-integrity
