@@ -5,8 +5,9 @@
 **Version**: 1.0.0 | **Node**: 22.x | **Framework**: Next.js 14
 
 [![Live Status](https://img.shields.io/badge/Status-LIVE-brightgreen)](https://main.d3m3k3uuuvlvyv.amplifyapp.com)
+[![Staging Status](https://img.shields.io/badge/Staging-LIVE-blue)](https://develop.d3m3k3uuuvlvyv.amplifyapp.com)
 [![Cost Status](https://img.shields.io/badge/AWS_Cost-$0.00_Free_Tier-green)](scripts/cost-sanity-check.js)
-[![Deployment](https://img.shields.io/badge/Deployment-56_SUCCESS-blue)](https://main.d3m3k3uuuvlvyv.amplifyapp.com)
+[![Deployment](https://img.shields.io/badge/Deployment-SUCCESS-blue)](https://main.d3m3k3uuuvlvyv.amplifyapp.com)
 
 ---
 
@@ -26,6 +27,7 @@ StackPro is a comprehensive business platform that provides:
 
 ### **✅ Production Deployment**
 - **Frontend**: https://main.d3m3k3uuuvlvyv.amplifyapp.com ✅ **LIVE**
+- **Staging**: https://develop.d3m3k3uuuvlvyv.amplifyapp.com ✅ **LIVE**
 - **Backend**: Ready for Fargate deployment (see [Production Plan](docs/deployment/PRODUCTION_DEPLOYMENT_PLAN.md))
 - **Domain**: stackpro.io with SSL certificates
 - **Status**: Fully operational, 17 pages, enterprise AI features
@@ -80,7 +82,9 @@ git push origin main
 ## 📊 **Current Status**
 
 ### **✅ Completed & Live**
-- **Frontend Deployment**: 56 successful after resolving 53+ failures
+- **Frontend Deployment**: Production + Staging environments live
+- **Branching Strategy**: Professional Git workflow with develop/main branches
+- **Branch Protection**: PR reviews required, admin bypass for solo development
 - **Static Export**: 17 pages, optimized for CDN
 - **Design System**: Complete token-based styling
 - **AI Capabilities**: Claude 3.5 Sonnet integration ready
@@ -117,6 +121,7 @@ git push origin main
 - **[Production Deployment Plan](docs/deployment/PRODUCTION_DEPLOYMENT_PLAN.md)** - AWS Fargate setup
 - **[MVP Launch Strategy](docs/marketing/MVP_LAUNCH_STRATEGY.md)** - Customer acquisition plan
 - **[Current Status](docs/development/CURRENT_STATUS.md)** - Live deployment status
+- **[Branching Strategy](BRANCHING_STRATEGY.md)** - Professional Git workflow
 - **[Deployment Success](DEPLOYMENT_SUCCESS.md)** - Achievement summary
 
 ### **🛠️ Development Guides**
@@ -166,16 +171,19 @@ npm install && node src/api/server.js
 npm run snap:before && npm run snap:after
 ```
 
-### **Deployment Pipeline**
+### **Development Pipeline**
 ```bash
-# Commit changes
-git add . && git commit -m "Your changes"
+# Feature development workflow
+git checkout develop && git pull origin develop
+git checkout -b feature/your-feature-name
 
-# Deploy frontend (automatic)
-git push origin main
+# After development
+git add . && git commit -m "feat: your changes"
+git push origin feature/your-feature-name
+gh pr create --base develop --title "Your Feature"
 
-# Deploy backend (when ready)
-./deploy/deploy-fargate.sh
+# After PR approval → automatic staging deployment
+# Release to production: develop → main PR
 ```
 
 ---
@@ -183,13 +191,13 @@ git push origin main
 ## 🏆 **Key Achievements**
 
 ### **Technical Success**
-- ✅ **53+ deployment failures resolved** - Robust solution implemented
+- ✅ **Professional branching strategy** - develop/main workflow with staging
 - ✅ **Enterprise AI platform preserved** - All sophisticated features intact
 - ✅ **Production-ready infrastructure** - Scalable, secure, cost-effective
 - ✅ **Design system maintained** - Professional, consistent UI/UX
 
 ### **Business Readiness**
-- ✅ **Live application** - Fully operational at production URL
+- ✅ **Live application** - Production + staging environments operational
 - ✅ **Target market identified** - Clear customer acquisition strategy
 - ✅ **Pricing strategy** - Profitable unit economics validated
 - ✅ **MVP launch plan** - 4-week timeline to $15K MRR
@@ -219,6 +227,7 @@ git push origin main
 
 ### **Live Application**
 - **Production**: https://main.d3m3k3uuuvlvyv.amplifyapp.com
+- **Staging**: https://develop.d3m3k3uuuvlvyv.amplifyapp.com
 - **Domain**: stackpro.io (configured)
 - **Status**: ✅ **OPERATIONAL**
 
