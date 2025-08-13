@@ -43,7 +43,7 @@ function main() {
     'frontend/package.json',
     'frontend/next.config.js',
     'frontend/tailwind.config.js',
-    'amplify-fixed.yml'
+    'amplify.yml'
   ];
   
   let allFilesExist = true;
@@ -99,12 +99,10 @@ function main() {
   
   console.log('\n✅ All tests passed! The build configuration should work on Amplify.');
   console.log('\n🚀 Next steps:');
-  console.log('1. Replace amplify.yml with amplify-fixed.yml');
-  console.log('2. Commit and push changes');
-  console.log('3. Monitor Amplify deployment');
+  console.log('1. Commit and push changes');
+  console.log('2. Monitor Amplify deployment');
   
   console.log('\n📋 Commands to deploy:');
-  console.log('cp amplify-fixed.yml amplify.yml');
   console.log('git add .');
   console.log('git commit -m "fix(amplify): critical build fixes - Node 20.x + removed invalid flags"');
   console.log('git push origin main');

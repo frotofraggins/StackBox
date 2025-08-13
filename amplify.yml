@@ -1,6 +1,6 @@
 version: 1
 env:
-  runtime: nodejs20.x  # Changed from nodejs22.x to nodejs20.x (supported by Amplify)
+  runtime: nodejs20.x
   variables:
     NODE_OPTIONS: "--max-old-space-size=8192"
     PUPPETEER_SKIP_DOWNLOAD: "true"
@@ -16,16 +16,16 @@ frontend:
         # Install pnpm
         - corepack enable
         - corepack prepare pnpm@9.12.3 --activate
-        # Install dependencies from the frontend directory
-        - cd frontend && pnpm install --frozen-lockfile
+        # Install dependencies (already in frontend directory due to AMPLIFY_MONOREPO_APP_ROOT)
+        - pnpm install --frozen-lockfile
     build:
       commands:
-        # Build from frontend directory directly - no complex turbo prune
-        - cd frontend && pnpm run build:amplify:fixed
+        # Build directly (already in frontend directory due to AMPLIFY_MONOREPO_APP_ROOT)
+        - pnpm run build:amplify:fixed
   artifacts:
-    baseDirectory: frontend/.next
+    baseDirectory: .next
     files:
       - '**/*'
   cache:
     paths:
-      - frontend/node_modules/**/*
+      - node_modules/**/*
