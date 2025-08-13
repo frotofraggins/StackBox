@@ -4,6 +4,7 @@ env:
   variables:
     NODE_OPTIONS: "--max-old-space-size=8192"
     PUPPETEER_SKIP_DOWNLOAD: "true"
+    PNPM_STORE_DIR: "pnpm-store"
 backend:
   phases:
     preBuild:
@@ -16,11 +17,10 @@ frontend:
         - corepack enable
         - npx turbo prune --scope=stackbox-frontend --docker
         - mv out/pnpm-lock.yaml out/full/pnpm-lock.yaml
-        - cd out/full
-        - pnpm install --frozen-lockfile
+        - cd out/full && NODE_OPTIONS="--max-old-space-size=8192" pnpm install --frozen-lockfile --prefer-offline
     build:
       commands:
-        - pnpm --filter stackbox-frontend... build
+        - cd out/full && NODE_OPTIONS="--max-old-space-size=8192" pnpm --filter stackbox-frontend... build
   artifacts:
     baseDirectory: out/full/frontend/.next
     files:
