@@ -4,7 +4,10 @@ const nextConfig = {
   swcMinify: true,
   productionBrowserSourceMaps: false,
   experimental: { forceSwcTransforms: true },
+  output: 'export',
+  trailingSlash: true,
   images: {
+    unoptimized: true,
     domains: ['stackpro-sandbox-assets.s3.amazonaws.com'],
   },
   env: {
@@ -14,18 +17,6 @@ const nextConfig = {
     NEXT_PUBLIC_FREE_TIER: process.env.NEXT_PUBLIC_FREE_TIER || 'true',
     AI_ENABLED: process.env.AI_ENABLED || 'false',
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-  },
-  async rewrites() {
-    // Only add rewrites in development - Amplify handles this in production
-    if (process.env.NODE_ENV === 'development') {
-      return [
-        {
-          source: '/api/:path*',
-          destination: 'http://localhost:3001/api/:path*',
-        },
-      ];
-    }
-    return [];
   },
 }
 
