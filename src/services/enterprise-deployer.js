@@ -1,14 +1,12 @@
 /**
  * StackBox Enterprise Deployment Service
- * Orchestrates Phase 1 enterprise services: ACM + ALB + RDS + Secrets Manager + CloudFront
+ * Orchestrates Phase 1 enterprise services: ACM + RDS + Secrets Manager + CloudFront
  */
 
 const { ACMService } = require('./acm-service');
-const { ALBService } = require('./alb-service');
 const { RDSService } = require('./rds-service');
 const { SecretsManagerService } = require('./secrets-manager-service');
 const { CloudFrontService } = require('./cloudfront-service');
-const { DockerService } = require('./docker-service');
 const { AWSProvisioner } = require('./aws-provisioner');
 const awsConfig = require('../../config/aws-config.json');
 const { logger } = require('../utils/logger');
@@ -16,11 +14,9 @@ const { logger } = require('../utils/logger');
 class EnterpriseDeployer {
   constructor() {
     this.acmService = new ACMService();
-    this.albService = new ALBService();
     this.rdsService = new RDSService();
     this.secretsService = new SecretsManagerService();
     this.cloudFrontService = new CloudFrontService();
-    this.dockerService = new DockerService();
     this.awsProvisioner = new AWSProvisioner();
   }
 
