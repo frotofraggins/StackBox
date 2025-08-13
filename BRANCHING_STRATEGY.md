@@ -15,13 +15,14 @@
 ### Workflow
 1. Create feature branch from develop: `git checkout -b feature/your-feature`
 2. Develop and commit changes
-3. Push and create PR to develop
+3. Push and create PR to develop (triggers preview deployment)
 4. After approval, merge to develop (triggers staging deployment)
 5. Create release PR from develop to main (triggers production deployment)
 
 ### Amplify Integration ✅ COMPLETE
 - **Production**: main branch → main.d3m3k3uuuvlvyv.amplifyapp.com
 - **Staging**: develop branch → develop.d3m3k3uuuvlvyv.amplifyapp.com ✅ DEPLOYED
+- **PR Previews**: Enabled for all PRs to develop branch ✅ ACTIVE
 
 ### Next Steps ✅ COMPLETE
 1. ✅ Configure Amplify staging environment for develop branch
