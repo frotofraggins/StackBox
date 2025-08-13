@@ -1,5 +1,3 @@
 packages:
   - 'frontend'
-  - 'packages/clients/*'
-  - 'packages/contracts/*'
-  - 'packages/runtime/*'
+  - 'packages/*'

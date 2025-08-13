@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <Head>
         <title>StackPro - Professional Business Tools in Minutes, Not Months</title>
-        <meta name="description" content="CRM, File Sharing, Website. Securely hosted on AWS. Trusted by law firms, real estate agents, and consultants." />
+        <meta name="description" content="Complete business platform for small businesses, contractors, and construction companies. CRM, File Sharing, Website, Project Management. Securely hosted on AWS." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -36,8 +36,8 @@ export default function Home() {
               <Link href="/pricing" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
                 Pricing
               </Link>
-              <Link href="/law-firms" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
-                Use Cases
+              <Link href="/contact" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
+                Industries
               </Link>
               <Link href="/contact" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
                 Support
@@ -76,7 +76,7 @@ export default function Home() {
                 </div>
                 <Link href="#features" className="text-muted hover:text-primary">Features</Link>
                 <Link href="/pricing" className="text-muted hover:text-primary">Pricing</Link>
-                <Link href="/law-firms" className="text-muted hover:text-primary">Use Cases</Link>
+                <Link href="/contact" className="text-muted hover:text-primary">Industries</Link>
                 <Link href="/contact" className="text-muted hover:text-primary">Support</Link>
                 <Link href="/pricing" className="bg-primary text-white px-4 py-2 rounded-lg text-center hover:opacity-90 transition-all">
                   Start Free Trial
@@ -186,19 +186,19 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-6">
-                <div className="text-4xl mb-4">🏛️</div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Law Firms</h3>
-                <p className="text-muted">Secure file exchange & client portals</p>
+                <div className="text-4xl mb-4">🔨</div>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Construction Companies</h3>
+                <p className="text-muted">Project tracking, blueprints, client communication</p>
               </div>
               <div className="text-center p-6">
-                <div className="text-4xl mb-4">🏠</div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Real Estate Agents</h3>
-                <p className="text-muted">CRM + Booking + Mobile</p>
+                <div className="text-4xl mb-4">🏗️</div>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Contractors & Trades</h3>
+                <p className="text-muted">Estimates, invoicing, job management</p>
               </div>
               <div className="text-center p-6">
-                <div className="text-4xl mb-4">🎓</div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Coaches & Consultants</h3>
-                <p className="text-muted">Payment, Scheduling, Communication</p>
+                <div className="text-4xl mb-4">🏪</div>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Small Businesses</h3>
+                <p className="text-muted">CRM, website, payments, file sharing</p>
               </div>
             </div>
           </div>
@@ -412,9 +412,9 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-[color:var(--brand-fg)] mb-4">Use Cases</h4>
               <ul className="space-y-2">
-                <li><Link href="/law-firms" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Law Firms</Link></li>
-                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Real Estate</Link></li>
-                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Consulting</Link></li>
+                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Construction</Link></li>
+                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Contractors</Link></li>
+                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Small Business</Link></li>
               </ul>
             </div>
             

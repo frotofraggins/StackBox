@@ -20,6 +20,8 @@ StackPro is a comprehensive business platform that provides:
 - **💳 Payment Processing** - Stripe integration for subscriptions
 - **🔒 Enterprise Security** - Multi-tenant isolation & compliance
 
+**Perfect for**: Small businesses, construction companies, contractors, trades, and service providers who need professional tools without the complexity.
+
 ## 📈 **Current Status**
 
 ### **✅ Production Ready**

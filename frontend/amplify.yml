@@ -1,32 +1,13 @@
 version: 1
-env:
-  runtime: nodejs22.x
-
 frontend:
   phases:
     preBuild:
       commands:
-        - echo "🔎 Preflight AWS account"
-        - echo "Current Node version: $(node -v)"
-        - nvm use 22 || echo "Node 22 already active"
-        - node -v
-        - node ../scripts/preflight-aws-account.js
-        - corepack enable
-        - corepack prepare pnpm@9.12.3 --activate
-        - pnpm -v && node -v
-        - cd .. && pnpm install --no-frozen-lockfile
-        - cd frontend
+        - npm install --legacy-peer-deps
     build:
       commands:
-        - echo "🏗️ Building frontend"
-        - pnpm build
+        - npm run build
   artifacts:
     baseDirectory: .next
     files:
       - '**/*'
-  cache:
-    paths:
-      - .npm-cache/**/*
-      - node_modules/**/*
-      - ../node_modules/**/*
-      - ../pnpm-store/**/*

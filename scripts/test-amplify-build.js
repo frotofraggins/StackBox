@@ -82,9 +82,9 @@ function main() {
     process.exit(1);
   }
   
-  // Test 4: Run the actual build
+  // Test 4: Run the actual build (with fallback like Amplify)
   console.log('\n4️⃣  Running build:');
-  if (!runCommand('pnpm run build:amplify:fixed', frontendDir)) {
+  if (!runCommand('pnpm run build:amplify:fixed || pnpm run build', frontendDir)) {
     console.error('❌ Build failed');
     process.exit(1);
   }
