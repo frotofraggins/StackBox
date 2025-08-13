@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:amplify": "NODE_OPTIONS=\"--max-old-space-size=4096\" next build --no-build-trace",
     "preview": "next start -p 3000",
     "start": "next start",
     "lint": "next lint",
