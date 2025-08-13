@@ -20,7 +20,7 @@ frontend:
         - pnpm install --shamefully-hoist --frozen-lockfile
     build:
       commands:
-        - pnpm --filter stackbox-frontend... build
+        - pnpm --filter stackbox-frontend... build --no-build-trace
   artifacts:
     baseDirectory: out/full/frontend/.next
     files:
