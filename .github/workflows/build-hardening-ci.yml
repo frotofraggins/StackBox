@@ -1,14 +1,17 @@
-name: Build Hardening & AWS SDK v3 CI
+name: Build Hardening & AWS SDK v3 CI - DISABLED
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+  # Disabled during production deployment phase
+  # push:
+  #   branches: [ main, develop ]
+  # pull_request:
+  #   branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
   build-hardening:
     runs-on: ubuntu-latest
+    if: false  # Disabled
     
     strategy:
       matrix:

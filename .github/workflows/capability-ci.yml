@@ -1,23 +1,26 @@
-name: Capability Architecture CI
+name: Capability Architecture CI - DISABLED
 
 on:
-  push:
-    branches: [ main, develop ]
-    paths:
-      - 'packages/**'
-      - 'pnpm-workspace.yaml'
-      - 'turbo.json'
-      - '.github/workflows/capability-ci.yml'
-  pull_request:
-    branches: [ main, develop ]
-    paths:
-      - 'packages/**'
-      - 'pnpm-workspace.yaml'
-      - 'turbo.json'
+  # Disabled during production deployment phase
+  # push:
+  #   branches: [ main, develop ]
+  #   paths:
+  #     - 'packages/**'
+  #     - 'pnpm-workspace.yaml'
+  #     - 'turbo.json'
+  #     - '.github/workflows/capability-ci.yml'
+  # pull_request:
+  #   branches: [ main, develop ]
+  #   paths:
+  #     - 'packages/**'
+  #     - 'pnpm-workspace.yaml'
+  #     - 'turbo.json'
+  workflow_dispatch:
 
 jobs:
   capability-validation:
     runs-on: ubuntu-latest
+    if: false  # Disabled
     
     strategy:
       matrix:

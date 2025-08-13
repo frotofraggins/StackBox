@@ -1,13 +1,16 @@
-name: CI (Amplify-like)
+name: CI (Amplify-like) - DISABLED
 on:
-  pull_request:
-    branches: [ main ]
-  push:
-    branches: [ main ]
+  # Disabled during production deployment phase
+  # pull_request:
+  #   branches: [ main ]
+  # push:
+  #   branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   amplify_like:
     runs-on: ubuntu-latest
+    if: false  # Disabled
     steps:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
