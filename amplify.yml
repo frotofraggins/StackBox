@@ -2,11 +2,13 @@ version: 1
 env:
   variables:
     AMPLIFY_MONOREPO_APP_ROOT: frontend
+    _LIVE_UPDATES: '[{"name":"Node.js","pkg":"node","type":"nvm","version":"20.11.0"}]'
 frontend:
   phases:
     preBuild:
       commands:
         - cd frontend
+        - nvm use 20.11.0
         - npm install --legacy-peer-deps
     build:
       commands:
