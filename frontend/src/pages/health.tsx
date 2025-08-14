@@ -46,12 +46,12 @@ export default function HealthPage() {
       case 'healthy': return 'text-green-600 bg-green-50';
       case 'error': return 'text-red-600 bg-red-50';
       case 'checking': return 'text-yellow-600 bg-yellow-50';
-      default: return 'text-gray-600 bg-gray-50';
+      default: return 'text-muted bg-surface-2';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-surface-2 py-12">
       <div className="max-w-2xl mx-auto px-4">
         <div className="bg-white rounded-xl shadow-lg p-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-8">
@@ -72,13 +72,13 @@ export default function HealthPage() {
 
             {/* Environment Info */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-lg bg-gray-50">
+              <div className="p-4 rounded-lg bg-surface-2">
                 <h4 className="font-medium text-gray-900">Environment</h4>
-                <p className="text-sm text-gray-600">{status.environment}</p>
+                <p className="text-sm text-muted">{status.environment}</p>
               </div>
-              <div className="p-4 rounded-lg bg-gray-50">
+              <div className="p-4 rounded-lg bg-surface-2">
                 <h4 className="font-medium text-gray-900">Free Tier</h4>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-muted">
                   {status.freeTier ? 'Enabled' : 'Disabled'}
                 </p>
               </div>
@@ -88,7 +88,7 @@ export default function HealthPage() {
             {status.wsUrl && (
               <div className="p-4 rounded-lg border">
                 <h4 className="font-medium text-gray-900">WebSocket URL</h4>
-                <p className="text-sm text-gray-600 break-all">{status.wsUrl}</p>
+                <p className="text-sm text-muted break-all">{status.wsUrl}</p>
               </div>
             )}
 

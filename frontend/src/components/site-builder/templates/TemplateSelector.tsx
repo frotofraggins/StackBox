@@ -154,7 +154,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
   };
 
   return (
-    <div className="template-selector min-h-screen bg-gray-50">
+    <div className="template-selector min-h-screen bg-surface-2">
       {/* Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -165,7 +165,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
             </div>
             <button
               onClick={onSkip}
-              className="text-gray-500 hover:text-gray-700 text-sm font-medium"
+              className="text-gray-500 hover:text-muted text-sm font-medium"
             >
               Skip & Start Blank
             </button>
@@ -185,7 +185,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                 placeholder="Search templates..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
               />
             </div>
 
@@ -200,7 +200,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                       selectedCategory === category.id
                         ? 'bg-blue-100 text-blue-900 font-medium'
-                        : 'text-gray-700 hover:bg-gray-100'
+                        : 'text-muted hover:bg-surface-2'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -229,7 +229,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                     className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow group"
                   >
                     {/* Template Preview Image */}
-                    <div className="relative aspect-video bg-gray-100">
+                    <div className="relative aspect-video bg-surface-2">
                       <img
                         src={template.preview}
                         alt={template.name}
@@ -249,14 +249,14 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                         <div className="flex space-x-3">
                           <button
                             onClick={() => handlePreview(template)}
-                            className="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-gray-100 transition-colors"
+                            className="px-4 py-2 bg-white text-gray-900 rounded-lg font-medium hover:bg-surface-2 transition-colors"
                           >
                             <Eye className="h-4 w-4 mr-2 inline" />
                             Preview
                           </button>
                           <button
                             onClick={() => handleTemplateSelect(template)}
-                            className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                            className="px-4 py-2 bg-secondary text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
                           >
                             Select
                             <ArrowRight className="h-4 w-4 ml-2 inline" />
@@ -271,7 +271,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                         <h3 className="font-semibold text-gray-900">{template.name}</h3>
                       </div>
                       
-                      <p className="text-sm text-gray-600 mb-4">{template.description}</p>
+                      <p className="text-sm text-muted mb-4">{template.description}</p>
                       
                       {/* Features */}
                       <div className="mb-4">
@@ -279,7 +279,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                           {template.features.slice(0, 3).map((feature, index) => (
                             <span
                               key={index}
-                              className="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                              className="inline-block px-2 py-1 bg-surface-2 text-muted text-xs rounded"
                             >
                               {feature}
                             </span>
@@ -296,13 +296,13 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                       <div className="flex space-x-2">
                         <button
                           onClick={() => handlePreview(template)}
-                          className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium"
+                          className="flex-1 px-4 py-2 border border-gray-300 text-muted rounded-lg hover:bg-surface-2 transition-colors text-sm font-medium"
                         >
                           Preview
                         </button>
                         <button
                           onClick={() => handleTemplateSelect(template)}
-                          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                          className="flex-1 px-4 py-2 bg-secondary text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                         >
                           Select
                         </button>
@@ -324,11 +324,11 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
             <div className="flex items-center justify-between p-6 border-b border-gray-200">
               <div>
                 <h3 className="text-lg font-semibold text-gray-900">{previewTemplate.name}</h3>
-                <p className="text-sm text-gray-600">{previewTemplate.description}</p>
+                <p className="text-sm text-muted">{previewTemplate.description}</p>
               </div>
               <button
                 onClick={() => setPreviewTemplate(null)}
-                className="p-2 text-gray-400 hover:text-gray-600 rounded-lg"
+                className="p-2 text-gray-400 hover:text-muted rounded-lg"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -336,7 +336,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
 
             {/* Modal Content */}
             <div className="p-6">
-              <div className="aspect-video bg-gray-100 rounded-lg mb-6 overflow-hidden">
+              <div className="aspect-video bg-surface-2 rounded-lg mb-6 overflow-hidden">
                 <img
                   src={previewTemplate.preview}
                   alt={previewTemplate.name}
@@ -349,8 +349,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
                 <h4 className="font-semibold text-gray-900 mb-3">Included Features</h4>
                 <div className="grid grid-cols-2 gap-2">
                   {previewTemplate.features.map((feature, index) => (
-                    <div key={index} className="flex items-center text-sm text-gray-600">
-                      <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></div>
+                    <div key={index} className="flex items-center text-sm text-muted">
+                      <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></div>
                       {feature}
                     </div>
                   ))}
@@ -361,13 +361,13 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               <div className="flex space-x-3">
                 <button
                   onClick={() => setPreviewTemplate(null)}
-                  className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="px-6 py-2 border border-gray-300 text-muted rounded-lg hover:bg-surface-2 transition-colors"
                 >
                   Close
                 </button>
                 <button
                   onClick={() => handleTemplateSelect(previewTemplate)}
-                  className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
+                  className="px-6 py-2 bg-secondary text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center"
                 >
                   Select This Template
                   <ArrowRight className="h-4 w-4 ml-2" />

@@ -9,12 +9,20 @@
   
   /* Semantic Light Theme */
   --bg: #FFFFFF;
+  --background: #FFFFFF;  /* alias for consistency */
   --fg: #0F172A;
+  --foreground: #0F172A;  /* alias for consistency */
   --muted: #475569;
   --border: #E2E8F0;
   --surface: #FFFFFF;
   --surface-2: #F8FAFC;
   --ring: #93C5FD;
+
+  /* Status Colors */
+  --success: #10B981;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+  --info: #3B82F6;
 
   /* Component Tokens */
   --radius: 14px;
@@ -28,9 +36,12 @@
 
   /* Logo & Brand */
   --logo-color: var(--fg);
+  --brand-fg: #10B981;  /* teal for brand elements */
 
   /* Gradients */
   --grad-primary: linear-gradient(135deg,#1F2A44 0%, #2563EB 100%);
+  --grad-surface: linear-gradient(135deg,#0F172A 0%, #1F2937 100%);
+  --grad-accent: linear-gradient(135deg,#10B981 0%, #059669 100%);
 
   /* Pricing Display */
   --price-color: var(--primary);
@@ -44,37 +55,49 @@
 @media(prefers-color-scheme: dark){
   :root {
     --bg:#0B1220;
+    --background:#0B1220;
     --fg:#E5E7EB;
+    --foreground:#E5E7EB;
     --muted:#94A3B8;
     --surface:#0F172A;
     --surface-2:#111827;
     --border:#1F2535;
     --logo-color:#FFFFFF;
+    --brand-fg:#34D399;
     --grad-primary: linear-gradient(135deg,#101b33 0%, #1e40af 100%);
+    --grad-surface: linear-gradient(135deg,#0B1220 0%, #111827 100%);
   }
 }
 
 /* Manual Theme Classes for Theme Toggle */
 [data-theme="light"] {
   --bg: #FFFFFF;
+  --background: #FFFFFF;
   --fg: #0F172A;
+  --foreground: #0F172A;
   --muted: #475569;
   --border: #E2E8F0;
   --surface: #FFFFFF;
   --surface-2: #F8FAFC;
   --logo-color: var(--fg);
+  --brand-fg: #10B981;
   --grad-primary: linear-gradient(135deg,#1F2A44 0%, #2563EB 100%);
+  --grad-surface: linear-gradient(135deg,#0F172A 0%, #1F2937 100%);
 }
 
 [data-theme="dark"] {
   --bg:#0B1220;
+  --background:#0B1220;
   --fg:#E5E7EB;
+  --foreground:#E5E7EB;
   --muted:#94A3B8;
   --surface:#0F172A;
   --surface-2:#111827;
   --border:#1F2535;
   --logo-color:#FFFFFF;
+  --brand-fg:#34D399;
   --grad-primary: linear-gradient(135deg,#101b33 0%, #1e40af 100%);
+  --grad-surface: linear-gradient(135deg,#0B1220 0%, #111827 100%);
 }
 
 /* Utility Classes */
@@ -146,6 +169,102 @@
 .btn-accent {
   background-color: var(--accent);
   color: white;
+}
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all var(--dur) var(--ease);
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.btn-primary {
+  background: var(--grad-primary);
+  color: white;
+  border: 1px solid transparent;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-2);
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  color: white;
+  border: 1px solid var(--secondary);
+}
+
+.btn-secondary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: white;
+  border: 1px solid var(--accent);
+}
+
+.btn-accent:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Global Layout Consistency */
+.page-header {
+  background: var(--surface-alpha);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-main {
+  padding-top: 4rem; /* 64px for fixed header */
+}
+
+.page-footer {
+  background: var(--primary);
+  color: white;
+  padding: 3rem 0;
+}
+
+/* Consistent Link Styling */
+.nav-link {
+  color: var(--muted);
+  transition: color var(--dur) var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--foreground);
+}
+
+.nav-link.active {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color var(--dur) var(--ease);
+}
+
+.footer-link:hover {
+  color: var(--brand-fg);
 }
 
 /* Enhanced Input System */
@@ -220,4 +339,10 @@
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
+}
+
+/* Pricing Components */
+.price-hero {
+  color: var(--price-color);
+  font-weight: 700;
 }

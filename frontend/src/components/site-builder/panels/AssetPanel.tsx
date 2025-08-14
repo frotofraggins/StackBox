@@ -221,14 +221,14 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
           <div className="flex items-center space-x-2">
             <button
               onClick={createFolder}
-              className="p-2 text-gray-600 hover:text-gray-900 rounded-lg"
+              className="p-2 text-muted hover:text-gray-900 rounded-lg"
               title="Create folder"
             >
               <FolderPlus className="h-4 w-4" />
             </button>
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="flex items-center px-3 py-2 bg-secondary text-white rounded-lg hover:bg-blue-700"
             >
               <Upload className="h-4 w-4 mr-2" />
               Upload
@@ -244,7 +244,7 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
             placeholder="Search assets..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
           />
         </div>
 
@@ -255,7 +255,7 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
             className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
               selectedFolder === null 
                 ? 'bg-blue-100 text-blue-900' 
-                : 'text-gray-700 hover:bg-gray-100'
+                : 'text-muted hover:bg-surface-2'
             }`}
           >
             All Assets ({assets.length})
@@ -267,7 +267,7 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
               className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                 selectedFolder === folder.id 
                   ? 'bg-blue-100 text-blue-900' 
-                  : 'text-gray-700 hover:bg-gray-100'
+                  : 'text-muted hover:bg-surface-2'
               }`}
             >
               {folder.name} ({assets.filter(a => a.folder === folder.id).length})
@@ -285,12 +285,12 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
           className="mb-6 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors"
         >
           <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <p className="text-sm text-gray-600 mb-2">
+          <p className="text-sm text-muted mb-2">
             Drag and drop files here, or click to browse
           </p>
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            className="text-secondary hover:text-blue-800 text-sm font-medium"
           >
             Choose Files
           </button>
@@ -329,12 +329,12 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
                 onClick={() => handleAssetClick(asset)}
                 className={`relative group cursor-pointer border-2 rounded-lg overflow-hidden transition-all ${
                   selectedAssets.includes(asset.id)
-                    ? 'border-blue-500 shadow-lg'
+                    ? 'border-secondary shadow-lg'
                     : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
                 }`}
               >
                 {/* Asset Thumbnail */}
-                <div className="aspect-square bg-gray-100 flex items-center justify-center">
+                <div className="aspect-square bg-surface-2 flex items-center justify-center">
                   {asset.type === 'image' ? (
                     <img
                       src={asset.url}
@@ -359,7 +359,7 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
 
                 {/* Selection Indicator */}
                 {selectedAssets.includes(asset.id) && (
-                  <div className="absolute top-2 right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                  <div className="absolute top-2 right-2 w-6 h-6 bg-secondary rounded-full flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   </div>
                 )}
@@ -373,7 +373,7 @@ export const AssetPanel: React.FC<AssetPanelProps> = ({ clientId, onAssetSelect 
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-6 max-w-sm mx-4">
               <div className="flex items-center space-x-3">
-                <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-6 h-6 border-2 border-secondary border-t-transparent rounded-full animate-spin"></div>
                 <span className="text-gray-900">Uploading files...</span>
               </div>
             </div>

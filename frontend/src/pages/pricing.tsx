@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
-import ThemeToggle from '../components/theme/ThemeToggle'
+import Layout from '../components/layout/Layout'
 
 export default function Pricing() {
   const [billingPeriod, setBillingPeriod] = useState('monthly')
@@ -87,28 +87,7 @@ export default function Pricing() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Header */}
-      <header className="bg-[color:var(--surface)]/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-50 border-b border-[color:var(--border)]">
-        <div className="container-custom">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold" style={{ color: 'var(--logo-color)' }}>
-              StackPro
-            </Link>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/#features" className="text-[color:var(--muted)] hover:text-[color:var(--primary)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Features</Link>
-              <Link href="/pricing" className="text-[color:var(--primary)] font-semibold">Pricing</Link>
-              <Link href="/law-firms" className="text-[color:var(--muted)] hover:text-[color:var(--primary)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Use Cases</Link>
-              <Link href="/contact" className="text-[color:var(--muted)] hover:text-[color:var(--primary)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Support</Link>
-            </nav>
-            <div className="flex items-center space-x-4">
-              <ThemeToggle />
-              <Link href="/" className="text-[color:var(--muted)] hover:text-[color:var(--primary)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">← Back to Home</Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="pt-16">
+      <Layout currentPage="/pricing">
         {/* Hero Section */}
         <section className="py-16 lg:py-24 text-white shadow-[var(--shadow-2)]" style={{ background: 'var(--grad-primary)' }}>
           <div className="container-custom">
@@ -201,16 +180,12 @@ export default function Pricing() {
                       ))}
                     </ul>
 
-                    <button
-                      onClick={() => {
-                        console.log(`Starting trial for ${plan.name} (${plan.id}) at $${price}`)
-                        handleStartTrial(plan.id, plan.name, price)
-                      }}
-                      className="w-full px-6 py-3 rounded-[var(--radius)] font-semibold transition-all duration-[var(--dur)] ease-[var(--ease)] hover-scale text-white hover:opacity-90 shadow-[var(--shadow-1)] cursor-pointer"
-                      style={{ background: 'var(--grad-primary)' }}
+                    <Link
+                      href="/signup"
+                      className="w-full px-6 py-3 rounded-[var(--radius)] font-semibold transition-all duration-[var(--dur)] ease-[var(--ease)] hover-scale text-white hover:opacity-90 shadow-[var(--shadow-1)] cursor-pointer btn btn-primary text-center block"
                     >
                       Start Free Trial
-                    </button>
+                    </Link>
                     
                     <p className="text-center text-sm text-[color:var(--muted)] mt-3">
                       7-day free trial • No credit card required
@@ -502,7 +477,7 @@ export default function Pricing() {
             <div>
               <h4 className="font-semibold text-white mb-4">Use Cases</h4>
               <ul className="space-y-2">
-                <li><Link href="/law-firms" className="text-white/70 hover:text-white transition-colors duration-[var(--dur)] ease-[var(--ease)]">Law Firms</Link></li>
+                <li><Link href="/industries/law-firms" className="text-white/70 hover:text-white transition-colors duration-[var(--dur)] ease-[var(--ease)]">Law Firms</Link></li>
                 <li><Link href="/contact" className="text-white/70 hover:text-white transition-colors duration-[var(--dur)] ease-[var(--ease)]">Real Estate</Link></li>
                 <li><Link href="/contact" className="text-white/70 hover:text-white transition-colors duration-[var(--dur)] ease-[var(--ease)]">Consulting</Link></li>
               </ul>

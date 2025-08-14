@@ -156,9 +156,9 @@ export const MessageInput: React.FC<MessageInputProps> = ({
       {attachments.length > 0 && (
         <div className="mb-3 space-y-2">
           {attachments.map((file, index) => (
-            <div key={index} className="flex items-center justify-between bg-gray-50 rounded-lg p-2">
+            <div key={index} className="flex items-center justify-between bg-surface-2 rounded-lg p-2">
               <div className="flex items-center space-x-2">
-                <div className="text-blue-500">
+                <div className="text-secondary">
                   {file.type.startsWith('image/') ? '🖼️' : '📎'}
                 </div>
                 <div className="flex-1 min-w-0">
@@ -198,7 +198,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={disabled}
-              className="p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="p-2 text-gray-400 hover:text-muted disabled:opacity-50 disabled:cursor-not-allowed"
               title="Attach file"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -226,7 +226,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             className={`
               w-full px-3 py-2 border border-gray-300 rounded-lg resize-none
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-              disabled:bg-gray-100 disabled:cursor-not-allowed
+              disabled:bg-surface-2 disabled:cursor-not-allowed
               placeholder-gray-400
             `}
             style={{ minHeight: '40px', maxHeight: '120px' }}
@@ -241,7 +241,7 @@ export const MessageInput: React.FC<MessageInputProps> = ({
             p-2 rounded-lg transition-colors duration-200
             ${disabled || (!message.trim() && attachments.length === 0)
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+              : 'bg-secondary text-white hover:bg-secondary focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
             }
           `}
           title="Send message"

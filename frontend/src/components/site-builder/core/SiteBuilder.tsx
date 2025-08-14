@@ -303,7 +303,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-100">
+    <div className="h-screen flex flex-col bg-surface-2">
       {/* Header Toolbar */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-4">
@@ -315,7 +315,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
             <button
               onClick={handleUndo}
               disabled={historyIndex === 0}
-              className="p-2 text-gray-600 hover:text-gray-900 disabled:opacity-50"
+              className="p-2 text-muted hover:text-gray-900 disabled:opacity-50"
               title="Undo"
             >
               <Undo className="h-4 w-4" />
@@ -324,7 +324,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
             <button
               onClick={handleRedo}
               disabled={historyIndex === history.length - 1}
-              className="p-2 text-gray-600 hover:text-gray-900 disabled:opacity-50"
+              className="p-2 text-muted hover:text-gray-900 disabled:opacity-50"
               title="Redo"
             >
               <Redo className="h-4 w-4" />
@@ -337,8 +337,8 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
             onClick={() => setActivePanel(activePanel === 'theme' ? null : 'theme')}
             className={`p-2 rounded-lg ${
               activePanel === 'theme' 
-                ? 'bg-blue-100 text-blue-600' 
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-blue-100 text-secondary' 
+                : 'text-muted hover:text-gray-900'
             }`}
             title="Theme"
           >
@@ -349,8 +349,8 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
             onClick={() => setActivePanel(activePanel === 'assets' ? null : 'assets')}
             className={`p-2 rounded-lg ${
               activePanel === 'assets' 
-                ? 'bg-blue-100 text-blue-600' 
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-blue-100 text-secondary' 
+                : 'text-muted hover:text-gray-900'
             }`}
             title="Assets"
           >
@@ -361,8 +361,8 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
             onClick={() => setActivePanel(activePanel === 'settings' ? null : 'settings')}
             className={`p-2 rounded-lg ${
               activePanel === 'settings' 
-                ? 'bg-blue-100 text-blue-600' 
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-blue-100 text-secondary' 
+                : 'text-muted hover:text-gray-900'
             }`}
             title="Settings"
           >
@@ -373,7 +373,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
 
           <button
             onClick={handlePreview}
-            className="flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 rounded-lg"
+            className="flex items-center px-3 py-2 text-muted hover:text-gray-900 rounded-lg"
           >
             <Eye className="h-4 w-4 mr-2" />
             Preview
@@ -382,7 +382,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
           <button
             onClick={() => handleSave(false)}
             disabled={isSaving}
-            className="flex items-center px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50"
+            className="flex items-center px-3 py-2 bg-surface-2 text-muted rounded-lg hover:bg-gray-200 disabled:opacity-50"
           >
             <Save className="h-4 w-4 mr-2" />
             {isSaving ? 'Saving...' : 'Save'}
@@ -391,7 +391,7 @@ export const SiteBuilder: React.FC<SiteBuilderProps> = ({
           <button
             onClick={handlePublish}
             disabled={isPublishing}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="flex items-center px-4 py-2 bg-secondary text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
           >
             <Download className="h-4 w-4 mr-2" />
             {isPublishing ? 'Publishing...' : 'Publish'}

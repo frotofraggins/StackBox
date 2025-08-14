@@ -2,90 +2,23 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import AIChatbox from '../components/AIChatbox'
-import ThemeToggle from '../components/theme/ThemeToggle'
+import Navigation from '../components/layout/Navigation'
+import Footer from '../components/layout/Footer'
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
 
   return (
     <>
       <Head>
-        <title>StackPro - Professional Business Tools in Minutes, Not Months</title>
-        <meta name="description" content="Complete business platform for small businesses, contractors, and construction companies. CRM, File Sharing, Website, Project Management. Securely hosted on AWS." />
+        <title>StackPro - Complete Business Stack Platform | CRM, Website Builder & AI Assistant</title>
+        <meta name="description" content="Transform your business with StackPro's all-in-one platform. Get CRM, website builder, client portal, and AI assistant in one powerful solution. Start your free trial today." />
+        <meta name="keywords" content="business platform, CRM, website builder, client portal, AI assistant, small business software" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="canonical" href="https://stackpro.io" />
       </Head>
 
-      {/* Header */}
-      <header className="bg-[color:var(--surface)]/95 backdrop-blur-md shadow-[var(--shadow-1)] fixed w-full top-0 z-50 border-b border-[color:var(--border)]">
-        <div className="container-custom">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex-shrink-0">
-              <Link href="/" className="text-2xl font-bold" style={{ color: 'var(--logo-color)' }}>
-                StackPro
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
-              <Link href="#features" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
-                Features
-              </Link>
-              <Link href="/pricing" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
-                Pricing
-              </Link>
-              <Link href="/contact" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
-                Industries
-              </Link>
-              <Link href="/contact" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">
-                Support
-              </Link>
-            </nav>
-
-            {/* CTA Button */}
-            <div className="hidden md:flex items-center space-x-4">
-              <ThemeToggle />
-              <Link href="/login" className="text-[color:var(--muted)] hover:text-[color:var(--fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)] font-medium">
-                Login
-              </Link>
-              <Link href="/signup" className="text-white px-6 py-2 rounded-[var(--radius)] hover:opacity-90 transition-all duration-[var(--dur)] ease-[var(--ease)] font-semibold shadow-[var(--shadow-1)] hover:shadow-[var(--shadow-2)] hover-scale" style={{ background: 'var(--primary)' }}>
-                Start Free Trial
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <button 
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden border-t border-border py-4">
-              <nav className="flex flex-col space-y-4">
-                <div className="flex justify-between items-center">
-                  <span className="text-muted text-sm">Theme:</span>
-                  <ThemeToggle />
-                </div>
-                <Link href="#features" className="text-muted hover:text-primary">Features</Link>
-                <Link href="/pricing" className="text-muted hover:text-primary">Pricing</Link>
-                <Link href="/contact" className="text-muted hover:text-primary">Industries</Link>
-                <Link href="/contact" className="text-muted hover:text-primary">Support</Link>
-                <Link href="/pricing" className="bg-primary text-white px-4 py-2 rounded-lg text-center hover:opacity-90 transition-all">
-                  Start Free Trial
-                </Link>
-              </nav>
-            </div>
-          )}
-        </div>
-      </header>
+      <Navigation currentPage="/" />
 
       {/* Mobile Sticky CTA */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 z-40">
@@ -403,7 +336,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-[color:var(--brand-fg)] mb-4">Product</h4>
               <ul className="space-y-2">
-                <li><Link href="#features" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Features</Link></li>
+                <li><Link href="/features" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Features</Link></li>
                 <li><Link href="/pricing" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Pricing</Link></li>
                 <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Support</Link></li>
               </ul>
@@ -412,9 +345,9 @@ export default function Home() {
             <div>
               <h4 className="font-semibold text-[color:var(--brand-fg)] mb-4">Use Cases</h4>
               <ul className="space-y-2">
-                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Construction</Link></li>
-                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Contractors</Link></li>
-                <li><Link href="/contact" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Small Business</Link></li>
+                <li><Link href="/industries/contractors" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Construction</Link></li>
+                <li><Link href="/industries/contractors" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Contractors</Link></li>
+                <li><Link href="/industries/contractors" className="text-white/70 hover:text-[color:var(--brand-fg)] transition-colors duration-[var(--dur)] ease-[var(--ease)]">Small Business</Link></li>
               </ul>
             </div>
             

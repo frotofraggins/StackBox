@@ -232,7 +232,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                       <div
                         key={i}
                         className={`w-2 h-2 rounded-full mr-2 ${
-                          i <= step ? 'bg-blue-600' : 'bg-gray-300'
+                          i <= step ? 'bg-secondary' : 'bg-gray-300'
                         }`}
                       />
                     ))}
@@ -240,7 +240,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                 </div>
                 <button
                   onClick={onClose}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="text-gray-400 hover:text-muted transition-colors"
                 >
                   <XMarkIcon className="w-6 h-6" />
                 </button>
@@ -253,7 +253,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                   <div className="space-y-6">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-muted mb-2">
                           First Name
                         </label>
                         <input
@@ -265,7 +265,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-muted mb-2">
                           Last Name
                         </label>
                         <input
@@ -279,7 +279,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted mb-2">
                         Email Address
                       </label>
                       <input
@@ -292,7 +292,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-muted mb-2">
                         Business Name
                       </label>
                       <input
@@ -305,7 +305,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-3">
+                      <label className="block text-sm font-medium text-muted mb-3">
                         Business Type
                       </label>
                       <div className="grid grid-cols-2 gap-3">
@@ -315,7 +315,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                             onClick={() => handleInputChange('businessType', type.id)}
                             className={`p-3 text-left border rounded-lg transition-all ${
                               formData.businessType === type.id
-                                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                                ? 'border-secondary bg-blue-50 text-blue-700'
                                 : 'border-gray-300 hover:border-gray-400'
                             }`}
                           >
@@ -332,7 +332,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                 {step === 2 && (
                   <div className="space-y-6">
                     <div className="text-center mb-6">
-                      <p className="text-gray-600">
+                      <p className="text-muted">
                         Choose how you'd like your website to be accessed
                       </p>
                     </div>
@@ -342,14 +342,14 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                         onClick={() => handleInputChange('useDomain', 'subdomain')}
                         className={`w-full p-4 text-left border rounded-lg transition-all ${
                           formData.useDomain === 'subdomain'
-                            ? 'border-blue-500 bg-blue-50'
+                            ? 'border-secondary bg-blue-50'
                             : 'border-gray-300 hover:border-gray-400'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div>
                             <h3 className="font-semibold text-gray-900">Use Free Subdomain</h3>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-sm text-muted mt-1">
                               {generateSubdomain(formData.businessName)}.allbusinesstools.com
                             </p>
                           </div>
@@ -361,25 +361,25 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                         onClick={() => handleInputChange('useDomain', 'custom')}
                         className={`w-full p-4 text-left border rounded-lg transition-all ${
                           formData.useDomain === 'custom'
-                            ? 'border-blue-500 bg-blue-50'
+                            ? 'border-secondary bg-blue-50'
                             : 'border-gray-300 hover:border-gray-400'
                         }`}
                       >
                         <div className="flex items-center justify-between">
                           <div>
                             <h3 className="font-semibold text-gray-900">Use Your Own Domain</h3>
-                            <p className="text-sm text-gray-600 mt-1">
+                            <p className="text-sm text-muted mt-1">
                               Connect your existing domain (e.g., yourcompany.com)
                             </p>
                           </div>
-                          <div className="text-blue-600 font-semibold">$5/month</div>
+                          <div className="text-secondary font-semibold">$5/month</div>
                         </div>
                       </button>
                     </div>
 
                     {formData.useDomain === 'custom' && (
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-muted mb-2">
                           Your Domain
                         </label>
                         <input
@@ -398,7 +398,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                 {step === 3 && (
                   <div className="space-y-6">
                     <div className="text-center mb-6">
-                      <p className="text-gray-600">
+                      <p className="text-muted">
                         Select the tools you need. You can always add more later.
                       </p>
                     </div>
@@ -409,7 +409,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                           key={feature.id}
                           className={`border rounded-lg p-4 transition-all ${
                             formData.features[feature.id]
-                              ? 'border-blue-500 bg-blue-50'
+                              ? 'border-secondary bg-blue-50'
                               : 'border-gray-300'
                           }`}
                         >
@@ -423,14 +423,14 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                                   </span>
                                 )}
                               </div>
-                              <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                              <p className="text-sm text-muted mt-1">{feature.description}</p>
                             </div>
                             <button
                               onClick={() => !feature.essential && handleFeatureToggle(feature.id)}
                               disabled={feature.essential}
                               className={`ml-4 w-6 h-6 rounded border-2 flex items-center justify-center transition-colors ${
                                 formData.features[feature.id]
-                                  ? 'bg-blue-600 border-blue-600'
+                                  ? 'bg-secondary border-secondary'
                                   : 'border-gray-300 hover:border-gray-400'
                               } ${feature.essential ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                             >
@@ -454,14 +454,14 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                     
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-2">Ready to Launch!</h3>
-                      <p className="text-gray-600">
+                      <p className="text-muted">
                         Your business stack will be deployed in 5-15 minutes. You'll receive an email with access details.
                       </p>
                     </div>
 
-                    <div className="bg-gray-50 rounded-lg p-4 text-left">
+                    <div className="bg-surface-2 rounded-lg p-4 text-left">
                       <h4 className="font-semibold text-gray-900 mb-3">What you're getting:</h4>
-                      <div className="space-y-2 text-sm text-gray-600">
+                      <div className="space-y-2 text-sm text-muted">
                         <div className="flex items-center">
                           <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
                           Website: {formData.useDomain === 'custom' ? formData.domain : `${generateSubdomain(formData.businessName)}.allbusinesstools.com`}
@@ -482,7 +482,7 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                       <button
                         onClick={handleStartTrial}
                         disabled={loading}
-                        className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                        className="w-full bg-secondary text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
                       >
                         {loading ? 'Deploying...' : 'Start Free Trial'}
                       </button>
@@ -505,13 +505,13 @@ export function SignupForm({ isOpen, onClose }: SignupFormProps) {
                   <button
                     onClick={prevStep}
                     disabled={step === 1}
-                    className="text-gray-600 hover:text-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed"
+                    className="text-muted hover:text-gray-800 disabled:text-gray-400 disabled:cursor-not-allowed"
                   >
                     Back
                   </button>
                   <button
                     onClick={nextStep}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+                    className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium"
                   >
                     Continue
                     <ArrowRightIcon className="inline w-4 h-4 ml-2" />

@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import ThemeToggle from '../components/theme/ThemeToggle'
+import Navigation from '../components/layout/Navigation'
 
 export default function About() {
   return (
@@ -12,6 +13,8 @@ export default function About() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+
+      <Navigation currentPage="/about" />
       {/* Header */}
       <header className="bg-background/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-50 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,7 +25,7 @@ export default function About() {
             <nav className="hidden md:flex space-x-8">
               <Link href="/#features" className="text-muted hover:text-primary transition-colors">Features</Link>
               <Link href="/pricing" className="text-muted hover:text-primary transition-colors">Pricing</Link>
-              <Link href="/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
+              <Link href="/industries/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
               <Link href="/contact" className="text-muted hover:text-primary transition-colors">Support</Link>
             </nav>
             <div className="flex items-center space-x-4">

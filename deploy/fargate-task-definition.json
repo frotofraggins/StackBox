@@ -24,16 +24,28 @@
         {
           "name": "PORT",
           "value": "3001"
+        },
+        {
+          "name": "FRONTEND_URL",
+          "value": "https://main.d3m3k3uuuvlvyv.amplifyapp.com"
+        },
+        {
+          "name": "STRIPE_SECRET_KEY",
+          "value": "sk_test_placeholder"
+        },
+        {
+          "name": "STRIPE_WEBHOOK_SECRET",
+          "value": "whsec_placeholder"
         }
       ],
       "secrets": [
         {
           "name": "DATABASE_URL",
-          "valueFrom": "arn:aws:secretsmanager:us-west-2:304052673868:secret:stackpro/database-url"
+          "valueFrom": "arn:aws:secretsmanager:us-west-2:304052673868:secret:stackpro/database-url-ommXod"
         },
         {
           "name": "JWT_SECRET",
-          "valueFrom": "arn:aws:secretsmanager:us-west-2:304052673868:secret:stackpro/jwt-secret"
+          "valueFrom": "arn:aws:secretsmanager:us-west-2:304052673868:secret:stackpro/jwt-secret-uaVcE1"
         }
       ],
       "logConfiguration": {

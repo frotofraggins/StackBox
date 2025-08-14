@@ -15,16 +15,16 @@ export default function Privacy() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-secondary">
               StackPro
             </Link>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/features" className="text-gray-700 hover:text-blue-600">Features</Link>
-              <Link href="/pricing" className="text-gray-700 hover:text-blue-600">Pricing</Link>
-              <Link href="/law-firms" className="text-gray-700 hover:text-blue-600">Use Cases</Link>
-              <Link href="/contact" className="text-gray-700 hover:text-blue-600">Support</Link>
+              <Link href="/features" className="text-muted hover:text-secondary">Features</Link>
+              <Link href="/pricing" className="text-muted hover:text-secondary">Pricing</Link>
+              <Link href="/industries/law-firms" className="text-muted hover:text-secondary">Use Cases</Link>
+              <Link href="/contact" className="text-muted hover:text-secondary">Support</Link>
             </nav>
-            <Link href="/pricing" className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+            <Link href="/pricing" className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
               Start Free Trial
             </Link>
           </div>
@@ -38,7 +38,7 @@ export default function Privacy() {
             <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
               Privacy Policy
             </h1>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-muted">
               Last updated: January 1, 2025
             </p>
           </div>
@@ -190,10 +190,10 @@ export default function Privacy() {
               <p>
                 If you have questions about this Privacy Policy or our data practices, please contact us:
               </p>
-              <div className="bg-gray-50 p-6 rounded-lg">
+              <div className="bg-surface-2 p-6 rounded-lg">
                 <p><strong>StackPro Privacy Team</strong><br />
                 Email: privacy@stackpro.io<br />
-                <Link href="/contact" className="text-blue-600 hover:text-blue-700">Contact Page</Link></p>
+                <Link href="/contact" className="text-secondary hover:text-blue-700">Contact Page</Link></p>
               </div>
 
               <div className="bg-blue-50 border-l-4 border-blue-400 p-6 mt-8">

@@ -22,7 +22,7 @@ export default function Terms() {
             <nav className="hidden md:flex space-x-8">
               <Link href="/features" className="text-muted hover:text-primary transition-colors">Features</Link>
               <Link href="/pricing" className="text-muted hover:text-primary transition-colors">Pricing</Link>
-              <Link href="/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
+              <Link href="/industries/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
               <Link href="/contact" className="text-muted hover:text-primary transition-colors">Support</Link>
             </nav>
             <div className="flex items-center space-x-4">

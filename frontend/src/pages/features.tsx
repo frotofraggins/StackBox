@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import ThemeToggle from '../components/theme/ThemeToggle'
+import Navigation from '../components/layout/Navigation'
 
 export default function Features() {
   const [activeFeature, setActiveFeature] = useState('crm')
@@ -150,6 +151,8 @@ export default function Features() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+
+      <Navigation currentPage="/features" />
       {/* Header */}
       <header className="bg-background/95 backdrop-blur-md shadow-sm fixed w-full top-0 z-50 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -160,7 +163,7 @@ export default function Features() {
             <nav className="hidden md:flex space-x-8">
               <Link href="/features" className="text-primary font-semibold">Features</Link>
               <Link href="/pricing" className="text-muted hover:text-primary transition-colors">Pricing</Link>
-              <Link href="/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
+              <Link href="/industries/law-firms" className="text-muted hover:text-primary transition-colors">Use Cases</Link>
               <Link href="/contact" className="text-muted hover:text-primary transition-colors">Support</Link>
             </nav>
             <div className="flex items-center space-x-4">
@@ -496,9 +499,9 @@ export default function Features() {
             <div>
               <h4 className="font-semibold text-white mb-4">Use Cases</h4>
               <ul className="space-y-2">
-                <li><Link href="/law-firms" className="text-white/70 hover:text-white transition-colors">Law Firms</Link></li>
-                <li><Link href="/real-estate" className="text-white/70 hover:text-white transition-colors">Real Estate</Link></li>
-                <li><Link href="/consulting" className="text-white/70 hover:text-white transition-colors">Consulting</Link></li>
+                <li><Link href="/industries/law-firms" className="text-white/70 hover:text-white transition-colors">Law Firms</Link></li>
+                <li><Link href="/industries/law-firms" className="text-white/70 hover:text-white transition-colors">Real Estate</Link></li>
+                <li><Link href="/industries/agencies" className="text-white/70 hover:text-white transition-colors">Consulting</Link></li>
               </ul>
             </div>
             

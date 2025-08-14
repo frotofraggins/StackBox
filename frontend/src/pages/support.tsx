@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Mail, MessageCircle, Phone, Clock, HelpCircle, FileText, Video, Search } from 'lucide-react'
+import Navigation from '../components/layout/Navigation'
+import Footer from '../components/layout/Footer'
 
 export default function Support() {
   const [activeCategory, setActiveCategory] = useState('getting-started')
@@ -128,25 +130,9 @@ export default function Support() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Header */}
-      <header className="header-glass">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-primary">
-              StackPro
-            </Link>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/features" className="nav-link">Features</Link>
-              <Link href="/pricing" className="nav-link">Pricing</Link>
-              <Link href="/law-firms" className="nav-link">Use Cases</Link>
-              <Link href="/support" className="nav-active">Support</Link>
-            </nav>
-            <Link href="/" className="text-text-light/80 hover:text-text-light">← Back to Home</Link>
-          </div>
-        </div>
-      </header>
+      <Navigation currentPage="/support" />
 
-      <main>
+      <main className="pt-16">
         {/* Hero Section */}
         <section className="bg-gradient-dark py-16">
           <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
@@ -281,11 +267,11 @@ export default function Support() {
             <div className="grid md:grid-cols-3 gap-8">
               <div className="text-center p-6">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Video className="h-8 w-8 text-blue-600" />
+                  <Video className="h-8 w-8 text-secondary" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Video Tutorials</h3>
-                <p className="text-gray-600 mb-4">Step-by-step video guides for getting the most out of StackPro</p>
-                <Link href="/tutorials" className="text-blue-600 hover:text-blue-700 font-medium">
+                <p className="text-muted mb-4">Step-by-step video guides for getting the most out of StackPro</p>
+                <Link href="/support" className="text-secondary hover:text-blue-700 font-medium">
                   Watch Tutorials →
                 </Link>
               </div>
@@ -295,8 +281,8 @@ export default function Support() {
                   <FileText className="h-8 w-8 text-green-600" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Documentation</h3>
-                <p className="text-gray-600 mb-4">Detailed guides and API documentation for advanced users</p>
-                <Link href="/docs" className="text-green-600 hover:text-green-700 font-medium">
+                <p className="text-muted mb-4">Detailed guides and API documentation for advanced users</p>
+                <Link href="/support" className="text-green-600 hover:text-green-700 font-medium">
                   Read Docs →
                 </Link>
               </div>
@@ -306,8 +292,8 @@ export default function Support() {
                   <MessageCircle className="h-8 w-8 text-purple-600" />
                 </div>
                 <h3 className="text-xl font-semibold mb-3">Community</h3>
-                <p className="text-gray-600 mb-4">Connect with other StackPro users and share best practices</p>
-                <Link href="/community" className="text-purple-600 hover:text-purple-700 font-medium">
+                <p className="text-muted mb-4">Connect with other StackPro users and share best practices</p>
+                <Link href="/support" className="text-purple-600 hover:text-purple-700 font-medium">
                   Join Community →
                 </Link>
               </div>
@@ -316,7 +302,7 @@ export default function Support() {
         </section>
 
         {/* Contact Form */}
-        <section className="py-16 bg-blue-600">
+        <section className="py-16 bg-secondary">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-white mb-4">
@@ -330,7 +316,7 @@ export default function Support() {
             <div className="bg-white rounded-lg shadow-xl p-8">
               <form className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="name" className="block text-sm font-medium text-muted mb-2">
                     Your Name
                   </label>
                   <input
@@ -342,7 +328,7 @@ export default function Support() {
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-muted mb-2">
                     Email Address
                   </label>
                   <input
@@ -354,7 +340,7 @@ export default function Support() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium text-muted mb-2">
                     Subject
                   </label>
                   <input
@@ -366,7 +352,7 @@ export default function Support() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium text-muted mb-2">
                     Message
                   </label>
                   <textarea
@@ -380,7 +366,7 @@ export default function Support() {
                 <div className="md:col-span-2">
                   <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+                    className="w-full bg-secondary text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold"
                   >
                     Send Message
                   </button>
@@ -391,50 +377,9 @@ export default function Support() {
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-2xl font-bold text-white mb-4">StackPro</div>
-              <p className="text-gray-400">
-                Professional business tools in minutes, not months.
-              </p>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2">
-                <li><Link href="/features" className="hover:text-white">Features</Link></li>
-                <li><Link href="/pricing" className="hover:text-white">Pricing</Link></li>
-                <li><Link href="/support" className="text-blue-400">Support</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2">
-                <li><Link href="/about" className="hover:text-white">About</Link></li>
-                <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
-                <li><a href="mailto:support@stackpro.io" className="hover:text-white">support@stackpro.io</a></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-2">
-                <li><Link href="/privacy" className="hover:text-white">Privacy</Link></li>
-                <li><Link href="/terms" className="hover:text-white">Terms</Link></li>
-                <li><Link href="/cookie-policy" className="hover:text-white">Cookies</Link></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-            <p>&copy; 2025 StackPro. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      </main>
+
+      <Footer />
     </>
   )
 }

@@ -165,7 +165,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
           <button
             type="button"
             onClick={onBack}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-muted shadow-sm hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
           >
             Previous
           </button>
@@ -210,7 +210,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                 />
               </div>
               <div className="ml-3 text-sm">
-                <label htmlFor={option.id} className="font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor={option.id} className="font-medium text-muted dark:text-gray-300">
                   {option.title}
                   {option.recommended && (
                     <span className="ml-1 inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800 dark:bg-green-800 dark:text-green-100">
@@ -247,7 +247,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                   onChange={() => setDomainChoice('bring')}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
-                <label htmlFor="bring-domain" className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="bring-domain" className="ml-3 text-sm font-medium text-muted dark:text-gray-300">
                   Use my existing domain
                 </label>
               </div>
@@ -260,7 +260,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                   onChange={() => setDomainChoice('buy')}
                   className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                 />
-                <label htmlFor="buy-domain" className="ml-3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="buy-domain" className="ml-3 text-sm font-medium text-muted dark:text-gray-300">
                   Buy a new domain through StackPro
                   <span className="ml-1 text-xs text-gray-500">(Coming Soon)</span>
                 </label>
@@ -271,7 +271,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
           {domainChoice === 'bring' && (
             <div className="space-y-4">
               <div>
-                <label htmlFor="custom-domain" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="custom-domain" className="block text-sm font-medium text-muted dark:text-gray-300">
                   Your Domain
                 </label>
                 <div className="mt-1">
@@ -290,7 +290,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
               </div>
 
               <div>
-                <label htmlFor="forward-to" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                <label htmlFor="forward-to" className="block text-sm font-medium text-muted dark:text-gray-300">
                   Forward emails to
                 </label>
                 <div className="mt-1">
@@ -306,7 +306,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-muted dark:text-gray-300 mb-2">
                   DNS Management Mode
                 </label>
                 <div className="space-y-2">
@@ -319,7 +319,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                       onChange={() => setMode('delegated-subdomain')}
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
-                    <label htmlFor="delegated" className="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                    <label htmlFor="delegated" className="ml-3 text-sm text-muted dark:text-gray-300">
                       Subdomain Delegation (Recommended)
                     </label>
                   </div>
@@ -332,7 +332,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                       onChange={() => setMode('full-zone')}
                       className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-500"
                     />
-                    <label htmlFor="full-zone" className="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                    <label htmlFor="full-zone" className="ml-3 text-sm text-muted dark:text-gray-300">
                       Full Zone Management
                     </label>
                   </div>
@@ -425,14 +425,14 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
                       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {record.description}
                       </p>
-                      <div className="mt-2 rounded bg-gray-50 p-2 font-mono text-xs dark:bg-gray-800">
+                      <div className="mt-2 rounded bg-surface-2 p-2 font-mono text-xs dark:bg-gray-800">
                         <div className="break-all">{formatDNSRecord(record)}</div>
                       </div>
                     </div>
                     <button
                       type="button"
                       onClick={() => copyToClipboard(formatDNSRecord(record), `${index}`)}
-                      className="ml-2 inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600"
+                      className="ml-2 inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-xs font-medium text-muted shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-surface-2 dark:bg-gray-700 dark:text-gray-300 dark:ring-gray-600 dark:hover:bg-gray-600"
                     >
                       <ClipboardDocumentIcon className="h-4 w-4" />
                       {copiedRecord === `${index}` ? 'Copied!' : 'Copy'}
@@ -461,7 +461,7 @@ export default function EmailStep({ data, onComplete, onBack }: EmailStepProps) 
         <button
           type="button"
           onClick={onBack}
-          className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
+          className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-muted shadow-sm hover:bg-surface-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
         >
           Previous
         </button>

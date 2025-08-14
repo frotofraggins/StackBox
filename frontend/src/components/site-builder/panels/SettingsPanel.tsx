@@ -67,13 +67,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Site Settings</h3>
 
         {/* Section Tabs */}
-        <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+        <div className="flex space-x-1 bg-surface-2 rounded-lg p-1">
           <button
             onClick={() => setActiveSection('general')}
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'general'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <Globe className="h-4 w-4 mr-2" />
@@ -84,7 +84,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'seo'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <Search className="h-4 w-4 mr-2" />
@@ -95,7 +95,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'domain'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <ExternalLink className="h-4 w-4 mr-2" />
@@ -115,42 +115,42 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
               <div className="space-y-4">
                 {/* Site Name */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Site Name *
                   </label>
                   <input
                     type="text"
                     value={settings.siteName}
                     onChange={(e) => handleChange('siteName', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="Your Business Name"
                   />
                 </div>
 
                 {/* Site Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Site Description
                   </label>
                   <textarea
                     value={settings.siteDescription}
                     onChange={(e) => handleChange('siteDescription', e.target.value)}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="Brief description of your business..."
                   />
                 </div>
 
                 {/* Domain */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Domain
                   </label>
                   <input
                     type="text"
                     value={settings.domain}
                     onChange={(e) => handleChange('domain', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="yourbusiness.com"
                   />
                   <p className="mt-1 text-xs text-gray-500">
@@ -166,14 +166,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
               <div className="space-y-4">
                 {/* Logo */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Logo URL
                   </label>
                   <input
                     type="url"
                     value={settings.logo || ''}
                     onChange={(e) => handleChange('logo', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="https://example.com/logo.png"
                   />
                   {settings.logo && (
@@ -192,14 +192,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
 
                 {/* Favicon */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Favicon URL
                   </label>
                   <input
                     type="url"
                     value={settings.favicon || ''}
                     onChange={(e) => handleChange('favicon', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="https://example.com/favicon.ico"
                   />
                   <p className="mt-1 text-xs text-gray-500">
@@ -220,14 +220,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
               <div className="space-y-4">
                 {/* SEO Title */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Meta Title *
                   </label>
                   <input
                     type="text"
                     value={settings.seo.title}
                     onChange={(e) => handleSEOChange('title', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="Your Business - Professional Services"
                     maxLength={60}
                   />
@@ -238,14 +238,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
 
                 {/* SEO Description */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Meta Description *
                   </label>
                   <textarea
                     value={settings.seo.description}
                     onChange={(e) => handleSEOChange('description', e.target.value)}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="Brief description that appears in search results..."
                     maxLength={160}
                   />
@@ -267,13 +267,13 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
                     value={newKeyword}
                     onChange={(e) => setNewKeyword(e.target.value)}
                     onKeyPress={handleKeywordKeyPress}
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                     placeholder="Add keyword..."
                   />
                   <button
                     onClick={addKeyword}
                     disabled={!newKeyword.trim()}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 bg-secondary text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Tag className="h-4 w-4" />
                   </button>
@@ -290,7 +290,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
                         {keyword}
                         <button
                           onClick={() => removeKeyword(keyword)}
-                          className="ml-2 text-blue-600 hover:text-blue-800"
+                          className="ml-2 text-secondary hover:text-blue-800"
                         >
                           <Trash2 className="h-3 w-3" />
                         </button>
@@ -308,14 +308,14 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
             {/* SEO Preview */}
             <div>
               <h4 className="text-sm font-semibold text-gray-900 mb-3">Search Preview</h4>
-              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
-                <div className="text-blue-600 text-lg font-medium truncate">
+              <div className="border border-gray-200 rounded-lg p-4 bg-surface-2">
+                <div className="text-secondary text-lg font-medium truncate">
                   {settings.seo.title || settings.siteName}
                 </div>
                 <div className="text-green-600 text-sm">
                   {settings.domain || 'yoursite.stackpro.io'}
                 </div>
-                <div className="text-gray-600 text-sm mt-1">
+                <div className="text-muted text-sm mt-1">
                   {settings.seo.description || settings.siteDescription || 'No description provided'}
                 </div>
               </div>
@@ -332,7 +332,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
               <div className="space-y-4">
                 {/* Current Domain */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-muted mb-2">
                     Current Domain
                   </label>
                   <div className="flex items-center space-x-3">
@@ -340,7 +340,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
                       type="text"
                       value={settings.domain}
                       onChange={(e) => handleChange('domain', e.target.value)}
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                       placeholder="yourbusiness.com"
                     />
                     <button className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
@@ -365,19 +365,19 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
                 </div>
 
                 {/* DNS Instructions */}
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="bg-surface-2 border border-gray-200 rounded-lg p-4">
                   <h5 className="text-sm font-medium text-gray-900 mb-3">DNS Configuration</h5>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Type:</span>
+                      <span className="text-muted">Type:</span>
                       <span className="font-mono">CNAME</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Name:</span>
+                      <span className="text-muted">Name:</span>
                       <span className="font-mono">www</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">Value:</span>
+                      <span className="text-muted">Value:</span>
                       <span className="font-mono">stackpro.io</span>
                     </div>
                   </div>
@@ -403,7 +403,7 @@ export const SettingsPanel: React.FC<SettingsPanelProps> = ({ settings, onChange
                   </div>
                 </div>
 
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-muted">
                   SSL certificates are automatically managed and renewed for all StackPro sites.
                 </div>
               </div>

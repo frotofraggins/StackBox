@@ -15,15 +15,15 @@ export default function CookiePolicy() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-secondary">
               StackPro
             </Link>
             <nav className="hidden md:flex space-x-8">
-              <Link href="/features" className="text-gray-700 hover:text-blue-600">Features</Link>
-              <Link href="/pricing" className="text-gray-700 hover:text-blue-600">Pricing</Link>
-              <Link href="/support" className="text-gray-700 hover:text-blue-600">Support</Link>
+              <Link href="/features" className="text-muted hover:text-secondary">Features</Link>
+              <Link href="/pricing" className="text-muted hover:text-secondary">Pricing</Link>
+              <Link href="/support" className="text-muted hover:text-secondary">Support</Link>
             </nav>
-            <Link href="/" className="text-gray-600 hover:text-gray-900">← Back to Home</Link>
+            <Link href="/" className="text-muted hover:text-gray-900">← Back to Home</Link>
           </div>
         </div>
       </header>
@@ -40,13 +40,13 @@ export default function CookiePolicy() {
 
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">What Are Cookies</h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted mb-6">
               Cookies are small text files that are stored on your computer or mobile device when you visit our website. 
               They allow our website to remember your preferences and provide you with a better user experience.
             </p>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">How We Use Cookies</h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted mb-6">
               StackPro uses cookies for the following purposes:
             </p>
 
@@ -103,10 +103,10 @@ export default function CookiePolicy() {
             </div>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Third-Party Cookies</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted mb-4">
               We may also use third-party cookies from trusted partners:
             </p>
-            <ul className="list-disc pl-5 text-gray-600 mb-6 space-y-2">
+            <ul className="list-disc pl-5 text-muted mb-6 space-y-2">
               <li><strong>Google Analytics:</strong> To analyze website traffic and user behavior</li>
               <li><strong>Stripe:</strong> For secure payment processing and fraud prevention</li>
               <li><strong>Intercom:</strong> For customer support chat functionality</li>
@@ -116,16 +116,16 @@ export default function CookiePolicy() {
             </ul>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Managing Your Cookie Preferences</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted mb-4">
               You have several options to control cookies:
             </p>
 
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
+            <div className="bg-surface-2 border border-gray-200 rounded-lg p-6 mb-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">Browser Settings</h3>
-              <p className="text-gray-700 mb-3">
+              <p className="text-muted mb-3">
                 Most web browsers allow you to control cookies through their settings:
               </p>
-              <ul className="list-disc pl-5 text-gray-700 space-y-1">
+              <ul className="list-disc pl-5 text-muted space-y-1">
                 <li>Accept or reject all cookies</li>
                 <li>Delete existing cookies</li>
                 <li>Block third-party cookies</li>
@@ -142,15 +142,15 @@ export default function CookiePolicy() {
               <ul className="list-disc pl-5 text-blue-800 space-y-1">
                 <li>Clicking the "Cookie Preferences" link in our footer</li>
                 <li>Accessing cookie settings in your account dashboard</li>
-                <li>Contacting our support team at <a href="mailto:privacy@stackpro.io" className="text-blue-600 hover:underline">privacy@stackpro.io</a></li>
+                <li>Contacting our support team at <a href="mailto:privacy@stackpro.io" className="text-secondary hover:underline">privacy@stackpro.io</a></li>
               </ul>
             </div>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Cookie Retention</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted mb-4">
               Different cookies are stored for different periods:
             </p>
-            <ul className="list-disc pl-5 text-gray-600 mb-6 space-y-2">
+            <ul className="list-disc pl-5 text-muted mb-6 space-y-2">
               <li><strong>Session Cookies:</strong> Deleted when you close your browser</li>
               <li><strong>Persistent Cookies:</strong> Remain until expiry date or manual deletion</li>
               <li><strong>Authentication Cookies:</strong> Expire after 30 days of inactivity</li>
@@ -159,28 +159,28 @@ export default function CookiePolicy() {
             </ul>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">International Transfers</h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted mb-6">
               Some of our third-party cookie providers may transfer data outside the European Union. 
               We ensure these transfers comply with applicable data protection laws through appropriate safeguards 
               such as Standard Contractual Clauses or adequacy decisions.
             </p>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Updates to This Policy</h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-muted mb-6">
               We may update this Cookie Policy from time to time to reflect changes in our practices or legal requirements. 
               We will notify you of any significant changes by posting the updated policy on our website with a new "Last Updated" date.
             </p>
 
             <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4">Contact Us</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted mb-4">
               If you have any questions about our use of cookies or this Cookie Policy, please contact us:
             </p>
-            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 mb-6">
-              <ul className="text-gray-700 space-y-2">
-                <li><strong>Email:</strong> <a href="mailto:privacy@stackpro.io" className="text-blue-600 hover:underline">privacy@stackpro.io</a></li>
-                <li><strong>Support:</strong> <a href="mailto:support@stackpro.io" className="text-blue-600 hover:underline">support@stackpro.io</a></li>
+            <div className="bg-surface-2 border border-gray-200 rounded-lg p-6 mb-6">
+              <ul className="text-muted space-y-2">
+                <li><strong>Email:</strong> <a href="mailto:privacy@stackpro.io" className="text-secondary hover:underline">privacy@stackpro.io</a></li>
+                <li><strong>Support:</strong> <a href="mailto:support@stackpro.io" className="text-secondary hover:underline">support@stackpro.io</a></li>
                 <li><strong>Address:</strong> StackPro Inc., 123 Business Ave, Tech City, TC 12345</li>
-                <li><strong>Phone:</strong> <a href="tel:+15551234567" className="text-blue-600 hover:underline">(555) 123-4567</a></li>
+                <li><strong>Phone:</strong> <a href="tel:+15551234567" className="text-secondary hover:underline">(555) 123-4567</a></li>
               </ul>
             </div>
 

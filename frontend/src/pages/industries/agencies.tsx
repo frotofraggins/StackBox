@@ -35,7 +35,7 @@ export default function Agencies() {
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
               <Link href="/login" className="nav-link-enhanced">Login</Link>
-              <Link href="/signup" className="btn text-white font-semibold" style={{ background: 'var(--primary)' }}>
+              <Link href="/signup" className="btn btn-primary">
                 Start Free Trial
               </Link>
             </div>
@@ -61,7 +61,7 @@ export default function Agencies() {
                 <Link href="/pricing" className="nav-link-enhanced">Pricing</Link>
                 <Link href="/industries/agencies" className="nav-link-enhanced active">Industries</Link>
                 <Link href="/support" className="nav-link-enhanced">Support</Link>
-                <Link href="/signup" className="btn text-white font-semibold" style={{ background: 'var(--primary)' }}>
+                <Link href="/signup" className="btn btn-primary">
                   Start Free Trial
                 </Link>
               </nav>
@@ -83,14 +83,10 @@ export default function Agencies() {
               that showcase your work beautifully.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup" className="btn text-white font-semibold text-lg px-8 py-4" style={{ background: 'var(--primary)' }}>
+              <Link href="/signup" className="btn btn-primary">
                 Start Free Trial
               </Link>
-              <Link href="/contact" className="btn font-semibold text-lg px-8 py-4 border-2" style={{ 
-                borderColor: 'var(--primary)', 
-                color: 'var(--primary)',
-                background: 'transparent'
-              }}>
+              <Link href="/contact" className="btn bg-transparent text-primary border-2 border-primary hover:bg-primary hover:text-white transition-all">
                 Schedule Demo
               </Link>
             </div>
@@ -283,12 +279,10 @@ export default function Agencies() {
               delight their clients, and focus on what they do best - creating amazing work.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup" className="btn bg-white font-semibold text-lg px-8 py-4" style={{ color: 'var(--primary)' }}>
+              <Link href="/signup" className="btn btn-primary">
                 Start Free Trial
               </Link>
-              <Link href="/contact" className="btn font-semibold text-lg px-8 py-4 border-2 border-white text-white bg-transparent hover:bg-white" style={{ 
-                transition: 'all var(--dur) var(--ease)'
-              }}>
+              <Link href="/contact" className="btn bg-transparent text-white border-2 border-white hover:bg-white hover:text-primary transition-all">
                 Schedule Demo
               </Link>
             </div>
@@ -311,7 +305,7 @@ export default function Agencies() {
               <ul className="space-y-2">
                 <li><Link href="/features" className="text-muted-enhanced hover:text-[color:var(--secondary)]">Features</Link></li>
                 <li><Link href="/pricing" className="text-muted-enhanced hover:text-[color:var(--secondary)]">Pricing</Link></li>
-                <li><Link href="/security" className="text-muted-enhanced hover:text-[color:var(--secondary)]">Security</Link></li>
+                <li><Link href="/features" className="text-muted-enhanced hover:text-[color:var(--secondary)]">Security</Link></li>
               </ul>
             </div>
             <div>

@@ -202,7 +202,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
           <h3 className="text-lg font-semibold text-gray-900">Theme Settings</h3>
           <button
             onClick={resetTheme}
-            className="p-2 text-gray-600 hover:text-gray-900 rounded-lg"
+            className="p-2 text-muted hover:text-gray-900 rounded-lg"
             title="Reset to default"
           >
             <RotateCcw className="h-4 w-4" />
@@ -210,13 +210,13 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
         </div>
 
         {/* Section Tabs */}
-        <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+        <div className="flex space-x-1 bg-surface-2 rounded-lg p-1">
           <button
             onClick={() => setActiveSection('colors')}
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'colors'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <Palette className="h-4 w-4 mr-2" />
@@ -227,7 +227,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'fonts'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <Type className="h-4 w-4 mr-2" />
@@ -238,7 +238,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
             className={`flex-1 flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               activeSection === 'spacing'
                 ? 'bg-white text-gray-900 shadow-sm'
-                : 'text-gray-600 hover:text-gray-900'
+                : 'text-muted hover:text-gray-900'
             }`}
           >
             <Layout className="h-4 w-4 mr-2" />
@@ -288,7 +288,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
               <div className="space-y-4">
                 {/* Primary Color */}
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Primary</label>
+                  <label className="text-sm font-medium text-muted">Primary</label>
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-8 h-8 rounded border border-gray-300"
@@ -305,7 +305,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Secondary Color */}
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Secondary</label>
+                  <label className="text-sm font-medium text-muted">Secondary</label>
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-8 h-8 rounded border border-gray-300"
@@ -322,7 +322,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Accent Color */}
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Accent</label>
+                  <label className="text-sm font-medium text-muted">Accent</label>
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-8 h-8 rounded border border-gray-300"
@@ -339,7 +339,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Text Color */}
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Text</label>
+                  <label className="text-sm font-medium text-muted">Text</label>
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-8 h-8 rounded border border-gray-300"
@@ -356,7 +356,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Background Color */}
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-medium text-gray-700">Background</label>
+                  <label className="text-sm font-medium text-muted">Background</label>
                   <div className="flex items-center space-x-2">
                     <div
                       className="w-8 h-8 rounded border border-gray-300"
@@ -403,11 +403,11 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
               <div className="space-y-4">
                 {/* Heading Font */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Heading Font</label>
+                  <label className="block text-sm font-medium text-muted mb-2">Heading Font</label>
                   <select
                     value={theme.fonts.heading}
                     onChange={(e) => handleFontChange('heading', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                   >
                     <option value="Inter">Inter</option>
                     <option value="Georgia">Georgia</option>
@@ -428,11 +428,11 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Body Font */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Body Font</label>
+                  <label className="block text-sm font-medium text-muted mb-2">Body Font</label>
                   <select
                     value={theme.fonts.body}
                     onChange={(e) => handleFontChange('body', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                   >
                     <option value="Inter">Inter</option>
                     <option value="Georgia">Georgia</option>
@@ -463,11 +463,11 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
               <div className="space-y-4">
                 {/* Container Width */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Container Width</label>
+                  <label className="block text-sm font-medium text-muted mb-2">Container Width</label>
                   <select
                     value={theme.spacing.container}
                     onChange={(e) => handleSpacingChange('container', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                   >
                     <option value="1140px">Narrow (1140px)</option>
                     <option value="1200px">Standard (1200px)</option>
@@ -479,11 +479,11 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
 
                 {/* Section Padding */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Section Padding</label>
+                  <label className="block text-sm font-medium text-muted mb-2">Section Padding</label>
                   <select
                     value={theme.spacing.section}
                     onChange={(e) => handleSpacingChange('section', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-secondary"
                   >
                     <option value="40px">Compact (40px)</option>
                     <option value="60px">Comfortable (60px)</option>
@@ -498,7 +498,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
             {/* Preview */}
             <div>
               <h4 className="text-sm font-semibold text-gray-900 mb-3">Layout Preview</h4>
-              <div className="border border-gray-200 rounded-lg p-4 bg-gray-50">
+              <div className="border border-gray-200 rounded-lg p-4 bg-surface-2">
                 <div 
                   className="bg-white rounded shadow-sm mx-auto p-4"
                   style={{ 
@@ -514,7 +514,7 @@ export const ThemePanel: React.FC<ThemePanelProps> = ({ theme, onChange }) => {
                       Section Title
                     </h5>
                     <p 
-                      className="text-sm text-gray-600"
+                      className="text-sm text-muted"
                       style={{ fontFamily: theme.fonts.body }}
                     >
                       This shows how your sections will be spaced

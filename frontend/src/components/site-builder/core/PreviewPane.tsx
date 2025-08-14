@@ -273,7 +273,7 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
   };
 
   return (
-    <div className="preview-pane h-full bg-gray-50 flex flex-col">
+    <div className="preview-pane h-full bg-surface-2 flex flex-col">
       {/* Preview Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center space-x-4">
@@ -285,8 +285,8 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
               onClick={() => setDevice('desktop')}
               className={`p-2 rounded-lg ${
                 device === 'desktop' 
-                  ? 'bg-blue-100 text-blue-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-blue-100 text-secondary' 
+                  : 'text-muted hover:text-gray-900'
               }`}
               title="Desktop"
             >
@@ -297,8 +297,8 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
               onClick={() => setDevice('tablet')}
               className={`p-2 rounded-lg ${
                 device === 'tablet' 
-                  ? 'bg-blue-100 text-blue-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-blue-100 text-secondary' 
+                  : 'text-muted hover:text-gray-900'
               }`}
               title="Tablet"
             >
@@ -309,8 +309,8 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
               onClick={() => setDevice('mobile')}
               className={`p-2 rounded-lg ${
                 device === 'mobile' 
-                  ? 'bg-blue-100 text-blue-600' 
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-blue-100 text-secondary' 
+                  : 'text-muted hover:text-gray-900'
               }`}
               title="Mobile"
             >
@@ -328,7 +328,7 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
           {/* Open in New Tab */}
           <button
             onClick={openInNewTab}
-            className="flex items-center px-3 py-2 text-gray-600 hover:text-gray-900 rounded-lg"
+            className="flex items-center px-3 py-2 text-muted hover:text-gray-900 rounded-lg"
             title="Open in new tab"
           >
             <ExternalLink className="h-4 w-4 mr-2" />
@@ -338,7 +338,7 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="p-2 text-gray-600 hover:text-gray-900 rounded-lg"
+            className="p-2 text-muted hover:text-gray-900 rounded-lg"
             title="Close preview"
           >
             <X className="h-5 w-5" />
@@ -349,11 +349,11 @@ export const PreviewPane: React.FC<PreviewPaneProps> = ({ siteConfig, onClose })
       {/* Preview Content */}
       <div className="flex-1 flex items-center justify-center p-4 overflow-auto">
         {isLoading && (
-          <div className="absolute inset-0 bg-gray-50 flex items-center justify-center z-10">
+          <div className="absolute inset-0 bg-surface-2 flex items-center justify-center z-10">
             <div className="flex items-center space-x-2">
-              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce"></div>
-              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-              <div className="w-4 h-4 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="w-4 h-4 bg-secondary rounded-full animate-bounce"></div>
+              <div className="w-4 h-4 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+              <div className="w-4 h-4 bg-secondary rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
             </div>
           </div>
         )}

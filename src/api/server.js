@@ -561,6 +561,8 @@ const aiDocsRoutes = require('./routes/ai-docs');
 const aiGapAnalysisRoutes = require('./routes/ai-gap-analysis');
 const emailStackRoutes = require('./routes/email-stack');
 const datasetIngestionRoutes = require('./routes/dataset-ingestion');
+const crmRoutes = require('./routes/crm');
+const circleEngineRoutes = require('./routes/circle-engine');
 
 // Site builder routes
 app.use('/api/site-builder', siteBuilderRoutes);
@@ -580,6 +582,10 @@ app.use('/api/email', emailStackRoutes);
 
 // Dataset ingestion (Phase 3.1 capability)
 app.use('/api/data-ingestion', require('./routes/data-ingestion'));
+
+// CRM Foundation & Circle Engine
+app.use('/api/crm', crmRoutes);
+app.use('/api/circle-engine', circleEngineRoutes);
 
 // Stripe webhook endpoint
 app.post('/api/stripe-webhook', express.raw({type: 'application/json'}), async (req, res) => {
@@ -717,7 +723,7 @@ async function sendUpgradeConfirmationEmail(clientId, conversionResult) {
 }
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   logger.info(`🚀 StackBox API server running on port ${PORT}`);
   logger.info(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
   logger.info(`🔗 Health check: http://localhost:${PORT}/health`);

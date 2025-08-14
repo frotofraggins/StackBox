@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, User, Building } from 'lucide-react'
 import ThemeToggle from '../components/theme/ThemeToggle'
+import Navigation from '../components/layout/Navigation'
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -91,6 +92,8 @@ export default function Signup() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+
+      <Navigation currentPage="/signup" />
       <div className="min-h-screen bg-gradient-to-br from-primary to-secondary py-12 px-4 sm:px-6 lg:px-8">
         {/* Theme Toggle - Fixed Position */}
         <div className="fixed top-4 right-4 z-50">

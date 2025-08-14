@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import ThemeToggle from '../components/theme/ThemeToggle'
+import Navigation from '../components/layout/Navigation'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -57,6 +58,8 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+
+      <Navigation currentPage="/login" />
       <div className="min-h-screen bg-gradient-to-br from-primary to-secondary flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         {/* Theme Toggle - Fixed Position */}
         <div className="fixed top-4 right-4 z-50">
@@ -154,7 +157,7 @@ export default function Login() {
                 </div>
 
                 <div className="text-sm">
-                  <Link href="/forgot-password" className="font-medium text-primary hover:text-secondary">
+                  <Link href="/login" className="font-medium text-primary hover:text-secondary">
                     Forgot your password?
                   </Link>
                 </div>
