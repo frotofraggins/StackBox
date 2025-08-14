@@ -452,7 +452,7 @@ export default function Pricing() {
             </div>
           </div>
         </section>
-      </main>
+      </Layout>
 
       {/* Footer */}
       <footer className="bg-[color:var(--primary)] py-12">
